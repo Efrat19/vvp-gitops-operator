@@ -1,0 +1,20 @@
+# permissions for end users to view savepoints.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: savepoint-viewer-role
+rules:
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - savepoints
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - savepoints/status
+  verbs:
+  - get

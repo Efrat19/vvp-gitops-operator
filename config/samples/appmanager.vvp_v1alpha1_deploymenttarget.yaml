@@ -1,0 +1,6 @@
+apiVersion: appmanager.vvp.efrat19.io/v1alpha1
+kind: DeploymentTarget
+metadata:
+  name: deploymenttarget-sample
+spec:
+  # TODO(user): Add fields here
