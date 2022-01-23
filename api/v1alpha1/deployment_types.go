@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/Efrat19/vvp-gitops-operator/pkg/appmanager_apis"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -29,7 +30,9 @@ type DeploymentSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Deployment. Edit deployment_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Metadata  appmanager_apis.DeploymentMetadata  `json:"metadata,omitempty"`
+	Spec      appmanager_apis.DeploymentSpec   `json:"spec,omitempty"`
+	Status    appmanager_apis.DeploymentStatus `json:"status,omitempty"`
 }
 
 // DeploymentStatus defines the observed state of Deployment
