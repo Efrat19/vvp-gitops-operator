@@ -1,0 +1,5474 @@
+---
+swagger: "2.0"
+info:
+  description: "The Ververica Platform APIs, excluding Application Manager."
+  version: "2.6.1"
+  title: "Ververica Platform API"
+  contact:
+    name: "Ververica GmbH"
+    url: "https://www.ververica.com"
+    email: "platform@ververica.com"
+  license:
+    name: "Proprietary"
+host: "host.docker.internal:8080"
+basePath: "/"
+tags:
+- name: "api-tokens"
+  description: "Api Tokens"
+- name: "autopilot"
+  description: "Autopilot"
+- name: "catalog-controller"
+  description: "Catalog Controller"
+- name: "connector-controller"
+  description: "Connector Controller"
+- name: "job-graph-controller"
+  description: "Job Graph Controller"
+- name: "namespaces"
+  description: "Namespaces"
+- name: "sql-controller"
+  description: "Sql Controller"
+- name: "udf-artifact-controller"
+  description: "Udf Artifact Controller"
+paths:
+  /apitokens/v1/namespaces/{ns}/apitokens:
+    get:
+      tags:
+      - "api-tokens"
+      summary: "listApiTokens"
+      operationId: "listApiTokensUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListApiTokensResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    post:
+      tags:
+      - "api-tokens"
+      summary: "createApiToken"
+      operationId: "createApiTokenUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "apiToken"
+        description: "apiToken"
+        required: true
+        schema:
+          $ref: "#/definitions/ApiToken"
+        x-exportParamName: "ApiToken"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateApiTokenResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /apitokens/v1/namespaces/{ns}/apitokens/{apiTokenName}:
+    get:
+      tags:
+      - "api-tokens"
+      summary: "getApiToken"
+      operationId: "getApiTokenUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "apiTokenName"
+        in: "path"
+        description: "apiTokenName"
+        required: true
+        type: "string"
+        x-exportParamName: "ApiTokenName"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetApiTokenResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    delete:
+      tags:
+      - "api-tokens"
+      summary: "deleteApiToken"
+      operationId: "deleteApiTokenUsingDELETE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "apiTokenName"
+        in: "path"
+        description: "apiTokenName"
+        required: true
+        type: "string"
+        x-exportParamName: "ApiTokenName"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DeleteApiTokenResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+  /autopilot/v1alpha1/namespaces/{ns}:
+    get:
+      tags:
+      - "autopilot"
+      summary: "listAutopilotPolicies"
+      operationId: "listAutopilotPoliciesUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListAutopilotPoliciesResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /autopilot/v1alpha1/namespaces/{ns}/deployments/{deploymentId}/autopilotpolicy:
+    get:
+      tags:
+      - "autopilot"
+      summary: "getAutopilotPolicy"
+      operationId: "getAutopilotPolicyUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "deploymentId"
+        in: "path"
+        description: "deploymentId"
+        required: true
+        type: "string"
+        x-exportParamName: "DeploymentId"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetAutopilotPolicyResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    put:
+      tags:
+      - "autopilot"
+      summary: "updateAutopilotPolicy"
+      operationId: "updateAutopilotPolicyUsingPUT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "deploymentId"
+        in: "path"
+        description: "deploymentId"
+        required: true
+        type: "string"
+        x-exportParamName: "DeploymentId"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "policy"
+        description: "policy"
+        required: true
+        schema:
+          $ref: "#/definitions/AutopilotPolicy"
+        x-exportParamName: "Policy"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UpdateAutopilotPolicyResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /autopilot/v1alpha1/namespaces/{ns}/deployments/{deploymentId}/autopilotpolicy:recommendation:
+    get:
+      tags:
+      - "autopilot"
+      summary: "getAutopilotPolicyRecommendation"
+      operationId: "getAutopilotPolicyRecommendationUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "deploymentId"
+        in: "path"
+        description: "deploymentId"
+        required: true
+        type: "string"
+        x-exportParamName: "DeploymentId"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetAutopilotPolicyRecommendationResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /autopilot/v1alpha1/namespaces/{ns}/deployments/{deploymentId}/autopilotpolicy:status:
+    get:
+      tags:
+      - "autopilot"
+      summary: "getAutopilotPolicyStatus"
+      operationId: "getAutopilotPolicyStatusUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "deploymentId"
+        in: "path"
+        description: "deploymentId"
+        required: true
+        type: "string"
+        x-exportParamName: "DeploymentId"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetAutopilotPolicyStatusResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "listCatalogs"
+      operationId: "listCatalogsUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListCatalogsResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "getCatalog"
+      operationId: "getCatalogUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetCatalogResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:getDatabase:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "getDatabase"
+      operationId: "getDatabaseUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: true
+        type: "string"
+        x-exportParamName: "Database"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetDatabaseResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:getFunction:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "getFunction"
+      operationId: "getFunctionUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "function"
+        in: "query"
+        description: "function"
+        required: true
+        type: "string"
+        x-exportParamName: "Function"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetFunctionResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:getTable:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "getTable"
+      operationId: "getTableUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - name: "table"
+        in: "query"
+        description: "table"
+        required: true
+        type: "string"
+        x-exportParamName: "Table"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetTableResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:getView:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "getView"
+      operationId: "getViewUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - name: "view"
+        in: "query"
+        description: "view"
+        required: true
+        type: "string"
+        x-exportParamName: "View"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetViewResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:listDatabases:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "listDatabases"
+      operationId: "listDatabasesUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListDatabasesResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:listFunctions:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "listFunctions"
+      operationId: "listFunctionsUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListFunctionsResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:listTables:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "listTables"
+      operationId: "listTablesUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListTablesResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /catalog/v1beta2/namespaces/{ns}/catalogs/{cat}:listViews:
+    get:
+      tags:
+      - "catalog-controller"
+      summary: "listViews"
+      operationId: "listViewsUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cat"
+        in: "path"
+        description: "cat"
+        required: true
+        type: "string"
+        x-exportParamName: "Cat"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListViewsResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /namespaces/v1/namespaces:
+    get:
+      tags:
+      - "namespaces"
+      summary: "listNamespaces"
+      operationId: "listNamespacesUsingGET"
+      produces:
+      - "application/json"
+      parameters: []
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListNamespacesResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    post:
+      tags:
+      - "namespaces"
+      summary: "createNamespace"
+      operationId: "createNamespaceUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "namespace"
+        description: "namespace"
+        required: true
+        schema:
+          $ref: "#/definitions/Namespace"
+        x-exportParamName: "Namespace"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateNamespaceResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /namespaces/v1/namespaces/{ns}:
+    get:
+      tags:
+      - "namespaces"
+      summary: "getNamespace"
+      operationId: "getNamespaceUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetNamespaceResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    put:
+      tags:
+      - "namespaces"
+      summary: "updateNamespace"
+      operationId: "updateNamespaceUsingPUT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "namespace"
+        description: "namespace"
+        required: true
+        schema:
+          $ref: "#/definitions/Namespace"
+        x-exportParamName: "Namespace"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UpdateNamespaceResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    delete:
+      tags:
+      - "namespaces"
+      summary: "deleteNamespace"
+      operationId: "deleteNamespaceUsingDELETE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DeleteNamespaceResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+    patch:
+      tags:
+      - "namespaces"
+      summary: "patchNamespace"
+      operationId: "patchNamespaceUsingPATCH"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "namespacePatch"
+        description: "namespacePatch"
+        required: true
+        schema:
+          $ref: "#/definitions/Namespace"
+        x-exportParamName: "NamespacePatch"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UpdateNamespaceResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+  /namespaces/v1/namespaces/{ns}:setPreviewSessionCluster:
+    post:
+      tags:
+      - "namespaces"
+      summary: "setPreviewSessionCluster"
+      operationId: "setPreviewSessionClusterUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "request"
+        description: "request"
+        required: true
+        schema:
+          $ref: "#/definitions/SetPreviewSessionClusterRequest"
+        x-exportParamName: "Request"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SetPreviewSessionClusterResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/catalog-connectors:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "listCatalogConnectors"
+      operationId: "listCatalogConnectorsUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListCatalogConnectorsResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    post:
+      tags:
+      - "connector-controller"
+      summary: "createCatalogConnector"
+      operationId: "createCatalogConnectorUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "catalogConnector"
+        description: "catalogConnector"
+        required: true
+        schema:
+          $ref: "#/definitions/CatalogConnector"
+        x-exportParamName: "CatalogConnector"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateCatalogConnectorResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/catalog-connectors/{catalogConnectorResourceId}:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "getCatalogConnector"
+      operationId: "getCatalogConnectorUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "catalogConnectorResourceId"
+        in: "path"
+        description: "catalogConnectorResourceId"
+        required: true
+        type: "string"
+        x-exportParamName: "CatalogConnectorResourceId"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetCatalogConnectorResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/catalog-connectors/{name}:
+    put:
+      tags:
+      - "connector-controller"
+      summary: "updateCatalogConnector"
+      operationId: "updateCatalogConnectorUsingPUT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "catalogConnector"
+        description: "catalogConnector"
+        required: true
+        schema:
+          $ref: "#/definitions/CatalogConnector"
+        x-exportParamName: "CatalogConnector"
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UpdateCatalogConnectorResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    delete:
+      tags:
+      - "connector-controller"
+      summary: "deleteCatalogConnector"
+      operationId: "deleteCatalogConnectorUsingDELETE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DeleteCatalogConnectorResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+  /sql/v1beta1/namespaces/{ns}/catalog-connectors/{name}:list-catalogs:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "listCatalogsReferencingCatalogConnector"
+      operationId: "listCatalogsReferencingCatalogConnectorUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListCatalogsReferencingCatalogConnectorResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/catalog-connectors:analyze-jars:
+    post:
+      tags:
+      - "connector-controller"
+      summary: "analyzeCatalogConnectorJars"
+      operationId: "analyzeCatalogConnectorJarsUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "jarUris"
+        description: "jarUris"
+        required: true
+        schema:
+          $ref: "#/definitions/JarUris"
+        x-exportParamName: "JarUris"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AnalyzeCatalogConnectorJarsResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/connectors:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "listConnectors"
+      operationId: "listConnectorsUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListConnectorsResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    post:
+      tags:
+      - "connector-controller"
+      summary: "createConnector"
+      operationId: "createConnectorUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "connector"
+        description: "connector"
+        required: true
+        schema:
+          $ref: "#/definitions/Connector"
+        x-exportParamName: "Connector"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateConnectorResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/connectors/{connectorResourceId}:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "getConnector"
+      operationId: "getConnectorUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "connectorResourceId"
+        in: "path"
+        description: "connectorResourceId"
+        required: true
+        type: "string"
+        x-exportParamName: "ConnectorResourceId"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetConnectorResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/connectors/{name}:
+    put:
+      tags:
+      - "connector-controller"
+      summary: "updateConnector"
+      operationId: "updateConnectorUsingPUT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "connector"
+        description: "connector"
+        required: true
+        schema:
+          $ref: "#/definitions/Connector"
+        x-exportParamName: "Connector"
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UpdateConnectorResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    delete:
+      tags:
+      - "connector-controller"
+      summary: "deleteConnector"
+      operationId: "deleteConnectorUsingDELETE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DeleteConnectorResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+  /sql/v1beta1/namespaces/{ns}/connectors/{name}:list-tables:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "listTablesReferencingConnector"
+      operationId: "listTablesReferencingConnectorUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListTablesReferencingConnectorResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/deployments/{deploymentId}:create-jobgraph:
+    post:
+      tags:
+      - "job-graph-controller"
+      summary: "createJobGraph"
+      operationId: "createJobGraphUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "deploymentName"
+        in: "path"
+        description: "deploymentName"
+        required: true
+        type: "string"
+        x-exportParamName: "DeploymentName"
+      - in: "body"
+        name: "jobGraphSpec"
+        description: "jobGraphSpec"
+        required: true
+        schema:
+          $ref: "#/definitions/JobGraphSpec"
+        x-exportParamName: "JobGraphSpec"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateJobGraphResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/deployments/{deploymentName}:delete-jobgraphs:
+    delete:
+      tags:
+      - "job-graph-controller"
+      summary: "deleteJobGraphs"
+      operationId: "deleteJobGraphsUsingDELETE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "deploymentName"
+        in: "path"
+        description: "deploymentName"
+        required: true
+        type: "string"
+        x-exportParamName: "DeploymentName"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DeleteJobGraphsResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+  /sql/v1beta1/namespaces/{ns}/deployments/{deploymentName}:validate-config-change:
+    post:
+      tags:
+      - "job-graph-controller"
+      summary: "validateConfigChange"
+      operationId: "validateConfigChangeUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "configSpec"
+        description: "configSpec"
+        required: true
+        schema:
+          $ref: "#/definitions/ConfigSpec"
+        x-exportParamName: "ConfigSpec"
+      - name: "deploymentName"
+        in: "path"
+        description: "deploymentName"
+        required: true
+        type: "string"
+        x-exportParamName: "DeploymentName"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateConfigChangeResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/formats:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "listFormats"
+      operationId: "listFormatsUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListFormatsResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    post:
+      tags:
+      - "connector-controller"
+      summary: "createFormat"
+      operationId: "createFormatUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "format"
+        description: "format"
+        required: true
+        schema:
+          $ref: "#/definitions/Format"
+        x-exportParamName: "Format"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateFormatResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/formats/{formatResourceId}:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "getFormat"
+      operationId: "getFormatUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "formatResourceId"
+        in: "path"
+        description: "formatResourceId"
+        required: true
+        type: "string"
+        x-exportParamName: "FormatResourceId"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetFormatResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/formats/{name}:
+    put:
+      tags:
+      - "connector-controller"
+      summary: "updateFormat"
+      operationId: "updateFormatUsingPUT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "format"
+        description: "format"
+        required: true
+        schema:
+          $ref: "#/definitions/Format"
+        x-exportParamName: "Format"
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UpdateFormatResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    delete:
+      tags:
+      - "connector-controller"
+      summary: "deleteFormat"
+      operationId: "deleteFormatUsingDELETE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DeleteFormatResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+  /sql/v1beta1/namespaces/{ns}/formats/{name}:list-tables:
+    get:
+      tags:
+      - "connector-controller"
+      summary: "listTablesReferencingFormat"
+      operationId: "listTablesReferencingFormatUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "name"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListTablesReferencingFormatResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/sqlscripts:
+    get:
+      tags:
+      - "sql-controller"
+      summary: "listSqlScripts"
+      operationId: "listSqlScriptsUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListSqlScriptsResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    post:
+      tags:
+      - "sql-controller"
+      summary: "createSqlScript"
+      operationId: "createSqlScriptUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "sqlScript"
+        description: "sqlScript"
+        required: true
+        schema:
+          $ref: "#/definitions/SqlScript"
+        x-exportParamName: "SqlScript"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateSqlScriptResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/sqlscripts/{sqlScriptName}:
+    get:
+      tags:
+      - "sql-controller"
+      summary: "getSqlScript"
+      operationId: "getSqlScriptUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - name: "sqlScriptName"
+        in: "path"
+        description: "sqlScriptName"
+        required: true
+        type: "string"
+        x-exportParamName: "SqlScriptName"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetSqlScriptResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    put:
+      tags:
+      - "sql-controller"
+      summary: "updateSqlScript"
+      operationId: "updateSqlScriptUsingPUT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "sqlScript"
+        description: "sqlScript"
+        required: true
+        schema:
+          $ref: "#/definitions/SqlScript"
+        x-exportParamName: "SqlScript"
+      - name: "sqlScriptName"
+        in: "path"
+        description: "sqlScriptName"
+        required: true
+        type: "string"
+        x-exportParamName: "SqlScriptName"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UpdateSqlScriptResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    delete:
+      tags:
+      - "sql-controller"
+      summary: "deleteSqlScript"
+      operationId: "deleteSqlScriptUsingDELETE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - name: "sqlScriptName"
+        in: "path"
+        description: "sqlScriptName"
+        required: true
+        type: "string"
+        x-exportParamName: "SqlScriptName"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DeleteSqlScriptResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+  /sql/v1beta1/namespaces/{ns}/sqlscripts:execute:
+    post:
+      tags:
+      - "sql-controller"
+      summary: "executeStatement"
+      operationId: "executeStatementUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "catalog"
+        in: "query"
+        description: "catalog"
+        required: false
+        type: "string"
+        x-exportParamName: "Catalog"
+        x-optionalDataType: "String"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "statement"
+        description: "statement"
+        required: true
+        schema:
+          $ref: "#/definitions/Statement"
+        x-exportParamName: "Statement"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ExecuteStatementResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/sqlscripts:execute-multi:
+    post:
+      tags:
+      - "sql-controller"
+      summary: "executeStatements"
+      operationId: "executeStatementsUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "catalog"
+        in: "query"
+        description: "catalog"
+        required: false
+        type: "string"
+        x-exportParamName: "Catalog"
+        x-optionalDataType: "String"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "statements"
+        description: "statements"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+        x-exportParamName: "Statements"
+      - name: "stopOnError"
+        in: "query"
+        description: "stopOnError"
+        required: false
+        type: "boolean"
+        default: true
+        x-exportParamName: "StopOnError"
+        x-optionalDataType: "Bool"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ExecuteStatementsResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/sqlscripts:suggest:
+    post:
+      tags:
+      - "sql-controller"
+      summary: "suggestSqlScriptCompletions"
+      operationId: "suggestSqlScriptCompletionsUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "details"
+        description: "details"
+        required: true
+        schema:
+          $ref: "#/definitions/SuggestSqlScriptCompletionsDetails"
+        x-exportParamName: "Details"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SuggestSqlScriptCompletionsResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/sqlscripts:validate:
+    post:
+      tags:
+      - "sql-controller"
+      summary: "validateStatement"
+      operationId: "validateStatementUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "catalog"
+        in: "query"
+        description: "catalog"
+        required: false
+        type: "string"
+        x-exportParamName: "Catalog"
+        x-optionalDataType: "String"
+      - name: "database"
+        in: "query"
+        description: "database"
+        required: false
+        type: "string"
+        x-exportParamName: "Database"
+        x-optionalDataType: "String"
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "statement"
+        description: "statement"
+        required: true
+        schema:
+          $ref: "#/definitions/Statement"
+        x-exportParamName: "Statement"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateStatementResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/udfartifacts:
+    get:
+      tags:
+      - "udf-artifact-controller"
+      summary: "listUdfArtifacts"
+      operationId: "listUdfArtifactsUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - name: "requireFunctionNames"
+        in: "query"
+        description: "requireFunctionNames"
+        required: false
+        type: "boolean"
+        x-exportParamName: "RequireFunctionNames"
+        x-optionalDataType: "Bool"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ListUdfArtifactsResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    post:
+      tags:
+      - "udf-artifact-controller"
+      summary: "createUdfArtifact"
+      operationId: "createUdfArtifactUsingPOST"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "udfArtifact"
+        description: "udfArtifact"
+        required: true
+        schema:
+          $ref: "#/definitions/UdfArtifact"
+        x-exportParamName: "UdfArtifact"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateUdfArtifactResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+  /sql/v1beta1/namespaces/{ns}/udfartifacts/{udfArtifactName}:
+    get:
+      tags:
+      - "udf-artifact-controller"
+      summary: "getUdfArtifact"
+      operationId: "getUdfArtifactUsingGET"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - name: "requireFunctionNames"
+        in: "query"
+        description: "requireFunctionNames"
+        required: false
+        type: "boolean"
+        x-exportParamName: "RequireFunctionNames"
+        x-optionalDataType: "Bool"
+      - name: "udfArtifactName"
+        in: "path"
+        description: "udfArtifactName"
+        required: true
+        type: "string"
+        x-exportParamName: "UdfArtifactName"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetUdfArtifactResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    put:
+      tags:
+      - "udf-artifact-controller"
+      summary: "updateUdfArtifact"
+      operationId: "updateUdfArtifactUsingPUT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - in: "body"
+        name: "udfArtifact"
+        description: "udfArtifact"
+        required: true
+        schema:
+          $ref: "#/definitions/UdfArtifact"
+        x-exportParamName: "UdfArtifact"
+      - name: "udfArtifactName"
+        in: "path"
+        description: "udfArtifactName"
+        required: true
+        type: "string"
+        x-exportParamName: "UdfArtifactName"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UpdateUdfArtifactResponse"
+        "201":
+          description: "Created"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+    delete:
+      tags:
+      - "udf-artifact-controller"
+      summary: "deleteUdfArtifact"
+      operationId: "deleteUdfArtifactUsingDELETE"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ns"
+        in: "path"
+        description: "ns"
+        required: true
+        type: "string"
+        x-exportParamName: "Ns"
+      - name: "udfArtifactName"
+        in: "path"
+        description: "udfArtifactName"
+        required: true
+        type: "string"
+        x-exportParamName: "UdfArtifactName"
+      security:
+      - apiKey: []
+      deprecated: false
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DeleteUdfArtifactResponse"
+        "204":
+          description: "No Content"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+securityDefinitions:
+  apiKey:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  AnalyzeCatalogConnectorJarsResponse:
+    type: "object"
+    properties:
+      catalogConnectors:
+        type: "array"
+        items:
+          $ref: "#/definitions/CatalogConnector"
+    title: "AnalyzeCatalogConnectorJarsResponse"
+    example:
+      catalogConnectors:
+      - name: "name"
+        readOnly: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+      - name: "name"
+        readOnly: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  ApiToken:
+    type: "object"
+    properties:
+      createTime:
+        type: "string"
+        format: "date-time"
+      name:
+        type: "string"
+      role:
+        type: "string"
+      secret:
+        type: "string"
+    title: "ApiToken"
+    example:
+      role: "role"
+      createTime: "2000-01-23T04:56:07.000+00:00"
+      name: "name"
+      secret: "secret"
+  AutopilotPolicy:
+    type: "object"
+    properties:
+      autoscalerConfig:
+        $ref: "#/definitions/AutoscalerConfig"
+      libraConfig:
+        $ref: "#/definitions/LibraConfig"
+      mode:
+        type: "string"
+        enum:
+        - "AUTOPILOT_MODE_INVALID"
+        - "AUTOPILOT_MODE_DISABLED"
+        - "AUTOPILOT_MODE_MONITORING"
+        - "AUTOPILOT_MODE_ACTIVE"
+        - "UNRECOGNIZED"
+      modifyTime:
+        type: "string"
+        format: "date-time"
+      name:
+        type: "string"
+    title: "AutopilotPolicy"
+    example:
+      mode: "AUTOPILOT_MODE_INVALID"
+      libraConfig:
+        cooldownMinutes: 5
+        extraConfig:
+          key: "extraConfig"
+        policies: "policies"
+      modifyTime: "2000-01-23T04:56:07.000+00:00"
+      autoscalerConfig:
+        targetUtilization: 5
+        cooldownMinutes: 0
+        extraConfig:
+          key: "extraConfig"
+        maxParallelism: 6
+        minParallelism: 1
+      name: "name"
+  AutopilotPolicyRecommendation:
+    type: "object"
+    properties:
+      deploymentPatch:
+        type: "string"
+      description:
+        type: "string"
+      lastUpdateTime:
+        type: "string"
+        format: "date-time"
+    title: "AutopilotPolicyRecommendation"
+    example:
+      description: "description"
+      deploymentPatch: "deploymentPatch"
+      lastUpdateTime: "2000-01-23T04:56:07.000+00:00"
+  AutopilotPolicyStatus:
+    type: "object"
+    properties:
+      autoscalerStatus:
+        $ref: "#/definitions/AutoscalerStatus"
+      libraStatus:
+        $ref: "#/definitions/LibraStatus"
+      status:
+        type: "string"
+        enum:
+        - "POLICY_STATUS_INVALID"
+        - "POLICY_STATUS_OK"
+        - "POLICY_STATUS_ERROR"
+        - "UNRECOGNIZED"
+    title: "AutopilotPolicyStatus"
+    example:
+      libraStatus:
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+        metrics: "metrics"
+        message: "message"
+        lastActionTime: "2000-01-23T04:56:07.000+00:00"
+      autoscalerStatus:
+        sourceStatus:
+        - estimatedLagSeconds: 1
+          vertexId: "vertexId"
+          taskName: "taskName"
+          throughput: 5.637376656633329
+          estimatedCatchUpSeconds: 6
+          capacity: 0.8008281904610115
+          target: 5.962133916683182
+        - estimatedLagSeconds: 1
+          vertexId: "vertexId"
+          taskName: "taskName"
+          throughput: 5.637376656633329
+          estimatedCatchUpSeconds: 6
+          capacity: 0.8008281904610115
+          target: 5.962133916683182
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+        metrics: "metrics"
+        message: "message"
+        lastActionTime: "2000-01-23T04:56:07.000+00:00"
+      status: "POLICY_STATUS_INVALID"
+  AutoscalerConfig:
+    type: "object"
+    properties:
+      cooldownMinutes:
+        type: "integer"
+        format: "int32"
+      extraConfig:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      maxParallelism:
+        type: "integer"
+        format: "int32"
+      minParallelism:
+        type: "integer"
+        format: "int32"
+      targetUtilization:
+        type: "integer"
+        format: "int32"
+    title: "AutoscalerConfig"
+    example:
+      targetUtilization: 5
+      cooldownMinutes: 0
+      extraConfig:
+        key: "extraConfig"
+      maxParallelism: 6
+      minParallelism: 1
+  AutoscalerStatus:
+    type: "object"
+    properties:
+      lastActionTime:
+        type: "string"
+        format: "date-time"
+      message:
+        type: "string"
+      metrics:
+        type: "string"
+      sourceStatus:
+        type: "array"
+        items:
+          $ref: "#/definitions/AutoscalingSourceStatus"
+      updateTime:
+        type: "string"
+        format: "date-time"
+    title: "AutoscalerStatus"
+    example:
+      sourceStatus:
+      - estimatedLagSeconds: 1
+        vertexId: "vertexId"
+        taskName: "taskName"
+        throughput: 5.637376656633329
+        estimatedCatchUpSeconds: 6
+        capacity: 0.8008281904610115
+        target: 5.962133916683182
+      - estimatedLagSeconds: 1
+        vertexId: "vertexId"
+        taskName: "taskName"
+        throughput: 5.637376656633329
+        estimatedCatchUpSeconds: 6
+        capacity: 0.8008281904610115
+        target: 5.962133916683182
+      updateTime: "2000-01-23T04:56:07.000+00:00"
+      metrics: "metrics"
+      message: "message"
+      lastActionTime: "2000-01-23T04:56:07.000+00:00"
+  AutoscalingSourceStatus:
+    type: "object"
+    properties:
+      capacity:
+        type: "number"
+        format: "double"
+      estimatedCatchUpSeconds:
+        type: "integer"
+        format: "int32"
+      estimatedLagSeconds:
+        type: "integer"
+        format: "int32"
+      target:
+        type: "number"
+        format: "double"
+      taskName:
+        type: "string"
+      throughput:
+        type: "number"
+        format: "double"
+      vertexId:
+        type: "string"
+    title: "AutoscalingSourceStatus"
+    example:
+      estimatedLagSeconds: 1
+      vertexId: "vertexId"
+      taskName: "taskName"
+      throughput: 5.637376656633329
+      estimatedCatchUpSeconds: 6
+      capacity: 0.8008281904610115
+      target: 5.962133916683182
+  Catalog:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "string"
+    title: "Catalog"
+    example:
+      name: "name"
+      properties:
+        key: "properties"
+  CatalogConnector:
+    type: "object"
+    properties:
+      dependencies:
+        type: "array"
+        items:
+          type: "string"
+      name:
+        type: "string"
+      packaged:
+        type: "boolean"
+      properties:
+        type: "array"
+        items:
+          $ref: "#/definitions/Property"
+      readOnly:
+        type: "boolean"
+      type:
+        type: "string"
+    title: "CatalogConnector"
+    example:
+      name: "name"
+      readOnly: true
+      type: "type"
+      properties:
+      - defaultValue: "defaultValue"
+        description: "description"
+        definesFormat: true
+        key: "key"
+        required: true
+      - defaultValue: "defaultValue"
+        description: "description"
+        definesFormat: true
+        key: "key"
+        required: true
+      dependencies:
+      - "dependencies"
+      - "dependencies"
+      packaged: true
+  CatalogReference:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+    title: "CatalogReference"
+    example:
+      name: "name"
+  ConfigSpec:
+    type: "object"
+    properties:
+      flinkVersion:
+        type: "string"
+      newConfig:
+        type: "object"
+        additionalProperties:
+          type: "string"
+    title: "ConfigSpec"
+    example:
+      newConfig:
+        key: "newConfig"
+      flinkVersion: "flinkVersion"
+  Connector:
+    type: "object"
+    properties:
+      dependencies:
+        type: "array"
+        items:
+          type: "string"
+      lookup:
+        type: "boolean"
+      name:
+        type: "string"
+      packaged:
+        type: "boolean"
+      properties:
+        type: "array"
+        items:
+          $ref: "#/definitions/Property"
+      sink:
+        type: "boolean"
+      source:
+        type: "boolean"
+      supportedFormats:
+        type: "array"
+        items:
+          type: "string"
+      type:
+        type: "string"
+    title: "Connector"
+    example:
+      lookup: true
+      supportedFormats:
+      - "supportedFormats"
+      - "supportedFormats"
+      sink: true
+      name: "name"
+      source: true
+      type: "type"
+      properties:
+      - defaultValue: "defaultValue"
+        description: "description"
+        definesFormat: true
+        key: "key"
+        required: true
+      - defaultValue: "defaultValue"
+        description: "description"
+        definesFormat: true
+        key: "key"
+        required: true
+      dependencies:
+      - "dependencies"
+      - "dependencies"
+      packaged: true
+  CreateApiTokenResponse:
+    type: "object"
+    properties:
+      apiToken:
+        $ref: "#/definitions/ApiToken"
+    title: "CreateApiTokenResponse"
+    example:
+      apiToken:
+        role: "role"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        secret: "secret"
+  CreateCatalogConnectorResponse:
+    type: "object"
+    properties:
+      catalogConnector:
+        $ref: "#/definitions/CatalogConnector"
+    title: "CreateCatalogConnectorResponse"
+    example:
+      catalogConnector:
+        name: "name"
+        readOnly: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  CreateConnectorResponse:
+    type: "object"
+    properties:
+      connector:
+        $ref: "#/definitions/Connector"
+    title: "CreateConnectorResponse"
+    example:
+      connector:
+        lookup: true
+        supportedFormats:
+        - "supportedFormats"
+        - "supportedFormats"
+        sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  CreateFormatResponse:
+    type: "object"
+    properties:
+      format:
+        $ref: "#/definitions/Format"
+    title: "CreateFormatResponse"
+    example:
+      format:
+        sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  CreateJobGraphResponse:
+    type: "object"
+    properties:
+      jobgraph:
+        $ref: "#/definitions/JobGraph"
+    title: "CreateJobGraphResponse"
+    example:
+      jobgraph:
+        fullFlinkConfiguration:
+          key: "fullFlinkConfiguration"
+        sqlStatement: "sqlStatement"
+        sourceTables:
+        - catalogName: "catalogName"
+          temporary: true
+          databaseName: "databaseName"
+          table:
+            schema:
+              watermarkSpec:
+              - timeColumn: "timeColumn"
+                watermarkType: "watermarkType"
+                watermarkExpression: "watermarkExpression"
+              - timeColumn: "timeColumn"
+                watermarkType: "watermarkType"
+                watermarkExpression: "watermarkExpression"
+              column:
+              - expression: "expression"
+                meta:
+                  virtual: true
+                  name: "name"
+                name: "name"
+                type: "type"
+              - expression: "expression"
+                meta:
+                  virtual: true
+                  name: "name"
+                name: "name"
+                type: "type"
+              primaryKey:
+                enforced: true
+                column:
+                - "column"
+                - "column"
+                name: "name"
+                type: "CONSTRAINT_TYPE_INVALID"
+            name: "name"
+            comment: "comment"
+            properties:
+              key: "properties"
+        - catalogName: "catalogName"
+          temporary: true
+          databaseName: "databaseName"
+          table:
+            schema:
+              watermarkSpec:
+              - timeColumn: "timeColumn"
+                watermarkType: "watermarkType"
+                watermarkExpression: "watermarkExpression"
+              - timeColumn: "timeColumn"
+                watermarkType: "watermarkType"
+                watermarkExpression: "watermarkExpression"
+              column:
+              - expression: "expression"
+                meta:
+                  virtual: true
+                  name: "name"
+                name: "name"
+                type: "type"
+              - expression: "expression"
+                meta:
+                  virtual: true
+                  name: "name"
+                name: "name"
+                type: "type"
+              primaryKey:
+                enforced: true
+                column:
+                - "column"
+                - "column"
+                name: "name"
+                type: "CONSTRAINT_TYPE_INVALID"
+            name: "name"
+            comment: "comment"
+            properties:
+              key: "properties"
+        jobgraphPath: "jobgraphPath"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+        jarUris:
+        - "jarUris"
+        - "jarUris"
+        flinkVersion: "flinkVersion"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        state: "JOBGRAPH_STATE_INVALID"
+        userFlinkConfiguration:
+          key: "userFlinkConfiguration"
+        errorDetails:
+          columnNumber: 0
+          endLineNumber: 1
+          endColumnNumber: 6
+          lineNumber: 5
+          message: "message"
+        sinkTables:
+        - catalogName: "catalogName"
+          temporary: true
+          databaseName: "databaseName"
+          table:
+            schema:
+              watermarkSpec:
+              - timeColumn: "timeColumn"
+                watermarkType: "watermarkType"
+                watermarkExpression: "watermarkExpression"
+              - timeColumn: "timeColumn"
+                watermarkType: "watermarkType"
+                watermarkExpression: "watermarkExpression"
+              column:
+              - expression: "expression"
+                meta:
+                  virtual: true
+                  name: "name"
+                name: "name"
+                type: "type"
+              - expression: "expression"
+                meta:
+                  virtual: true
+                  name: "name"
+                name: "name"
+                type: "type"
+              primaryKey:
+                enforced: true
+                column:
+                - "column"
+                - "column"
+                name: "name"
+                type: "CONSTRAINT_TYPE_INVALID"
+            name: "name"
+            comment: "comment"
+            properties:
+              key: "properties"
+        - catalogName: "catalogName"
+          temporary: true
+          databaseName: "databaseName"
+          table:
+            schema:
+              watermarkSpec:
+              - timeColumn: "timeColumn"
+                watermarkType: "watermarkType"
+                watermarkExpression: "watermarkExpression"
+              - timeColumn: "timeColumn"
+                watermarkType: "watermarkType"
+                watermarkExpression: "watermarkExpression"
+              column:
+              - expression: "expression"
+                meta:
+                  virtual: true
+                  name: "name"
+                name: "name"
+                type: "type"
+              - expression: "expression"
+                meta:
+                  virtual: true
+                  name: "name"
+                name: "name"
+                type: "type"
+              primaryKey:
+                enforced: true
+                column:
+                - "column"
+                - "column"
+                name: "name"
+                type: "CONSTRAINT_TYPE_INVALID"
+            name: "name"
+            comment: "comment"
+            properties:
+              key: "properties"
+  CreateNamespaceResponse:
+    type: "object"
+    properties:
+      namespace:
+        $ref: "#/definitions/Namespace"
+    title: "CreateNamespaceResponse"
+    example:
+      namespace:
+        roleBindings:
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        previewSessionClusterName: "previewSessionClusterName"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        lifecyclePhase: "LIFECYCLE_PHASE_INVALID"
+        name: "name"
+  CreateSqlScriptResponse:
+    type: "object"
+    properties:
+      sqlScript:
+        $ref: "#/definitions/SqlScript"
+    title: "CreateSqlScriptResponse"
+    example:
+      sqlScript:
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        displayName: "displayName"
+        name: "name"
+        description: "description"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+        script: "script"
+  CreateUdfArtifactResponse:
+    type: "object"
+    properties:
+      collidingClasses:
+        type: "array"
+        items:
+          $ref: "#/definitions/UdfClass"
+      udfArtifact:
+        $ref: "#/definitions/UdfArtifact"
+    title: "CreateUdfArtifactResponse"
+    example:
+      collidingClasses:
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      udfArtifact:
+        udfClasses:
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        jarUpdateTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        jarUrl: "jarUrl"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+  Database:
+    type: "object"
+    properties:
+      comment:
+        type: "string"
+      name:
+        type: "string"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "string"
+    title: "Database"
+    example:
+      name: "name"
+      comment: "comment"
+      properties:
+        key: "properties"
+  DeleteApiTokenResponse:
+    type: "object"
+    title: "DeleteApiTokenResponse"
+  DeleteCatalogConnectorResponse:
+    type: "object"
+    title: "DeleteCatalogConnectorResponse"
+  DeleteConnectorResponse:
+    type: "object"
+    properties:
+      affectedTables:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableReference"
+    title: "DeleteConnectorResponse"
+    example:
+      affectedTables:
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+  DeleteFormatResponse:
+    type: "object"
+    properties:
+      affectedTables:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableReference"
+    title: "DeleteFormatResponse"
+    example:
+      affectedTables:
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+  DeleteJobGraphResponse:
+    type: "object"
+    properties:
+      notDeletedFiles:
+        type: "array"
+        items:
+          type: "string"
+    title: "DeleteJobGraphResponse"
+    example:
+      notDeletedFiles:
+      - "notDeletedFiles"
+      - "notDeletedFiles"
+  DeleteJobGraphsResponse:
+    type: "object"
+    properties:
+      deletedJobGraphs:
+        type: "array"
+        items:
+          $ref: "#/definitions/DeleteJobGraphResponse"
+    title: "DeleteJobGraphsResponse"
+    example:
+      deletedJobGraphs:
+      - notDeletedFiles:
+        - "notDeletedFiles"
+        - "notDeletedFiles"
+      - notDeletedFiles:
+        - "notDeletedFiles"
+        - "notDeletedFiles"
+  DeleteNamespaceResponse:
+    type: "object"
+    properties:
+      namespace:
+        $ref: "#/definitions/Namespace"
+    title: "DeleteNamespaceResponse"
+    example:
+      namespace:
+        roleBindings:
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        previewSessionClusterName: "previewSessionClusterName"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        lifecyclePhase: "LIFECYCLE_PHASE_INVALID"
+        name: "name"
+  DeleteSqlScriptResponse:
+    type: "object"
+    title: "DeleteSqlScriptResponse"
+  DeleteUdfArtifactResponse:
+    type: "object"
+    properties:
+      referencedClasses:
+        type: "array"
+        items:
+          $ref: "#/definitions/UdfClass"
+    title: "DeleteUdfArtifactResponse"
+    example:
+      referencedClasses:
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+  ErrorDetails:
+    type: "object"
+    properties:
+      columnNumber:
+        type: "integer"
+        format: "int32"
+      endColumnNumber:
+        type: "integer"
+        format: "int32"
+      endLineNumber:
+        type: "integer"
+        format: "int32"
+      lineNumber:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+    title: "ErrorDetails"
+    example:
+      columnNumber: 0
+      endLineNumber: 1
+      endColumnNumber: 6
+      lineNumber: 5
+      message: "message"
+  ExecuteStatementResponse:
+    type: "object"
+    properties:
+      errorMessage:
+        $ref: "#/definitions/ErrorDetails"
+      result:
+        type: "string"
+        enum:
+        - "RESULT_INVALID"
+        - "RESULT_SUCCESS"
+        - "RESULT_SUCCESS_WITH_ROWS"
+        - "RESULT_ERROR_WITH_ROWS"
+        - "RESULT_ERROR_WITH_DETAILS"
+        - "RESULT_SKIPPED"
+        - "UNRECOGNIZED"
+      resultTable:
+        $ref: "#/definitions/ResultTable"
+    title: "ExecuteStatementResponse"
+    example:
+      result: "RESULT_INVALID"
+      errorMessage:
+        columnNumber: 0
+        endLineNumber: 1
+        endColumnNumber: 6
+        lineNumber: 5
+        message: "message"
+      resultTable:
+        headers:
+        - name: "name"
+        - name: "name"
+        rows:
+        - cells:
+          - value: "value"
+          - value: "value"
+        - cells:
+          - value: "value"
+          - value: "value"
+  ExecuteStatementsResponse:
+    type: "object"
+    properties:
+      responses:
+        type: "array"
+        items:
+          $ref: "#/definitions/ExecuteStatementResponse"
+    title: "ExecuteStatementsResponse"
+    example:
+      responses:
+      - result: "RESULT_INVALID"
+        errorMessage:
+          columnNumber: 0
+          endLineNumber: 1
+          endColumnNumber: 6
+          lineNumber: 5
+          message: "message"
+        resultTable:
+          headers:
+          - name: "name"
+          - name: "name"
+          rows:
+          - cells:
+            - value: "value"
+            - value: "value"
+          - cells:
+            - value: "value"
+            - value: "value"
+      - result: "RESULT_INVALID"
+        errorMessage:
+          columnNumber: 0
+          endLineNumber: 1
+          endColumnNumber: 6
+          lineNumber: 5
+          message: "message"
+        resultTable:
+          headers:
+          - name: "name"
+          - name: "name"
+          rows:
+          - cells:
+            - value: "value"
+            - value: "value"
+          - cells:
+            - value: "value"
+            - value: "value"
+  Format:
+    type: "object"
+    properties:
+      dependencies:
+        type: "array"
+        items:
+          type: "string"
+      name:
+        type: "string"
+      packaged:
+        type: "boolean"
+      properties:
+        type: "array"
+        items:
+          $ref: "#/definitions/Property"
+      sink:
+        type: "boolean"
+      source:
+        type: "boolean"
+      type:
+        type: "string"
+    title: "Format"
+    example:
+      sink: true
+      name: "name"
+      source: true
+      type: "type"
+      properties:
+      - defaultValue: "defaultValue"
+        description: "description"
+        definesFormat: true
+        key: "key"
+        required: true
+      - defaultValue: "defaultValue"
+        description: "description"
+        definesFormat: true
+        key: "key"
+        required: true
+      dependencies:
+      - "dependencies"
+      - "dependencies"
+      packaged: true
+  Function:
+    type: "object"
+    properties:
+      className:
+        type: "string"
+      description:
+        type: "string"
+      functionLanguage:
+        type: "string"
+        enum:
+        - "FUNCTION_LANGUAGE_INVALID"
+        - "FUNCTION_LANGUAGE_JAVA"
+        - "FUNCTION_LANGUAGE_SCALA"
+        - "FUNCTION_LANGUAGE_PYTHON"
+        - "UNRECOGNIZED"
+      functionType:
+        type: "string"
+        enum:
+        - "FUNCTION_TYPE_INVALID"
+        - "FUNCTION_TYPE_FLINK"
+        - "FUNCTION_TYPE_UNKNOWN_EXTERNAL"
+        - "UNRECOGNIZED"
+      name:
+        type: "string"
+    title: "Function"
+    example:
+      functionLanguage: "FUNCTION_LANGUAGE_INVALID"
+      name: "name"
+      description: "description"
+      className: "className"
+      functionType: "FUNCTION_TYPE_INVALID"
+  GetApiTokenResponse:
+    type: "object"
+    properties:
+      apiToken:
+        $ref: "#/definitions/ApiToken"
+    title: "GetApiTokenResponse"
+    example:
+      apiToken:
+        role: "role"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        secret: "secret"
+  GetAutopilotPolicyRecommendationResponse:
+    type: "object"
+    properties:
+      recommendation:
+        $ref: "#/definitions/AutopilotPolicyRecommendation"
+    title: "GetAutopilotPolicyRecommendationResponse"
+    example:
+      recommendation:
+        description: "description"
+        deploymentPatch: "deploymentPatch"
+        lastUpdateTime: "2000-01-23T04:56:07.000+00:00"
+  GetAutopilotPolicyResponse:
+    type: "object"
+    properties:
+      policy:
+        $ref: "#/definitions/AutopilotPolicy"
+    title: "GetAutopilotPolicyResponse"
+    example:
+      policy:
+        mode: "AUTOPILOT_MODE_INVALID"
+        libraConfig:
+          cooldownMinutes: 5
+          extraConfig:
+            key: "extraConfig"
+          policies: "policies"
+        modifyTime: "2000-01-23T04:56:07.000+00:00"
+        autoscalerConfig:
+          targetUtilization: 5
+          cooldownMinutes: 0
+          extraConfig:
+            key: "extraConfig"
+          maxParallelism: 6
+          minParallelism: 1
+        name: "name"
+  GetAutopilotPolicyStatusResponse:
+    type: "object"
+    properties:
+      status:
+        $ref: "#/definitions/AutopilotPolicyStatus"
+    title: "GetAutopilotPolicyStatusResponse"
+    example:
+      status:
+        libraStatus:
+          updateTime: "2000-01-23T04:56:07.000+00:00"
+          metrics: "metrics"
+          message: "message"
+          lastActionTime: "2000-01-23T04:56:07.000+00:00"
+        autoscalerStatus:
+          sourceStatus:
+          - estimatedLagSeconds: 1
+            vertexId: "vertexId"
+            taskName: "taskName"
+            throughput: 5.637376656633329
+            estimatedCatchUpSeconds: 6
+            capacity: 0.8008281904610115
+            target: 5.962133916683182
+          - estimatedLagSeconds: 1
+            vertexId: "vertexId"
+            taskName: "taskName"
+            throughput: 5.637376656633329
+            estimatedCatchUpSeconds: 6
+            capacity: 0.8008281904610115
+            target: 5.962133916683182
+          updateTime: "2000-01-23T04:56:07.000+00:00"
+          metrics: "metrics"
+          message: "message"
+          lastActionTime: "2000-01-23T04:56:07.000+00:00"
+        status: "POLICY_STATUS_INVALID"
+  GetCatalogConnectorResponse:
+    type: "object"
+    properties:
+      catalogConnector:
+        $ref: "#/definitions/CatalogConnector"
+    title: "GetCatalogConnectorResponse"
+    example:
+      catalogConnector:
+        name: "name"
+        readOnly: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  GetCatalogResponse:
+    type: "object"
+    properties:
+      catalog:
+        $ref: "#/definitions/Catalog"
+    title: "GetCatalogResponse"
+    example:
+      catalog:
+        name: "name"
+        properties:
+          key: "properties"
+  GetConnectorResponse:
+    type: "object"
+    properties:
+      connector:
+        $ref: "#/definitions/Connector"
+    title: "GetConnectorResponse"
+    example:
+      connector:
+        lookup: true
+        supportedFormats:
+        - "supportedFormats"
+        - "supportedFormats"
+        sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  GetDatabaseResponse:
+    type: "object"
+    properties:
+      database:
+        $ref: "#/definitions/Database"
+    title: "GetDatabaseResponse"
+    example:
+      database:
+        name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+  GetFormatResponse:
+    type: "object"
+    properties:
+      format:
+        $ref: "#/definitions/Format"
+    title: "GetFormatResponse"
+    example:
+      format:
+        sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  GetFunctionResponse:
+    type: "object"
+    properties:
+      function:
+        $ref: "#/definitions/Function"
+    title: "GetFunctionResponse"
+    example:
+      function:
+        functionLanguage: "FUNCTION_LANGUAGE_INVALID"
+        name: "name"
+        description: "description"
+        className: "className"
+        functionType: "FUNCTION_TYPE_INVALID"
+  GetNamespaceResponse:
+    type: "object"
+    properties:
+      namespace:
+        $ref: "#/definitions/Namespace"
+    title: "GetNamespaceResponse"
+    example:
+      namespace:
+        roleBindings:
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        previewSessionClusterName: "previewSessionClusterName"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        lifecyclePhase: "LIFECYCLE_PHASE_INVALID"
+        name: "name"
+  GetSqlScriptResponse:
+    type: "object"
+    properties:
+      sqlScript:
+        $ref: "#/definitions/SqlScript"
+    title: "GetSqlScriptResponse"
+    example:
+      sqlScript:
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        displayName: "displayName"
+        name: "name"
+        description: "description"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+        script: "script"
+  GetTableResponse:
+    type: "object"
+    properties:
+      table:
+        $ref: "#/definitions/VvpTable"
+    title: "GetTableResponse"
+    example:
+      table:
+        schema:
+          watermarkSpec:
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          column:
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          primaryKey:
+            enforced: true
+            column:
+            - "column"
+            - "column"
+            name: "name"
+            type: "CONSTRAINT_TYPE_INVALID"
+        name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+  GetUdfArtifactResponse:
+    type: "object"
+    properties:
+      udfArtifact:
+        $ref: "#/definitions/UdfArtifact"
+    title: "GetUdfArtifactResponse"
+    example:
+      udfArtifact:
+        udfClasses:
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        jarUpdateTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        jarUrl: "jarUrl"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+  GetViewResponse:
+    type: "object"
+    properties:
+      view:
+        $ref: "#/definitions/VvpView"
+    title: "GetViewResponse"
+    example:
+      view:
+        schema:
+          watermarkSpec:
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          column:
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          primaryKey:
+            enforced: true
+            column:
+            - "column"
+            - "column"
+            name: "name"
+            type: "CONSTRAINT_TYPE_INVALID"
+        expandedQuery: "expandedQuery"
+        query: "query"
+        name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+  JarUri:
+    type: "object"
+    properties:
+      jarUri:
+        type: "string"
+    title: "JarUri"
+    example:
+      jarUri: "jarUri"
+  JarUris:
+    type: "object"
+    properties:
+      jarUris:
+        type: "array"
+        items:
+          $ref: "#/definitions/JarUri"
+    title: "JarUris"
+    example:
+      jarUris:
+      - jarUri: "jarUri"
+      - jarUri: "jarUri"
+  JobGraph:
+    type: "object"
+    properties:
+      createTime:
+        type: "string"
+        format: "date-time"
+      errorDetails:
+        $ref: "#/definitions/ErrorDetails"
+      flinkVersion:
+        type: "string"
+      fullFlinkConfiguration:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      jarUris:
+        type: "array"
+        items:
+          type: "string"
+      jobgraphPath:
+        type: "string"
+      name:
+        type: "string"
+      sinkTables:
+        type: "array"
+        items:
+          $ref: "#/definitions/ReferencedTable"
+      sourceTables:
+        type: "array"
+        items:
+          $ref: "#/definitions/ReferencedTable"
+      sqlStatement:
+        type: "string"
+      state:
+        type: "string"
+        enum:
+        - "JOBGRAPH_STATE_INVALID"
+        - "JOBGRAPH_STATE_TRANSLATING"
+        - "JOBGRAPH_STATE_COMPLETED"
+        - "JOBGRAPH_STATE_FAILED"
+        - "UNRECOGNIZED"
+      updateTime:
+        type: "string"
+        format: "date-time"
+      userFlinkConfiguration:
+        type: "object"
+        additionalProperties:
+          type: "string"
+    title: "JobGraph"
+    example:
+      fullFlinkConfiguration:
+        key: "fullFlinkConfiguration"
+      sqlStatement: "sqlStatement"
+      sourceTables:
+      - catalogName: "catalogName"
+        temporary: true
+        databaseName: "databaseName"
+        table:
+          schema:
+            watermarkSpec:
+            - timeColumn: "timeColumn"
+              watermarkType: "watermarkType"
+              watermarkExpression: "watermarkExpression"
+            - timeColumn: "timeColumn"
+              watermarkType: "watermarkType"
+              watermarkExpression: "watermarkExpression"
+            column:
+            - expression: "expression"
+              meta:
+                virtual: true
+                name: "name"
+              name: "name"
+              type: "type"
+            - expression: "expression"
+              meta:
+                virtual: true
+                name: "name"
+              name: "name"
+              type: "type"
+            primaryKey:
+              enforced: true
+              column:
+              - "column"
+              - "column"
+              name: "name"
+              type: "CONSTRAINT_TYPE_INVALID"
+          name: "name"
+          comment: "comment"
+          properties:
+            key: "properties"
+      - catalogName: "catalogName"
+        temporary: true
+        databaseName: "databaseName"
+        table:
+          schema:
+            watermarkSpec:
+            - timeColumn: "timeColumn"
+              watermarkType: "watermarkType"
+              watermarkExpression: "watermarkExpression"
+            - timeColumn: "timeColumn"
+              watermarkType: "watermarkType"
+              watermarkExpression: "watermarkExpression"
+            column:
+            - expression: "expression"
+              meta:
+                virtual: true
+                name: "name"
+              name: "name"
+              type: "type"
+            - expression: "expression"
+              meta:
+                virtual: true
+                name: "name"
+              name: "name"
+              type: "type"
+            primaryKey:
+              enforced: true
+              column:
+              - "column"
+              - "column"
+              name: "name"
+              type: "CONSTRAINT_TYPE_INVALID"
+          name: "name"
+          comment: "comment"
+          properties:
+            key: "properties"
+      jobgraphPath: "jobgraphPath"
+      updateTime: "2000-01-23T04:56:07.000+00:00"
+      jarUris:
+      - "jarUris"
+      - "jarUris"
+      flinkVersion: "flinkVersion"
+      createTime: "2000-01-23T04:56:07.000+00:00"
+      name: "name"
+      state: "JOBGRAPH_STATE_INVALID"
+      userFlinkConfiguration:
+        key: "userFlinkConfiguration"
+      errorDetails:
+        columnNumber: 0
+        endLineNumber: 1
+        endColumnNumber: 6
+        lineNumber: 5
+        message: "message"
+      sinkTables:
+      - catalogName: "catalogName"
+        temporary: true
+        databaseName: "databaseName"
+        table:
+          schema:
+            watermarkSpec:
+            - timeColumn: "timeColumn"
+              watermarkType: "watermarkType"
+              watermarkExpression: "watermarkExpression"
+            - timeColumn: "timeColumn"
+              watermarkType: "watermarkType"
+              watermarkExpression: "watermarkExpression"
+            column:
+            - expression: "expression"
+              meta:
+                virtual: true
+                name: "name"
+              name: "name"
+              type: "type"
+            - expression: "expression"
+              meta:
+                virtual: true
+                name: "name"
+              name: "name"
+              type: "type"
+            primaryKey:
+              enforced: true
+              column:
+              - "column"
+              - "column"
+              name: "name"
+              type: "CONSTRAINT_TYPE_INVALID"
+          name: "name"
+          comment: "comment"
+          properties:
+            key: "properties"
+      - catalogName: "catalogName"
+        temporary: true
+        databaseName: "databaseName"
+        table:
+          schema:
+            watermarkSpec:
+            - timeColumn: "timeColumn"
+              watermarkType: "watermarkType"
+              watermarkExpression: "watermarkExpression"
+            - timeColumn: "timeColumn"
+              watermarkType: "watermarkType"
+              watermarkExpression: "watermarkExpression"
+            column:
+            - expression: "expression"
+              meta:
+                virtual: true
+                name: "name"
+              name: "name"
+              type: "type"
+            - expression: "expression"
+              meta:
+                virtual: true
+                name: "name"
+              name: "name"
+              type: "type"
+            primaryKey:
+              enforced: true
+              column:
+              - "column"
+              - "column"
+              name: "name"
+              type: "CONSTRAINT_TYPE_INVALID"
+          name: "name"
+          comment: "comment"
+          properties:
+            key: "properties"
+  JobGraphSpec:
+    type: "object"
+    properties:
+      allowNonRestoredState:
+        type: "boolean"
+      flinkVersion:
+        type: "string"
+      fullFlinkConfiguration:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      jobId:
+        type: "string"
+      savepointLocation:
+        type: "string"
+      sqlStatement:
+        type: "string"
+      userFlinkConfiguration:
+        type: "object"
+        additionalProperties:
+          type: "string"
+    title: "JobGraphSpec"
+    example:
+      jobId: "jobId"
+      savepointLocation: "savepointLocation"
+      fullFlinkConfiguration:
+        key: "fullFlinkConfiguration"
+      sqlStatement: "sqlStatement"
+      allowNonRestoredState: true
+      flinkVersion: "flinkVersion"
+      userFlinkConfiguration:
+        key: "userFlinkConfiguration"
+  LibraConfig:
+    type: "object"
+    properties:
+      cooldownMinutes:
+        type: "integer"
+        format: "int32"
+      extraConfig:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      policies:
+        type: "string"
+    title: "LibraConfig"
+    example:
+      cooldownMinutes: 5
+      extraConfig:
+        key: "extraConfig"
+      policies: "policies"
+  LibraStatus:
+    type: "object"
+    properties:
+      lastActionTime:
+        type: "string"
+        format: "date-time"
+      message:
+        type: "string"
+      metrics:
+        type: "string"
+      updateTime:
+        type: "string"
+        format: "date-time"
+    title: "LibraStatus"
+    example:
+      updateTime: "2000-01-23T04:56:07.000+00:00"
+      metrics: "metrics"
+      message: "message"
+      lastActionTime: "2000-01-23T04:56:07.000+00:00"
+  ListApiTokensResponse:
+    type: "object"
+    properties:
+      apiTokens:
+        type: "array"
+        items:
+          $ref: "#/definitions/ApiToken"
+    title: "ListApiTokensResponse"
+    example:
+      apiTokens:
+      - role: "role"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        secret: "secret"
+      - role: "role"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        secret: "secret"
+  ListAutopilotPoliciesResponse:
+    type: "object"
+    properties:
+      policies:
+        type: "array"
+        items:
+          $ref: "#/definitions/AutopilotPolicy"
+    title: "ListAutopilotPoliciesResponse"
+    example:
+      policies:
+      - mode: "AUTOPILOT_MODE_INVALID"
+        libraConfig:
+          cooldownMinutes: 5
+          extraConfig:
+            key: "extraConfig"
+          policies: "policies"
+        modifyTime: "2000-01-23T04:56:07.000+00:00"
+        autoscalerConfig:
+          targetUtilization: 5
+          cooldownMinutes: 0
+          extraConfig:
+            key: "extraConfig"
+          maxParallelism: 6
+          minParallelism: 1
+        name: "name"
+      - mode: "AUTOPILOT_MODE_INVALID"
+        libraConfig:
+          cooldownMinutes: 5
+          extraConfig:
+            key: "extraConfig"
+          policies: "policies"
+        modifyTime: "2000-01-23T04:56:07.000+00:00"
+        autoscalerConfig:
+          targetUtilization: 5
+          cooldownMinutes: 0
+          extraConfig:
+            key: "extraConfig"
+          maxParallelism: 6
+          minParallelism: 1
+        name: "name"
+  ListCatalogConnectorsResponse:
+    type: "object"
+    properties:
+      catalogConnectors:
+        type: "array"
+        items:
+          $ref: "#/definitions/CatalogConnector"
+    title: "ListCatalogConnectorsResponse"
+    example:
+      catalogConnectors:
+      - name: "name"
+        readOnly: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+      - name: "name"
+        readOnly: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  ListCatalogsReferencingCatalogConnectorResponse:
+    type: "object"
+    properties:
+      catalogs:
+        type: "array"
+        items:
+          $ref: "#/definitions/CatalogReference"
+    title: "ListCatalogsReferencingCatalogConnectorResponse"
+    example:
+      catalogs:
+      - name: "name"
+      - name: "name"
+  ListCatalogsResponse:
+    type: "object"
+    properties:
+      catalogs:
+        type: "array"
+        items:
+          $ref: "#/definitions/Catalog"
+    title: "ListCatalogsResponse"
+    example:
+      catalogs:
+      - name: "name"
+        properties:
+          key: "properties"
+      - name: "name"
+        properties:
+          key: "properties"
+  ListConnectorsResponse:
+    type: "object"
+    properties:
+      connectors:
+        type: "array"
+        items:
+          $ref: "#/definitions/Connector"
+    title: "ListConnectorsResponse"
+    example:
+      connectors:
+      - lookup: true
+        supportedFormats:
+        - "supportedFormats"
+        - "supportedFormats"
+        sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+      - lookup: true
+        supportedFormats:
+        - "supportedFormats"
+        - "supportedFormats"
+        sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  ListDatabasesResponse:
+    type: "object"
+    properties:
+      databases:
+        type: "array"
+        items:
+          $ref: "#/definitions/Database"
+    title: "ListDatabasesResponse"
+    example:
+      databases:
+      - name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+      - name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+  ListFormatsResponse:
+    type: "object"
+    properties:
+      formats:
+        type: "array"
+        items:
+          $ref: "#/definitions/Format"
+    title: "ListFormatsResponse"
+    example:
+      formats:
+      - sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+      - sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  ListFunctionsResponse:
+    type: "object"
+    properties:
+      functions:
+        type: "array"
+        items:
+          $ref: "#/definitions/Function"
+    title: "ListFunctionsResponse"
+    example:
+      functions:
+      - functionLanguage: "FUNCTION_LANGUAGE_INVALID"
+        name: "name"
+        description: "description"
+        className: "className"
+        functionType: "FUNCTION_TYPE_INVALID"
+      - functionLanguage: "FUNCTION_LANGUAGE_INVALID"
+        name: "name"
+        description: "description"
+        className: "className"
+        functionType: "FUNCTION_TYPE_INVALID"
+  ListNamespacesResponse:
+    type: "object"
+    properties:
+      namespaces:
+        type: "array"
+        items:
+          $ref: "#/definitions/Namespace"
+    title: "ListNamespacesResponse"
+    example:
+      namespaces:
+      - roleBindings:
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        previewSessionClusterName: "previewSessionClusterName"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        lifecyclePhase: "LIFECYCLE_PHASE_INVALID"
+        name: "name"
+      - roleBindings:
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        previewSessionClusterName: "previewSessionClusterName"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        lifecyclePhase: "LIFECYCLE_PHASE_INVALID"
+        name: "name"
+  ListSqlScriptsResponse:
+    type: "object"
+    properties:
+      sqlScripts:
+        type: "array"
+        items:
+          $ref: "#/definitions/SqlScript"
+    title: "ListSqlScriptsResponse"
+    example:
+      sqlScripts:
+      - createTime: "2000-01-23T04:56:07.000+00:00"
+        displayName: "displayName"
+        name: "name"
+        description: "description"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+        script: "script"
+      - createTime: "2000-01-23T04:56:07.000+00:00"
+        displayName: "displayName"
+        name: "name"
+        description: "description"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+        script: "script"
+  ListTablesReferencingConnectorResponse:
+    type: "object"
+    properties:
+      tables:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableReference"
+    title: "ListTablesReferencingConnectorResponse"
+    example:
+      tables:
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+  ListTablesReferencingFormatResponse:
+    type: "object"
+    properties:
+      tables:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableReference"
+    title: "ListTablesReferencingFormatResponse"
+    example:
+      tables:
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+  ListTablesResponse:
+    type: "object"
+    properties:
+      tables:
+        type: "array"
+        items:
+          $ref: "#/definitions/VvpTable"
+    title: "ListTablesResponse"
+    example:
+      tables:
+      - schema:
+          watermarkSpec:
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          column:
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          primaryKey:
+            enforced: true
+            column:
+            - "column"
+            - "column"
+            name: "name"
+            type: "CONSTRAINT_TYPE_INVALID"
+        name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+      - schema:
+          watermarkSpec:
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          column:
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          primaryKey:
+            enforced: true
+            column:
+            - "column"
+            - "column"
+            name: "name"
+            type: "CONSTRAINT_TYPE_INVALID"
+        name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+  ListUdfArtifactsResponse:
+    type: "object"
+    properties:
+      udfArtifacts:
+        type: "array"
+        items:
+          $ref: "#/definitions/UdfArtifact"
+    title: "ListUdfArtifactsResponse"
+    example:
+      udfArtifacts:
+      - udfClasses:
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        jarUpdateTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        jarUrl: "jarUrl"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+      - udfClasses:
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        jarUpdateTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        jarUrl: "jarUrl"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+  ListViewsResponse:
+    type: "object"
+    properties:
+      views:
+        type: "array"
+        items:
+          $ref: "#/definitions/VvpView"
+    title: "ListViewsResponse"
+    example:
+      views:
+      - schema:
+          watermarkSpec:
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          column:
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          primaryKey:
+            enforced: true
+            column:
+            - "column"
+            - "column"
+            name: "name"
+            type: "CONSTRAINT_TYPE_INVALID"
+        expandedQuery: "expandedQuery"
+        query: "query"
+        name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+      - schema:
+          watermarkSpec:
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          column:
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          primaryKey:
+            enforced: true
+            column:
+            - "column"
+            - "column"
+            name: "name"
+            type: "CONSTRAINT_TYPE_INVALID"
+        expandedQuery: "expandedQuery"
+        query: "query"
+        name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+  Namespace:
+    type: "object"
+    properties:
+      createTime:
+        type: "string"
+        format: "date-time"
+      lifecyclePhase:
+        type: "string"
+        enum:
+        - "LIFECYCLE_PHASE_INVALID"
+        - "LIFECYCLE_PHASE_ACTIVE"
+        - "LIFECYCLE_PHASE_TERMINATING"
+        - "UNRECOGNIZED"
+      name:
+        type: "string"
+      previewSessionClusterName:
+        type: "string"
+      roleBindings:
+        type: "array"
+        items:
+          $ref: "#/definitions/RoleBinding"
+    title: "Namespace"
+    example:
+      roleBindings:
+      - role: "role"
+        members:
+        - "members"
+        - "members"
+      - role: "role"
+        members:
+        - "members"
+        - "members"
+      previewSessionClusterName: "previewSessionClusterName"
+      createTime: "2000-01-23T04:56:07.000+00:00"
+      lifecyclePhase: "LIFECYCLE_PHASE_INVALID"
+      name: "name"
+  Property:
+    type: "object"
+    properties:
+      defaultValue:
+        type: "string"
+      definesFormat:
+        type: "boolean"
+      description:
+        type: "string"
+      key:
+        type: "string"
+      required:
+        type: "boolean"
+    title: "Property"
+    example:
+      defaultValue: "defaultValue"
+      description: "description"
+      definesFormat: true
+      key: "key"
+      required: true
+  ReferencedTable:
+    type: "object"
+    properties:
+      catalogName:
+        type: "string"
+      databaseName:
+        type: "string"
+      table:
+        $ref: "#/definitions/VvpTable"
+      temporary:
+        type: "boolean"
+    title: "ReferencedTable"
+    example:
+      catalogName: "catalogName"
+      temporary: true
+      databaseName: "databaseName"
+      table:
+        schema:
+          watermarkSpec:
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          - timeColumn: "timeColumn"
+            watermarkType: "watermarkType"
+            watermarkExpression: "watermarkExpression"
+          column:
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          - expression: "expression"
+            meta:
+              virtual: true
+              name: "name"
+            name: "name"
+            type: "type"
+          primaryKey:
+            enforced: true
+            column:
+            - "column"
+            - "column"
+            name: "name"
+            type: "CONSTRAINT_TYPE_INVALID"
+        name: "name"
+        comment: "comment"
+        properties:
+          key: "properties"
+  ResultTable:
+    type: "object"
+    properties:
+      headers:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableHeader"
+      rows:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableRow"
+    title: "ResultTable"
+    example:
+      headers:
+      - name: "name"
+      - name: "name"
+      rows:
+      - cells:
+        - value: "value"
+        - value: "value"
+      - cells:
+        - value: "value"
+        - value: "value"
+  RoleBinding:
+    type: "object"
+    properties:
+      members:
+        type: "array"
+        items:
+          type: "string"
+      role:
+        type: "string"
+    title: "RoleBinding"
+    example:
+      role: "role"
+      members:
+      - "members"
+      - "members"
+  SetPreviewSessionClusterRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      previewSessionClusterName:
+        type: "string"
+    title: "SetPreviewSessionClusterRequest"
+    example:
+      previewSessionClusterName: "previewSessionClusterName"
+      name: "name"
+  SetPreviewSessionClusterResponse:
+    type: "object"
+    title: "SetPreviewSessionClusterResponse"
+  SqlScript:
+    type: "object"
+    properties:
+      createTime:
+        type: "string"
+        format: "date-time"
+      description:
+        type: "string"
+      displayName:
+        type: "string"
+      name:
+        type: "string"
+      script:
+        type: "string"
+      updateTime:
+        type: "string"
+        format: "date-time"
+    title: "SqlScript"
+    example:
+      createTime: "2000-01-23T04:56:07.000+00:00"
+      displayName: "displayName"
+      name: "name"
+      description: "description"
+      updateTime: "2000-01-23T04:56:07.000+00:00"
+      script: "script"
+  SqlScriptCompletion:
+    type: "object"
+    properties:
+      text:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "HINT_TYPE_INVALID"
+        - "HINT_TYPE_UNKNOWN"
+        - "HINT_TYPE_COLUMN"
+        - "HINT_TYPE_TABLE"
+        - "HINT_TYPE_VIEW"
+        - "HINT_TYPE_SCHEMA"
+        - "HINT_TYPE_CATALOG"
+        - "HINT_TYPE_REPOSITORY"
+        - "HINT_TYPE_FUNCTION"
+        - "HINT_TYPE_KEYWORD"
+        - "UNRECOGNIZED"
+    title: "SqlScriptCompletion"
+    example:
+      text: "text"
+      type: "HINT_TYPE_INVALID"
+  Statement:
+    type: "object"
+    properties:
+      statement:
+        type: "string"
+    title: "Statement"
+    example:
+      statement: "statement"
+  SuggestSqlScriptCompletionsDetails:
+    type: "object"
+    properties:
+      position:
+        type: "integer"
+        format: "int32"
+      sqlScript:
+        type: "string"
+    title: "SuggestSqlScriptCompletionsDetails"
+    example:
+      sqlScript: "sqlScript"
+      position: 0
+  SuggestSqlScriptCompletionsResponse:
+    type: "object"
+    properties:
+      completions:
+        type: "array"
+        items:
+          $ref: "#/definitions/SqlScriptCompletion"
+    title: "SuggestSqlScriptCompletionsResponse"
+    example:
+      completions:
+      - text: "text"
+        type: "HINT_TYPE_INVALID"
+      - text: "text"
+        type: "HINT_TYPE_INVALID"
+  TableCell:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+    title: "TableCell"
+    example:
+      value: "value"
+  TableHeader:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+    title: "TableHeader"
+    example:
+      name: "name"
+  TableReference:
+    type: "object"
+    properties:
+      catalogName:
+        type: "string"
+      databaseName:
+        type: "string"
+      tableName:
+        type: "string"
+    title: "TableReference"
+    example:
+      catalogName: "catalogName"
+      databaseName: "databaseName"
+      tableName: "tableName"
+  TableRow:
+    type: "object"
+    properties:
+      cells:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableCell"
+    title: "TableRow"
+    example:
+      cells:
+      - value: "value"
+      - value: "value"
+  UdfArtifact:
+    type: "object"
+    properties:
+      createTime:
+        type: "string"
+        format: "date-time"
+      jarUpdateTime:
+        type: "string"
+        format: "date-time"
+      jarUrl:
+        type: "string"
+      name:
+        type: "string"
+      udfClasses:
+        type: "array"
+        items:
+          $ref: "#/definitions/UdfClass"
+      updateTime:
+        type: "string"
+        format: "date-time"
+    title: "UdfArtifact"
+    example:
+      udfClasses:
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      createTime: "2000-01-23T04:56:07.000+00:00"
+      jarUpdateTime: "2000-01-23T04:56:07.000+00:00"
+      name: "name"
+      jarUrl: "jarUrl"
+      updateTime: "2000-01-23T04:56:07.000+00:00"
+  UdfClass:
+    type: "object"
+    properties:
+      className:
+        type: "string"
+      classType:
+        type: "string"
+        enum:
+        - "UDF_TYPE_INVALID"
+        - "UDF_TYPE_SCALAR"
+        - "UDF_TYPE_TABLE"
+        - "UDF_TYPE_AGGREGATE"
+        - "UDF_TYPE_TABLE_AGGREGATE"
+        - "UNRECOGNIZED"
+      functionNames:
+        type: "array"
+        items:
+          type: "string"
+      udfArtifactName:
+        type: "string"
+    title: "UdfClass"
+    example:
+      functionNames:
+      - "functionNames"
+      - "functionNames"
+      udfArtifactName: "udfArtifactName"
+      className: "className"
+      classType: "UDF_TYPE_INVALID"
+  UpdateAutopilotPolicyResponse:
+    type: "object"
+    properties:
+      policy:
+        $ref: "#/definitions/AutopilotPolicy"
+    title: "UpdateAutopilotPolicyResponse"
+    example:
+      policy:
+        mode: "AUTOPILOT_MODE_INVALID"
+        libraConfig:
+          cooldownMinutes: 5
+          extraConfig:
+            key: "extraConfig"
+          policies: "policies"
+        modifyTime: "2000-01-23T04:56:07.000+00:00"
+        autoscalerConfig:
+          targetUtilization: 5
+          cooldownMinutes: 0
+          extraConfig:
+            key: "extraConfig"
+          maxParallelism: 6
+          minParallelism: 1
+        name: "name"
+  UpdateCatalogConnectorResponse:
+    type: "object"
+    properties:
+      catalogConnector:
+        $ref: "#/definitions/CatalogConnector"
+    title: "UpdateCatalogConnectorResponse"
+    example:
+      catalogConnector:
+        name: "name"
+        readOnly: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  UpdateConnectorResponse:
+    type: "object"
+    properties:
+      affectedTables:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableReference"
+      connector:
+        $ref: "#/definitions/Connector"
+    title: "UpdateConnectorResponse"
+    example:
+      affectedTables:
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+      connector:
+        lookup: true
+        supportedFormats:
+        - "supportedFormats"
+        - "supportedFormats"
+        sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  UpdateFormatResponse:
+    type: "object"
+    properties:
+      affectedTables:
+        type: "array"
+        items:
+          $ref: "#/definitions/TableReference"
+      format:
+        $ref: "#/definitions/Format"
+    title: "UpdateFormatResponse"
+    example:
+      affectedTables:
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+      - catalogName: "catalogName"
+        databaseName: "databaseName"
+        tableName: "tableName"
+      format:
+        sink: true
+        name: "name"
+        source: true
+        type: "type"
+        properties:
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        - defaultValue: "defaultValue"
+          description: "description"
+          definesFormat: true
+          key: "key"
+          required: true
+        dependencies:
+        - "dependencies"
+        - "dependencies"
+        packaged: true
+  UpdateNamespaceResponse:
+    type: "object"
+    properties:
+      namespace:
+        $ref: "#/definitions/Namespace"
+    title: "UpdateNamespaceResponse"
+    example:
+      namespace:
+        roleBindings:
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        - role: "role"
+          members:
+          - "members"
+          - "members"
+        previewSessionClusterName: "previewSessionClusterName"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        lifecyclePhase: "LIFECYCLE_PHASE_INVALID"
+        name: "name"
+  UpdateSqlScriptResponse:
+    type: "object"
+    properties:
+      sqlScript:
+        $ref: "#/definitions/SqlScript"
+    title: "UpdateSqlScriptResponse"
+    example:
+      sqlScript:
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        displayName: "displayName"
+        name: "name"
+        description: "description"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+        script: "script"
+  UpdateUdfArtifactResponse:
+    type: "object"
+    properties:
+      collidingClasses:
+        type: "array"
+        items:
+          $ref: "#/definitions/UdfClass"
+      missingClasses:
+        type: "array"
+        items:
+          $ref: "#/definitions/UdfClass"
+      udfArtifact:
+        $ref: "#/definitions/UdfArtifact"
+    title: "UpdateUdfArtifactResponse"
+    example:
+      missingClasses:
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      collidingClasses:
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      - functionNames:
+        - "functionNames"
+        - "functionNames"
+        udfArtifactName: "udfArtifactName"
+        className: "className"
+        classType: "UDF_TYPE_INVALID"
+      udfArtifact:
+        udfClasses:
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        - functionNames:
+          - "functionNames"
+          - "functionNames"
+          udfArtifactName: "udfArtifactName"
+          className: "className"
+          classType: "UDF_TYPE_INVALID"
+        createTime: "2000-01-23T04:56:07.000+00:00"
+        jarUpdateTime: "2000-01-23T04:56:07.000+00:00"
+        name: "name"
+        jarUrl: "jarUrl"
+        updateTime: "2000-01-23T04:56:07.000+00:00"
+  ValidateConfigChangeResponse:
+    type: "object"
+    properties:
+      unsupportedConfigOptions:
+        type: "array"
+        items:
+          type: "string"
+    title: "ValidateConfigChangeResponse"
+    example:
+      unsupportedConfigOptions:
+      - "unsupportedConfigOptions"
+      - "unsupportedConfigOptions"
+  ValidateStatementResponse:
+    type: "object"
+    properties:
+      errorDetails:
+        $ref: "#/definitions/ErrorDetails"
+      validationResult:
+        type: "string"
+        enum:
+        - "VALIDATION_RESULT_INVALID"
+        - "VALIDATION_RESULT_INVALID_QUERY"
+        - "VALIDATION_RESULT_UNSUPPORTED_QUERY"
+        - "VALIDATION_RESULT_INVALID_CONNECTOR_CONFIG"
+        - "VALIDATION_RESULT_VALID_INSERT_QUERY"
+        - "VALIDATION_RESULT_VALID_SELECT_QUERY"
+        - "VALIDATION_RESULT_VALID_DDL_STATEMENT"
+        - "VALIDATION_RESULT_VALID_COMMAND_STATEMENT"
+        - "UNRECOGNIZED"
+    title: "ValidateStatementResponse"
+    example:
+      validationResult: "VALIDATION_RESULT_INVALID"
+      errorDetails:
+        columnNumber: 0
+        endLineNumber: 1
+        endColumnNumber: 6
+        lineNumber: 5
+        message: "message"
+  VvpColumn:
+    type: "object"
+    properties:
+      expression:
+        type: "string"
+      meta:
+        $ref: "#/definitions/VvpColumnMeta"
+      name:
+        type: "string"
+      type:
+        type: "string"
+    title: "VvpColumn"
+    example:
+      expression: "expression"
+      meta:
+        virtual: true
+        name: "name"
+      name: "name"
+      type: "type"
+  VvpColumnMeta:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      virtual:
+        type: "boolean"
+    title: "VvpColumnMeta"
+    example:
+      virtual: true
+      name: "name"
+  VvpSchema:
+    type: "object"
+    properties:
+      column:
+        type: "array"
+        items:
+          $ref: "#/definitions/VvpColumn"
+      primaryKey:
+        $ref: "#/definitions/VvpUniqueConstraint"
+      watermarkSpec:
+        type: "array"
+        items:
+          $ref: "#/definitions/VvpWatermark"
+    title: "VvpSchema"
+    example:
+      watermarkSpec:
+      - timeColumn: "timeColumn"
+        watermarkType: "watermarkType"
+        watermarkExpression: "watermarkExpression"
+      - timeColumn: "timeColumn"
+        watermarkType: "watermarkType"
+        watermarkExpression: "watermarkExpression"
+      column:
+      - expression: "expression"
+        meta:
+          virtual: true
+          name: "name"
+        name: "name"
+        type: "type"
+      - expression: "expression"
+        meta:
+          virtual: true
+          name: "name"
+        name: "name"
+        type: "type"
+      primaryKey:
+        enforced: true
+        column:
+        - "column"
+        - "column"
+        name: "name"
+        type: "CONSTRAINT_TYPE_INVALID"
+  VvpTable:
+    type: "object"
+    properties:
+      comment:
+        type: "string"
+      name:
+        type: "string"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      schema:
+        $ref: "#/definitions/VvpSchema"
+    title: "VvpTable"
+    example:
+      schema:
+        watermarkSpec:
+        - timeColumn: "timeColumn"
+          watermarkType: "watermarkType"
+          watermarkExpression: "watermarkExpression"
+        - timeColumn: "timeColumn"
+          watermarkType: "watermarkType"
+          watermarkExpression: "watermarkExpression"
+        column:
+        - expression: "expression"
+          meta:
+            virtual: true
+            name: "name"
+          name: "name"
+          type: "type"
+        - expression: "expression"
+          meta:
+            virtual: true
+            name: "name"
+          name: "name"
+          type: "type"
+        primaryKey:
+          enforced: true
+          column:
+          - "column"
+          - "column"
+          name: "name"
+          type: "CONSTRAINT_TYPE_INVALID"
+      name: "name"
+      comment: "comment"
+      properties:
+        key: "properties"
+  VvpUniqueConstraint:
+    type: "object"
+    properties:
+      column:
+        type: "array"
+        items:
+          type: "string"
+      enforced:
+        type: "boolean"
+      name:
+        type: "string"
+      type:
+        type: "string"
+        enum:
+        - "CONSTRAINT_TYPE_INVALID"
+        - "CONSTRAINT_TYPE_PRIMARY_KEY"
+        - "CONSTRAINT_TYPE_UNIQUE"
+        - "UNRECOGNIZED"
+    title: "VvpUniqueConstraint"
+    example:
+      enforced: true
+      column:
+      - "column"
+      - "column"
+      name: "name"
+      type: "CONSTRAINT_TYPE_INVALID"
+  VvpView:
+    type: "object"
+    properties:
+      comment:
+        type: "string"
+      expandedQuery:
+        type: "string"
+      name:
+        type: "string"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      query:
+        type: "string"
+      schema:
+        $ref: "#/definitions/VvpSchema"
+    title: "VvpView"
+    example:
+      schema:
+        watermarkSpec:
+        - timeColumn: "timeColumn"
+          watermarkType: "watermarkType"
+          watermarkExpression: "watermarkExpression"
+        - timeColumn: "timeColumn"
+          watermarkType: "watermarkType"
+          watermarkExpression: "watermarkExpression"
+        column:
+        - expression: "expression"
+          meta:
+            virtual: true
+            name: "name"
+          name: "name"
+          type: "type"
+        - expression: "expression"
+          meta:
+            virtual: true
+            name: "name"
+          name: "name"
+          type: "type"
+        primaryKey:
+          enforced: true
+          column:
+          - "column"
+          - "column"
+          name: "name"
+          type: "CONSTRAINT_TYPE_INVALID"
+      expandedQuery: "expandedQuery"
+      query: "query"
+      name: "name"
+      comment: "comment"
+      properties:
+        key: "properties"
+  VvpWatermark:
+    type: "object"
+    properties:
+      timeColumn:
+        type: "string"
+      watermarkExpression:
+        type: "string"
+      watermarkType:
+        type: "string"
+    title: "VvpWatermark"
+    example:
+      timeColumn: "timeColumn"
+      watermarkType: "watermarkType"
+      watermarkExpression: "watermarkExpression"
