@@ -1,0 +1,6 @@
+domain: efrat19.io
+layout:
+- go.kubebuilder.io/v3
+projectName: vvp-gitops-operator
+repo: efrat19.io/vvp-gitops-operator
+version: "3"
