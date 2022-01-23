@@ -1,0 +1,20 @@
+# permissions for end users to view deploymentdefaults.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deploymentdefaults-viewer-role
+rules:
+- apiGroups:
+  - vvp.appmanager.efrat19.io.efrat19.io
+  resources:
+  - deploymentdefaults
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - vvp.appmanager.efrat19.io.efrat19.io
+  resources:
+  - deploymentdefaults/status
+  verbs:
+  - get

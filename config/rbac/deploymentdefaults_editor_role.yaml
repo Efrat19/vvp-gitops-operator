@@ -1,0 +1,24 @@
+# permissions for end users to edit deploymentdefaults.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deploymentdefaults-editor-role
+rules:
+- apiGroups:
+  - vvp.appmanager.efrat19.io.efrat19.io
+  resources:
+  - deploymentdefaults
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vvp.appmanager.efrat19.io.efrat19.io
+  resources:
+  - deploymentdefaults/status
+  verbs:
+  - get

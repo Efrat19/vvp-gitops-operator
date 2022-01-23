@@ -1,0 +1,24 @@
+# permissions for end users to edit sessionclusters.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sessioncluster-editor-role
+rules:
+- apiGroups:
+  - vvp.appmanager.efrat19.io.efrat19.io
+  resources:
+  - sessionclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vvp.appmanager.efrat19.io.efrat19.io
+  resources:
+  - sessionclusters/status
+  verbs:
+  - get
