@@ -17,8 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
+	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"github.com/Efrat19/vvp-gitops-operator/pkg/appmanager_apis"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -39,6 +39,7 @@ type DeploymentSpec struct {
 type DeploymentStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Phase string `json:"phase,omitempty"`
 }
 
 //+kubebuilder:object:root=true

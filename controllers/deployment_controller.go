@@ -26,6 +26,8 @@ import (
     "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
 	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+    appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+
 )
 
 // DeploymentReconciler reconciles a Deployment object
@@ -49,7 +51,10 @@ type DeploymentReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.11.0/pkg/reconcile
 func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
+    cfg := appmanager_apis.NewConfiguration()
+    apiClient := appmanager_apis.NewAPIClient(cfg)
     var deployment *appmanagervvpv1alpha1.Deployment
+
     if err := r.Get(ctx, req.NamespacedName, deployment); err != nil {
         log.Error(err, "unable to fetch deployment")
         // we'll ignore not-found errors, since they can't be fixed by an immediate
@@ -75,7 +80,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
         // The object is being deleted
         if controllerutil.ContainsFinalizer(deployment, appmanagerFinalizer) {
             // our finalizer is present, so lets handle any external dependency
-            if err := r.deleteExternalResources(deployment); err != nil {
+            if err := r.deleteExternalResources(deployment,apiClient); err != nil {
                 // if fail to delete the external dependency here, return with error
                 // so that it can be retried
                 return ctrl.Result{}, err
@@ -92,69 +97,88 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
         return ctrl.Result{}, nil
     }
 	// Create deployment if not exists
-	err,deploymentExists := r.deploymentExistsInVVP(deployment)
+	err,deploymentExists := r.deploymentExistsInVVP(deployment,apiClient)
 	if  err != nil {
 		log.Error(err, "unable to check whether vvp deployment exists")
 		return ctrl.Result{}, nil
 	}
 	if !deploymentExists {
-		if err := r.createExternalResources(deployment); err != nil {
+		if err := r.createExternalResources(deployment,apiClient); err != nil {
 			log.Error(err, "unable to create vvp deployment")
 		} 
 	} 
-	// update k8s deployment status from vvp
-	if err := r.updateStatus(deployment); err != nil {
-		log.Error(err, "unable to update k8s deployment status")
+    // get k8s deployment status from vvp
+	status,err := r.getStatus(deployment,apiClient)
+    if err != nil {
+        log.Error(err, "unable to get k8s deployment status")
 		return ctrl.Result{}, nil
 	}
+    // update k8s deployment status from vvp
+    deployment.Status.Phase = status
+    if err := r.Status().Update(ctx, deployment); err != nil {
+        log.Error(err, "unable to update k8s deployment status")
+        return ctrl.Result{}, err
+    }
+
 	// update vvp deployment spec from vvp
-	if err := r.updateExternalResources(deployment); err != nil {
+	if err := r.updateExternalResources(deployment,apiClient); err != nil {
 		log.Error(err, "unable to update vvp deployment spec")
 		return ctrl.Result{}, nil
 	}
     return ctrl.Result{}, nil
 }
 
-func (r *DeploymentReconciler) deploymentExistsInVVP(deployment *appmanagervvpv1alpha1.Deployment) (error,bool) {
-    //
-    // delete any external resources associated with the deployment
-    //
-    // Ensure that delete implementation is idempotent and safe to invoke
-    // multiple times for same object.
+func (r *DeploymentReconciler) deploymentExistsInVVP(d *appmanagervvpv1alpha1.Deployment, c *appmanager_apis.APIClient) (error,bool) {
+    ctx := context.Background()
+    _,response,err := c.DeploymentResourceApi.GetDeploymentUsingGET(ctx,d.Spec.Metadata.Id,d.Spec.Metadata.Namespace)
+    if err != nil {
+        if response.StatusCode == 404 {
+            // deployment doesn't exists
+            return nil, false
+        }
+        // other error occurred
+        return err, false
+    }
+    // deployment exists
+    return err,true
 }
 
-func (r *DeploymentReconciler) deleteExternalResources(deployment *appmanagervvpv1alpha1.Deployment) error {
-    //
-    // delete any external resources associated with the deployment
-    //
-    // Ensure that delete implementation is idempotent and safe to invoke
-    // multiple times for same object.
+func (r *DeploymentReconciler) deleteExternalResources(d *appmanagervvpv1alpha1.Deployment, c *appmanager_apis.APIClient) error {
+    ctx := context.Background()
+    _,_,err := c.DeploymentResourceApi.DeleteDeploymentUsingDELETE(ctx,d.Spec.Metadata.Id,d.Spec.Metadata.Namespace)
+    return err
 }
 
-func (r *DeploymentReconciler) createExternalResources(deployment *appmanagervvpv1alpha1.Deployment) error {
-    //
-    // create any external resources associated with the deployment
-    //
-    // Ensure that delete implementation is idempotent and safe to invoke
-    // multiple times for same object.
+func (r *DeploymentReconciler) createExternalResources(d *appmanagervvpv1alpha1.Deployment, c *appmanager_apis.APIClient) error {
+    ctx := context.Background()
+    deployment := &appmanager_apis.Deployment{
+        ApiVersion:    "v1",
+        Kind:          "Deployment",
+        Metadata:      &d.Spec.Metadata,
+        Spec:          &d.Spec.Spec,
+        Status:        &d.Spec.Status,
+    }
+    _,_,err := c.DeploymentResourceApi.CreateDeploymentUsingPOST(ctx,*deployment,d.Spec.Metadata.Namespace)
+    return err
 }
 
-func (r *DeploymentReconciler) updateExternalResources(deployment *appmanagervvpv1alpha1.Deployment) error {
-    //
-    // update any external resources associated with the deployment
-    //
-    // Ensure that delete implementation is idempotent and safe to invoke
-    // multiple times for same object.
-
+func (r *DeploymentReconciler) updateExternalResources(d *appmanagervvpv1alpha1.Deployment, c *appmanager_apis.APIClient) error {
+    ctx := context.Background()
+    deployment := &appmanager_apis.Deployment{
+        ApiVersion:    "v1",
+        Kind:          "Deployment",
+        Metadata:      &d.Spec.Metadata,
+        Spec:          &d.Spec.Spec,
+        Status:        &d.Spec.Status,
+    }
+    _,_,err := c.DeploymentResourceApi.UpdateDeploymentUsingPATCH(ctx,*deployment,d.Spec.Metadata.Id,d.Spec.Metadata.Namespace)
+    return err
 }
 
-func (r *DeploymentReconciler) updateStatus(deployment *appmanagervvpv1alpha1.Deployment) error {
-    //
-    // update status from external resource
-    //
-    // Ensure that delete implementation is idempotent and safe to invoke
-    // multiple times for same object.
-
+func (r *DeploymentReconciler) getStatus(d *appmanagervvpv1alpha1.Deployment, c *appmanager_apis.APIClient) (string,error) {
+    ctx := context.Background()
+    deployment,_,err := c.DeploymentResourceApi.GetDeploymentUsingGET(ctx,d.Spec.Metadata.Id,d.Spec.Metadata.Namespace)
+    return deployment.Status.State,err
 }
 
 // SetupWithManager sets up the controller with the Manager.
