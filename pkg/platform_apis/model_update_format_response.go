@@ -12,5 +12,5 @@ package swagger
 
 type UpdateFormatResponse struct {
 	AffectedTables []TableReference `json:"affectedTables,omitempty"`
-	Format *Format `json:"format,omitempty"`
+	Format         *Format          `json:"format,omitempty"`
 }

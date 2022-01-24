@@ -15,7 +15,7 @@ import (
 )
 
 type AutopilotPolicyRecommendation struct {
-	DeploymentPatch string `json:"deploymentPatch,omitempty"`
-	Description string `json:"description,omitempty"`
-	LastUpdateTime time.Time `json:"lastUpdateTime,omitempty"`
+	DeploymentPatch string    `json:"deploymentPatch,omitempty"`
+	Description     string    `json:"description,omitempty"`
+	LastUpdateTime  time.Time `json:"lastUpdateTime,omitempty"`
 }

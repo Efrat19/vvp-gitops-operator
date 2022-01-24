@@ -11,11 +11,11 @@
 package swagger
 
 type JobGraphSpec struct {
-	AllowNonRestoredState bool `json:"allowNonRestoredState,omitempty"`
-	FlinkVersion string `json:"flinkVersion,omitempty"`
+	AllowNonRestoredState  bool              `json:"allowNonRestoredState,omitempty"`
+	FlinkVersion           string            `json:"flinkVersion,omitempty"`
 	FullFlinkConfiguration map[string]string `json:"fullFlinkConfiguration,omitempty"`
-	JobId string `json:"jobId,omitempty"`
-	SavepointLocation string `json:"savepointLocation,omitempty"`
-	SqlStatement string `json:"sqlStatement,omitempty"`
+	JobId                  string            `json:"jobId,omitempty"`
+	SavepointLocation      string            `json:"savepointLocation,omitempty"`
+	SqlStatement           string            `json:"sqlStatement,omitempty"`
 	UserFlinkConfiguration map[string]string `json:"userFlinkConfiguration,omitempty"`
 }

@@ -12,5 +12,5 @@ package swagger
 
 type UpdateConnectorResponse struct {
 	AffectedTables []TableReference `json:"affectedTables,omitempty"`
-	Connector *Connector `json:"connector,omitempty"`
+	Connector      *Connector       `json:"connector,omitempty"`
 }

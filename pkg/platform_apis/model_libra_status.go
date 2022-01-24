@@ -16,7 +16,7 @@ import (
 
 type LibraStatus struct {
 	LastActionTime time.Time `json:"lastActionTime,omitempty"`
-	Message string `json:"message,omitempty"`
-	Metrics string `json:"metrics,omitempty"`
-	UpdateTime time.Time `json:"updateTime,omitempty"`
+	Message        string    `json:"message,omitempty"`
+	Metrics        string    `json:"metrics,omitempty"`
+	UpdateTime     time.Time `json:"updateTime,omitempty"`
 }

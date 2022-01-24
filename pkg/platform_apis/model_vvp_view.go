@@ -11,10 +11,10 @@
 package swagger
 
 type VvpView struct {
-	Comment string `json:"comment,omitempty"`
-	ExpandedQuery string `json:"expandedQuery,omitempty"`
-	Name string `json:"name,omitempty"`
-	Properties map[string]string `json:"properties,omitempty"`
-	Query string `json:"query,omitempty"`
-	Schema *VvpSchema `json:"schema,omitempty"`
+	Comment       string            `json:"comment,omitempty"`
+	ExpandedQuery string            `json:"expandedQuery,omitempty"`
+	Name          string            `json:"name,omitempty"`
+	Properties    map[string]string `json:"properties,omitempty"`
+	Query         string            `json:"query,omitempty"`
+	Schema        *VvpSchema        `json:"schema,omitempty"`
 }

@@ -1,4 +1,3 @@
-
 /*
  * Application Manager API
  *
@@ -13,12 +12,12 @@ package swagger
 
 import (
 	"context"
+	"fmt"
+	"github.com/antihax/optional"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"fmt"
-	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -40,18 +39,18 @@ EventResourceApiService Filter all events for a deployment or job
 @return ResourceListOfEvent
 */
 
-type EventResourceApiGetEventsUsingGETOpts struct { 
-	DeploymentId optional.Interface
-	JobId optional.Interface
+type EventResourceApiGetEventsUsingGETOpts struct {
+	DeploymentId     optional.Interface
+	JobId            optional.Interface
 	SessionClusterId optional.Interface
 }
 
 func (a *EventResourceApiService) GetEventsUsingGET(ctx context.Context, namespace string, localVarOptionals *EventResourceApiGetEventsUsingGETOpts) (ResourceListOfEvent, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue ResourceListOfEvent
 	)
 
@@ -99,7 +98,7 @@ func (a *EventResourceApiService) GetEventsUsingGET(ctx context.Context, namespa
 				key = auth.Key
 			}
 			localVarHeaderParams["Authorization"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -120,30 +119,29 @@ func (a *EventResourceApiService) GetEventsUsingGET(ctx context.Context, namespa
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ResourceListOfEvent
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
-

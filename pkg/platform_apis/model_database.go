@@ -11,7 +11,7 @@
 package swagger
 
 type Database struct {
-	Comment string `json:"comment,omitempty"`
-	Name string `json:"name,omitempty"`
+	Comment    string            `json:"comment,omitempty"`
+	Name       string            `json:"name,omitempty"`
 	Properties map[string]string `json:"properties,omitempty"`
 }

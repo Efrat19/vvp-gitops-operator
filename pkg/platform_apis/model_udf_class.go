@@ -11,8 +11,8 @@
 package swagger
 
 type UdfClass struct {
-	ClassName string `json:"className,omitempty"`
-	ClassType string `json:"classType,omitempty"`
-	FunctionNames []string `json:"functionNames,omitempty"`
-	UdfArtifactName string `json:"udfArtifactName,omitempty"`
+	ClassName       string   `json:"className,omitempty"`
+	ClassType       string   `json:"classType,omitempty"`
+	FunctionNames   []string `json:"functionNames,omitempty"`
+	UdfArtifactName string   `json:"udfArtifactName,omitempty"`
 }

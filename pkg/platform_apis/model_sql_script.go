@@ -15,10 +15,10 @@ import (
 )
 
 type SqlScript struct {
-	CreateTime time.Time `json:"createTime,omitempty"`
-	Description string `json:"description,omitempty"`
-	DisplayName string `json:"displayName,omitempty"`
-	Name string `json:"name,omitempty"`
-	Script string `json:"script,omitempty"`
-	UpdateTime time.Time `json:"updateTime,omitempty"`
+	CreateTime  time.Time `json:"createTime,omitempty"`
+	Description string    `json:"description,omitempty"`
+	DisplayName string    `json:"displayName,omitempty"`
+	Name        string    `json:"name,omitempty"`
+	Script      string    `json:"script,omitempty"`
+	UpdateTime  time.Time `json:"updateTime,omitempty"`
 }

@@ -11,6 +11,6 @@
 package swagger
 
 type VvpColumnMeta struct {
-	Name string `json:"name,omitempty"`
-	Virtual bool `json:"virtual,omitempty"`
+	Name    string `json:"name,omitempty"`
+	Virtual bool   `json:"virtual,omitempty"`
 }

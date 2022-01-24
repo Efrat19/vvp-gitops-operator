@@ -13,5 +13,5 @@ package swagger
 // PodTemplateSpec describes the data a pod should have when created from a template
 type V1PodTemplateSpec struct {
 	Metadata *V1ObjectMeta `json:"metadata,omitempty"`
-	Spec *V1PodSpec `json:"spec,omitempty"`
+	Spec     *V1PodSpec    `json:"spec,omitempty"`
 }

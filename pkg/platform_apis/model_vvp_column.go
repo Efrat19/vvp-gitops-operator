@@ -11,8 +11,8 @@
 package swagger
 
 type VvpColumn struct {
-	Expression string `json:"expression,omitempty"`
-	Meta *VvpColumnMeta `json:"meta,omitempty"`
-	Name string `json:"name,omitempty"`
-	Type_ string `json:"type,omitempty"`
+	Expression string         `json:"expression,omitempty"`
+	Meta       *VvpColumnMeta `json:"meta,omitempty"`
+	Name       string         `json:"name,omitempty"`
+	Type_      string         `json:"type,omitempty"`
 }

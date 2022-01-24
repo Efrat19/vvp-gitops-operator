@@ -11,8 +11,8 @@
 package swagger
 
 type VvpTable struct {
-	Comment string `json:"comment,omitempty"`
-	Name string `json:"name,omitempty"`
+	Comment    string            `json:"comment,omitempty"`
+	Name       string            `json:"name,omitempty"`
 	Properties map[string]string `json:"properties,omitempty"`
-	Schema *VvpSchema `json:"schema,omitempty"`
+	Schema     *VvpSchema        `json:"schema,omitempty"`
 }

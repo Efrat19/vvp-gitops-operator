@@ -12,5 +12,5 @@ package swagger
 
 type ResultTable struct {
 	Headers []TableHeader `json:"headers,omitempty"`
-	Rows []TableRow `json:"rows,omitempty"`
+	Rows    []TableRow    `json:"rows,omitempty"`
 }
