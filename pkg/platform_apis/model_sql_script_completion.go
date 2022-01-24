@@ -11,6 +11,6 @@
 package swagger
 
 type SqlScriptCompletion struct {
-	Text string `json:"text,omitempty"`
+	Text  string `json:"text,omitempty"`
 	Type_ string `json:"type,omitempty"`
 }

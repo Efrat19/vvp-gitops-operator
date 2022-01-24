@@ -12,5 +12,5 @@ package swagger
 
 type Quantity struct {
 	Format string `json:"format,omitempty"`
-	Number float32 `json:"number,omitempty"`
+	Number string `json:"number,omitempty"`
 }

@@ -11,7 +11,7 @@
 package swagger
 
 type VvpWatermark struct {
-	TimeColumn string `json:"timeColumn,omitempty"`
+	TimeColumn          string `json:"timeColumn,omitempty"`
 	WatermarkExpression string `json:"watermarkExpression,omitempty"`
-	WatermarkType string `json:"watermarkType,omitempty"`
+	WatermarkType       string `json:"watermarkType,omitempty"`
 }

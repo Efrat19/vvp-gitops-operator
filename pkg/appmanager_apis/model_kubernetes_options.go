@@ -11,8 +11,8 @@
 package swagger
 
 type KubernetesOptions struct {
-	Labels map[string]string `json:"labels,omitempty"`
-	Pods *Pods `json:"pods,omitempty"`
-	JobManagerPodTemplate *V1PodTemplateSpec `json:"jobManagerPodTemplate,omitempty"`
+	Labels                 map[string]string  `json:"labels,omitempty"`
+	Pods                   *Pods              `json:"pods,omitempty"`
+	JobManagerPodTemplate  *V1PodTemplateSpec `json:"jobManagerPodTemplate,omitempty"`
 	TaskManagerPodTemplate *V1PodTemplateSpec `json:"taskManagerPodTemplate,omitempty"`
 }

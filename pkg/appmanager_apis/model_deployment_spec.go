@@ -10,14 +10,16 @@
 
 package swagger
 
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
 type DeploymentSpec struct {
-	DeploymentTargetId string `json:"deploymentTargetId,omitempty"`
-	DeploymentTargetName string `json:"deploymentTargetName,omitempty"`
-	MaxJobCreationAttempts int32 `json:"maxJobCreationAttempts,omitempty"`
-	MaxSavepointCreationAttempts int32 `json:"maxSavepointCreationAttempts,omitempty"`
-	RestoreStrategy *DeploymentRestoreStrategy `json:"restoreStrategy,omitempty"`
-	SessionClusterName string `json:"sessionClusterName,omitempty"`
-	State string `json:"state,omitempty"`
-	Template *DeploymentTemplate `json:"template,omitempty"`
-	UpgradeStrategy *DeploymentUpgradeStrategy `json:"upgradeStrategy,omitempty"`
+	DeploymentTargetId           string                     `json:"deploymentTargetId,omitempty"`
+	DeploymentTargetName         string                     `json:"deploymentTargetName,omitempty"`
+	MaxJobCreationAttempts       int32                      `json:"maxJobCreationAttempts,omitempty"`
+	MaxSavepointCreationAttempts int32                      `json:"maxSavepointCreationAttempts,omitempty"`
+	RestoreStrategy              *DeploymentRestoreStrategy `json:"restoreStrategy,omitempty"`
+	SessionClusterName           string                     `json:"sessionClusterName,omitempty"`
+	State                        string                     `json:"state,omitempty"`
+	Template                     *DeploymentTemplate        `json:"template,omitempty"`
+	UpgradeStrategy              *DeploymentUpgradeStrategy `json:"upgradeStrategy,omitempty"`
 }

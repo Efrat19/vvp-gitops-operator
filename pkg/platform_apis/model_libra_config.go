@@ -11,7 +11,7 @@
 package swagger
 
 type LibraConfig struct {
-	CooldownMinutes int32 `json:"cooldownMinutes,omitempty"`
-	ExtraConfig map[string]string `json:"extraConfig,omitempty"`
-	Policies string `json:"policies,omitempty"`
+	CooldownMinutes int32             `json:"cooldownMinutes,omitempty"`
+	ExtraConfig     map[string]string `json:"extraConfig,omitempty"`
+	Policies        string            `json:"policies,omitempty"`
 }

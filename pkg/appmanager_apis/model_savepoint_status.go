@@ -11,6 +11,6 @@
 package swagger
 
 type SavepointStatus struct {
-	State string `json:"state,omitempty"`
+	State   string   `json:"state,omitempty"`
 	Failure *Failure `json:"failure,omitempty"`
 }

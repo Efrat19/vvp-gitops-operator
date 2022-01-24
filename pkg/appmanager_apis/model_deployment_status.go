@@ -10,7 +10,8 @@
 
 package swagger
 
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type DeploymentStatus struct {
 	Running *DeploymentStatusRunning `json:"running,omitempty"`
-	State string `json:"state,omitempty"`
+	State   string                   `json:"state,omitempty"`
 }

@@ -11,9 +11,9 @@
 package swagger
 
 type ErrorDetails struct {
-	ColumnNumber int32 `json:"columnNumber,omitempty"`
-	EndColumnNumber int32 `json:"endColumnNumber,omitempty"`
-	EndLineNumber int32 `json:"endLineNumber,omitempty"`
-	LineNumber int32 `json:"lineNumber,omitempty"`
-	Message string `json:"message,omitempty"`
+	ColumnNumber    int32  `json:"columnNumber,omitempty"`
+	EndColumnNumber int32  `json:"endColumnNumber,omitempty"`
+	EndLineNumber   int32  `json:"endLineNumber,omitempty"`
+	LineNumber      int32  `json:"lineNumber,omitempty"`
+	Message         string `json:"message,omitempty"`
 }

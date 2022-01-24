@@ -11,6 +11,6 @@
 package swagger
 
 type SetPreviewSessionClusterRequest struct {
-	Name string `json:"name,omitempty"`
+	Name                      string `json:"name,omitempty"`
 	PreviewSessionClusterName string `json:"previewSessionClusterName,omitempty"`
 }

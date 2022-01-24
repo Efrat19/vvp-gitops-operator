@@ -30,9 +30,9 @@ type DeploymentSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Deployment. Edit deployment_types.go to remove/update
-	Metadata  appmanager_apis.DeploymentMetadata  `json:"metadata,omitempty"`
-	Spec      appmanager_apis.DeploymentSpec   `json:"spec,omitempty"`
-	Status    appmanager_apis.DeploymentStatus `json:"status,omitempty"`
+	Metadata appmanager_apis.DeploymentMetadata `json:"metadata,omitempty"`
+	Spec     appmanager_apis.DeploymentSpec     `json:"spec,omitempty"`
+	Status   appmanager_apis.DeploymentStatus   `json:"status,omitempty"`
 }
 
 // DeploymentStatus defines the observed state of Deployment

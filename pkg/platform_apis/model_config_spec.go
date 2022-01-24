@@ -11,6 +11,6 @@
 package swagger
 
 type ConfigSpec struct {
-	FlinkVersion string `json:"flinkVersion,omitempty"`
-	NewConfig map[string]string `json:"newConfig,omitempty"`
+	FlinkVersion string            `json:"flinkVersion,omitempty"`
+	NewConfig    map[string]string `json:"newConfig,omitempty"`
 }

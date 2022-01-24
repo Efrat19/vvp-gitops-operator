@@ -11,11 +11,11 @@
 package swagger
 
 type Format struct {
-	Dependencies []string `json:"dependencies,omitempty"`
-	Name string `json:"name,omitempty"`
-	Packaged bool `json:"packaged,omitempty"`
-	Properties []Property `json:"properties,omitempty"`
-	Sink bool `json:"sink,omitempty"`
-	Source bool `json:"source,omitempty"`
-	Type_ string `json:"type,omitempty"`
+	Dependencies []string   `json:"dependencies,omitempty"`
+	Name         string     `json:"name,omitempty"`
+	Packaged     bool       `json:"packaged,omitempty"`
+	Properties   []Property `json:"properties,omitempty"`
+	Sink         bool       `json:"sink,omitempty"`
+	Source       bool       `json:"source,omitempty"`
+	Type_        string     `json:"type,omitempty"`
 }

@@ -12,6 +12,6 @@ package swagger
 
 type AutopilotPolicyStatus struct {
 	AutoscalerStatus *AutoscalerStatus `json:"autoscalerStatus,omitempty"`
-	LibraStatus *LibraStatus `json:"libraStatus,omitempty"`
-	Status string `json:"status,omitempty"`
+	LibraStatus      *LibraStatus      `json:"libraStatus,omitempty"`
+	Status           string            `json:"status,omitempty"`
 }

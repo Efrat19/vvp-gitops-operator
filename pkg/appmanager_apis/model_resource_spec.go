@@ -11,6 +11,6 @@
 package swagger
 
 type ResourceSpec struct {
-	Cpu float64 `json:"cpu,omitempty"`
+	Cpu    string `json:"cpu,omitempty"`
 	Memory string `json:"memory,omitempty"`
 }

@@ -11,7 +11,7 @@
 package swagger
 
 type TableReference struct {
-	CatalogName string `json:"catalogName,omitempty"`
+	CatalogName  string `json:"catalogName,omitempty"`
 	DatabaseName string `json:"databaseName,omitempty"`
-	TableName string `json:"tableName,omitempty"`
+	TableName    string `json:"tableName,omitempty"`
 }

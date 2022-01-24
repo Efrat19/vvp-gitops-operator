@@ -11,6 +11,6 @@
 package swagger
 
 type SuggestSqlScriptCompletionsDetails struct {
-	Position int32 `json:"position,omitempty"`
+	Position  int32  `json:"position,omitempty"`
 	SqlScript string `json:"sqlScript,omitempty"`
 }

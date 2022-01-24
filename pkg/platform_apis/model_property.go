@@ -11,9 +11,9 @@
 package swagger
 
 type Property struct {
-	DefaultValue string `json:"defaultValue,omitempty"`
-	DefinesFormat bool `json:"definesFormat,omitempty"`
-	Description string `json:"description,omitempty"`
-	Key string `json:"key,omitempty"`
-	Required bool `json:"required,omitempty"`
+	DefaultValue  string `json:"defaultValue,omitempty"`
+	DefinesFormat bool   `json:"definesFormat,omitempty"`
+	Description   string `json:"description,omitempty"`
+	Key           string `json:"key,omitempty"`
+	Required      bool   `json:"required,omitempty"`
 }

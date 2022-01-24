@@ -11,6 +11,6 @@
 package swagger
 
 type ValidateStatementResponse struct {
-	ErrorDetails *ErrorDetails `json:"errorDetails,omitempty"`
-	ValidationResult string `json:"validationResult,omitempty"`
+	ErrorDetails     *ErrorDetails `json:"errorDetails,omitempty"`
+	ValidationResult string        `json:"validationResult,omitempty"`
 }

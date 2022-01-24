@@ -11,11 +11,11 @@
 package swagger
 
 type AutoscalingSourceStatus struct {
-	Capacity float64 `json:"capacity,omitempty"`
-	EstimatedCatchUpSeconds int32 `json:"estimatedCatchUpSeconds,omitempty"`
-	EstimatedLagSeconds int32 `json:"estimatedLagSeconds,omitempty"`
-	Target float64 `json:"target,omitempty"`
-	TaskName string `json:"taskName,omitempty"`
-	Throughput float64 `json:"throughput,omitempty"`
-	VertexId string `json:"vertexId,omitempty"`
+	Capacity                float64 `json:"capacity,omitempty"`
+	EstimatedCatchUpSeconds int32   `json:"estimatedCatchUpSeconds,omitempty"`
+	EstimatedLagSeconds     int32   `json:"estimatedLagSeconds,omitempty"`
+	Target                  float64 `json:"target,omitempty"`
+	TaskName                string  `json:"taskName,omitempty"`
+	Throughput              float64 `json:"throughput,omitempty"`
+	VertexId                string  `json:"vertexId,omitempty"`
 }
