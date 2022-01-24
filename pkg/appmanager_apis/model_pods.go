@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Pods struct {
 	Annotations      map[string]string      `json:"annotations,omitempty"`
 	Labels           map[string]string      `json:"labels,omitempty"`

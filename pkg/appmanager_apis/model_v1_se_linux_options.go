@@ -11,6 +11,7 @@
 package swagger
 
 // SELinuxOptions are the labels to be applied to the container
+//+kubebuilder:object:generate=true
 type V1SeLinuxOptions struct {
 	// Level is SELinux level label that applies to the container.
 	Level string `json:"level,omitempty"`

@@ -11,9 +11,10 @@
 package swagger
 
 import (
-	"time"
+	time "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//+kubebuilder:object:generate=true
 type EventMetadata struct {
 	CreatedAt        time.Time `json:"createdAt,omitempty"`
 	DeploymentId     string    `json:"deploymentId,omitempty"`

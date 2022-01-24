@@ -11,6 +11,7 @@
 package swagger
 
 // PodDNSConfigOption defines DNS resolver options of a pod.
+//+kubebuilder:object:generate=true
 type V1PodDnsConfigOption struct {
 	// Required.
 	Name  string `json:"name,omitempty"`

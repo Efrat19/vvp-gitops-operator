@@ -11,9 +11,10 @@
 package swagger
 
 import (
-	"time"
+	time "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//+kubebuilder:object:generate=true
 type JobMetadata struct {
 	Annotations        map[string]string `json:"annotations,omitempty"`
 	CreatedAt          time.Time         `json:"createdAt,omitempty"`

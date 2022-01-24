@@ -11,6 +11,7 @@
 package swagger
 
 // Represents a Glusterfs mount that lasts the lifetime of a pod. Glusterfs volumes do not support ownership management or SELinux relabeling.
+//+kubebuilder:object:generate=true
 type V1GlusterfsVolumeSource struct {
 	// EndpointsName is the endpoint name that details Glusterfs topology. More info: https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
 	Endpoints string `json:"endpoints"`

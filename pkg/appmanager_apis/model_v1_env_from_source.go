@@ -11,6 +11,7 @@
 package swagger
 
 // EnvFromSource represents the source of a set of ConfigMaps
+//+kubebuilder:object:generate=true
 type V1EnvFromSource struct {
 	ConfigMapRef *V1ConfigMapEnvSource `json:"configMapRef,omitempty"`
 	// An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.

@@ -11,6 +11,7 @@
 package swagger
 
 // ResourceRequirements describes the compute resource requirements.
+//+kubebuilder:object:generate=true
 type V1ResourceRequirements struct {
 	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 	Limits map[string]Quantity `json:"limits,omitempty"`

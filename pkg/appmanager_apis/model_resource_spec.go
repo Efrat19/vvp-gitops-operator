@@ -10,7 +10,8 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceSpec struct {
-	Cpu    float64 `json:"cpu,omitempty"`
-	Memory string  `json:"memory,omitempty"`
+	Cpu    string `json:"cpu,omitempty"`
+	Memory string `json:"memory,omitempty"`
 }

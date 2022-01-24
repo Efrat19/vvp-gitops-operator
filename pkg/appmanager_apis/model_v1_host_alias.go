@@ -11,6 +11,7 @@
 package swagger
 
 // HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
+//+kubebuilder:object:generate=true
 type V1HostAlias struct {
 	// Hostnames for the above IP address.
 	Hostnames []string `json:"hostnames,omitempty"`

@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type SavepointStatus struct {
 	State   string   `json:"state,omitempty"`
 	Failure *Failure `json:"failure,omitempty"`

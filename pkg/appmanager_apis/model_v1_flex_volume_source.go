@@ -11,6 +11,7 @@
 package swagger
 
 // FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
+//+kubebuilder:object:generate=true
 type V1FlexVolumeSource struct {
 	// Driver is the name of the driver to use for this volume.
 	Driver string `json:"driver"`

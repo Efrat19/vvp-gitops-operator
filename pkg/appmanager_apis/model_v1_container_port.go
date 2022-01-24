@@ -11,6 +11,7 @@
 package swagger
 
 // ContainerPort represents a network port in a single container.
+//+kubebuilder:object:generate=true
 type V1ContainerPort struct {
 	// Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
 	ContainerPort int32 `json:"containerPort"`

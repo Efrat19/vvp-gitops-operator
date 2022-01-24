@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type KubernetesOptions struct {
 	Labels                 map[string]string  `json:"labels,omitempty"`
 	Pods                   *Pods              `json:"pods,omitempty"`

@@ -11,6 +11,7 @@
 package swagger
 
 // Adds and removes POSIX capabilities from running containers.
+//+kubebuilder:object:generate=true
 type V1Capabilities struct {
 	// Added capabilities
 	Add []string `json:"add,omitempty"`

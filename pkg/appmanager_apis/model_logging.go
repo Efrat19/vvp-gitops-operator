@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Logging struct {
 	LoggingProfile              string            `json:"loggingProfile,omitempty"`
 	Log4j2ConfigurationTemplate string            `json:"log4j2ConfigurationTemplate,omitempty"`

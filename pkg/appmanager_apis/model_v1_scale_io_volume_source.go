@@ -11,6 +11,7 @@
 package swagger
 
 // ScaleIOVolumeSource represents a persistent ScaleIO volume
+//+kubebuilder:object:generate=true
 type V1ScaleIoVolumeSource struct {
 	// Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Default is \"xfs\".
 	FsType string `json:"fsType,omitempty"`

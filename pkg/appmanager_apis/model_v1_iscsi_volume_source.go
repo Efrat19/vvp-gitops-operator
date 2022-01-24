@@ -11,6 +11,7 @@
 package swagger
 
 // Represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.
+//+kubebuilder:object:generate=true
 type V1IscsiVolumeSource struct {
 	// whether support iSCSI Discovery CHAP authentication
 	ChapAuthDiscovery bool `json:"chapAuthDiscovery,omitempty"`

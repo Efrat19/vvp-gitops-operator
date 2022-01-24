@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type SessionCluster struct {
 	ApiVersion string                  `json:"apiVersion,omitempty"`
 	Kind       string                  `json:"kind,omitempty"`

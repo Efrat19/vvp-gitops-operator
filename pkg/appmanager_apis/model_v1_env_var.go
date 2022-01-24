@@ -11,6 +11,7 @@
 package swagger
 
 // EnvVar represents an environment variable present in a Container.
+//+kubebuilder:object:generate=true
 type V1EnvVar struct {
 	// Name of the environment variable. Must be a C_IDENTIFIER.
 	Name string `json:"name"`

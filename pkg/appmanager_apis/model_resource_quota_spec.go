@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceQuotaSpec struct {
 	Limits           *ResourceConsumption `json:"limits,omitempty"`
 	ToleratedOveruse *ResourceConsumption `json:"toleratedOveruse,omitempty"`

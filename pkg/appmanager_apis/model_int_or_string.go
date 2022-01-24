@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type IntOrString struct {
 	IntValue int32  `json:"intValue,omitempty"`
 	Integer  bool   `json:"integer,omitempty"`

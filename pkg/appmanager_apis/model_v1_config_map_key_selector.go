@@ -11,6 +11,7 @@
 package swagger
 
 // Selects a key from a ConfigMap.
+//+kubebuilder:object:generate=true
 type V1ConfigMapKeySelector struct {
 	// The key to select.
 	Key string `json:"key"`

@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type SessionClusterSpec struct {
 	State                string                  `json:"state,omitempty"`
 	DeploymentTargetName string                  `json:"deploymentTargetName,omitempty"`

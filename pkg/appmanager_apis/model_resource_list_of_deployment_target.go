@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceListOfDeploymentTarget struct {
 	ApiVersion string                `json:"apiVersion,omitempty"`
 	Items      []DeploymentTarget    `json:"items,omitempty"`

@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceListOfJob struct {
 	ApiVersion string                `json:"apiVersion,omitempty"`
 	Items      []Job                 `json:"items,omitempty"`

@@ -11,6 +11,7 @@
 package swagger
 
 // AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
+//+kubebuilder:object:generate=true
 type V1AzureFileVolumeSource struct {
 	// Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 	ReadOnly bool `json:"readOnly,omitempty"`

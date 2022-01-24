@@ -11,6 +11,7 @@
 package swagger
 
 // DownwardAPIVolumeFile represents information to create the file containing the pod field
+//+kubebuilder:object:generate=true
 type V1DownwardApiVolumeFile struct {
 	FieldRef *V1ObjectFieldSelector `json:"fieldRef,omitempty"`
 	// Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.

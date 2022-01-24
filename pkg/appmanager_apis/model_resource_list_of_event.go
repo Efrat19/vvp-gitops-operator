@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceListOfEvent struct {
 	ApiVersion string                `json:"apiVersion,omitempty"`
 	Items      []Event               `json:"items,omitempty"`

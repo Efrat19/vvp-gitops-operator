@@ -11,6 +11,7 @@
 package swagger
 
 // PodTemplateSpec describes the data a pod should have when created from a template
+//+kubebuilder:object:generate=true
 type V1PodTemplateSpec struct {
 	Metadata *V1ObjectMeta `json:"metadata,omitempty"`
 	Spec     *V1PodSpec    `json:"spec,omitempty"`

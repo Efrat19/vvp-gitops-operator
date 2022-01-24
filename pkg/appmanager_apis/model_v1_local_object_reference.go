@@ -11,6 +11,7 @@
 package swagger
 
 // LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+//+kubebuilder:object:generate=true
 type V1LocalObjectReference struct {
 	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 	Name string `json:"name,omitempty"`

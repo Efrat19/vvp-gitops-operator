@@ -11,6 +11,7 @@
 package swagger
 
 // PodSpec is a description of a pod.
+//+kubebuilder:object:generate=true
 type V1PodSpec struct {
 	// Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
 	ActiveDeadlineSeconds int64       `json:"activeDeadlineSeconds,omitempty"`

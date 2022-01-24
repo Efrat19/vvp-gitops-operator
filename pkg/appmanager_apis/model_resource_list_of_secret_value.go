@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceListOfSecretValue struct {
 	ApiVersion string                `json:"apiVersion,omitempty"`
 	Items      []SecretValue         `json:"items,omitempty"`

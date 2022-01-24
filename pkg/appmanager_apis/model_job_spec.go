@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type JobSpec struct {
 	AllowNonRestoredState  bool                    `json:"allowNonRestoredState,omitempty"`
 	Artifact               *Artifact               `json:"artifact,omitempty"`

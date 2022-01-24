@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type RevisionInformation struct {
 	BuildTime      string `json:"buildTime,omitempty"`
 	BuildVersion   string `json:"buildVersion,omitempty"`

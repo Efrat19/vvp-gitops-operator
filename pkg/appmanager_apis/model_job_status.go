@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type JobStatus struct {
 	Failure      *Failure          `json:"failure,omitempty"`
 	SinkTables   []JobTable        `json:"sinkTables,omitempty"`

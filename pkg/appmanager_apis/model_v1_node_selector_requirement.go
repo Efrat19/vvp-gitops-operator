@@ -11,6 +11,7 @@
 package swagger
 
 // A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+//+kubebuilder:object:generate=true
 type V1NodeSelectorRequirement struct {
 	// The label key that the selector applies to.
 	Key string `json:"key"`

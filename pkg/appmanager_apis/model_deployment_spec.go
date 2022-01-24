@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeploymentSpec struct {
 	DeploymentTargetId           string                     `json:"deploymentTargetId,omitempty"`
 	DeploymentTargetName         string                     `json:"deploymentTargetName,omitempty"`

@@ -10,7 +10,8 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Quantity struct {
-	Format string  `json:"format,omitempty"`
-	Number float32 `json:"number,omitempty"`
+	Format string `json:"format,omitempty"`
+	Number string `json:"number,omitempty"`
 }

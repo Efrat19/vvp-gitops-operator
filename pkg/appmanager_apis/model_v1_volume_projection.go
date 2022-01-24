@@ -11,6 +11,7 @@
 package swagger
 
 // Projection that may be projected along with other supported volume types
+//+kubebuilder:object:generate=true
 type V1VolumeProjection struct {
 	ConfigMap           *V1ConfigMapProjection           `json:"configMap,omitempty"`
 	DownwardAPI         *V1DownwardApiProjection         `json:"downwardAPI,omitempty"`

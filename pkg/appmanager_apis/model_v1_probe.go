@@ -11,6 +11,7 @@
 package swagger
 
 // Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
+//+kubebuilder:object:generate=true
 type V1Probe struct {
 	Exec *V1ExecAction `json:"exec,omitempty"`
 	// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.

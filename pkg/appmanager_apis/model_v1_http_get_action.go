@@ -11,6 +11,7 @@
 package swagger
 
 // HTTPGetAction describes an action based on HTTP Get requests.
+//+kubebuilder:object:generate=true
 type V1HttpGetAction struct {
 	// Host name to connect to, defaults to the pod IP. You probably want to set \"Host\" in httpHeaders instead.
 	Host string `json:"host,omitempty"`

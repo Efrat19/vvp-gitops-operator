@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type JobTable struct {
 	CatalogName  string            `json:"catalogName,omitempty"`
 	Columns      []JobTableColumn  `json:"columns,omitempty"`

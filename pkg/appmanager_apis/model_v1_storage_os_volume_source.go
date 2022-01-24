@@ -11,6 +11,7 @@
 package swagger
 
 // Represents a StorageOS persistent volume resource.
+//+kubebuilder:object:generate=true
 type V1StorageOsVolumeSource struct {
 	// Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.
 	FsType string `json:"fsType,omitempty"`

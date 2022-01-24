@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceQuotaStatus struct {
 	Used *ResourceConsumption `json:"used,omitempty"`
 }

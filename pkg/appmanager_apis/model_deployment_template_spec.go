@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeploymentTemplateSpec struct {
 	Artifact             *Artifact               `json:"artifact,omitempty"`
 	FlinkConfiguration   map[string]string       `json:"flinkConfiguration,omitempty"`

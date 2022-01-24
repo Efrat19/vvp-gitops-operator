@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type SystemInformationStatus struct {
 	JvmVersion          string               `json:"jvmVersion,omitempty"`
 	ResourceQuota       *ResourceQuota       `json:"resourceQuota,omitempty"`

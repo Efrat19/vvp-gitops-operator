@@ -11,9 +11,10 @@
 package swagger
 
 import (
-	"time"
+	time "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//+kubebuilder:object:generate=true
 type Failure struct {
 	Message  string    `json:"message,omitempty"`
 	Reason   string    `json:"reason,omitempty"`

@@ -11,6 +11,7 @@
 package swagger
 
 // Represents an NFS mount that lasts the lifetime of a pod. NFS volumes do not support ownership management or SELinux relabeling.
+//+kubebuilder:object:generate=true
 type V1NfsVolumeSource struct {
 	// Path that is exported by the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
 	Path string `json:"path"`

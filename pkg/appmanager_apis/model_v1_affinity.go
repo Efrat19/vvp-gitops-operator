@@ -11,6 +11,7 @@
 package swagger
 
 // Affinity is a group of affinity scheduling rules.
+//+kubebuilder:object:generate=true
 type V1Affinity struct {
 	NodeAffinity    *V1NodeAffinity    `json:"nodeAffinity,omitempty"`
 	PodAffinity     *V1PodAffinity     `json:"podAffinity,omitempty"`

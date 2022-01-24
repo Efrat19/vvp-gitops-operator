@@ -8,7 +8,7 @@ TIME_REPLACE_FROM = '"time"'
 TIME_REPLACE_TO = 'time "k8s.io/apimachinery/pkg/apis/meta/v1"'
 FLOAT_REPLACE_FROM = 'float64'
 FLOAT_REPLACE_TO = 'string'
-FLOAT2_REPLACE_FROM = 'float64'
+FLOAT2_REPLACE_FROM = 'float32'
 
 
 def replace_in_file(file_path, search_text, new_text):

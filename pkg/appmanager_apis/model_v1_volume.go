@@ -11,6 +11,7 @@
 package swagger
 
 // Volume represents a named volume in a pod that may be accessed by any container in the pod.
+//+kubebuilder:object:generate=true
 type V1Volume struct {
 	AwsElasticBlockStore *V1AwsElasticBlockStoreVolumeSource `json:"awsElasticBlockStore,omitempty"`
 	AzureDisk            *V1AzureDiskVolumeSource            `json:"azureDisk,omitempty"`

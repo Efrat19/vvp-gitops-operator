@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Artifact struct {
 	AdditionalDependencies []string `json:"additionalDependencies,omitempty"`
 	EntryClass             string   `json:"entryClass,omitempty"`

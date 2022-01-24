@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceQuota struct {
 	ApiVersion string               `json:"apiVersion,omitempty"`
 	Kind       string               `json:"kind,omitempty"`

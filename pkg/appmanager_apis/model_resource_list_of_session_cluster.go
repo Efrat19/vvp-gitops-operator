@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceListOfSessionCluster struct {
 	ApiVersion string                `json:"apiVersion,omitempty"`
 	Items      []SessionCluster      `json:"items,omitempty"`

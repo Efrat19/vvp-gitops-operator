@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceListOfSavepoint struct {
 	ApiVersion string                `json:"apiVersion,omitempty"`
 	Items      []Savepoint           `json:"items,omitempty"`

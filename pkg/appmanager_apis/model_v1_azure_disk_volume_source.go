@@ -11,6 +11,7 @@
 package swagger
 
 // AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
+//+kubebuilder:object:generate=true
 type V1AzureDiskVolumeSource struct {
 	// Host Caching mode: None, Read Only, Read Write.
 	CachingMode string `json:"cachingMode,omitempty"`

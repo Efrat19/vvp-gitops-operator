@@ -11,6 +11,7 @@
 package swagger
 
 // Represents a source location of a volume to mount, managed by an external CSI driver
+//+kubebuilder:object:generate=true
 type V1CsiVolumeSource struct {
 	// Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
 	Driver string `json:"driver"`
