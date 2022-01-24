@@ -2,7 +2,7 @@ import fileinput
 import os
 import re
 
-DIR = "pkg"
+DIR = "pkg/appmanager_apis"
 MARKER = '//+kubebuilder:object:generate=true'
 TIME_REPLACE_FROM = '"time"'
 TIME_REPLACE_TO = 'time "k8s.io/apimachinery/pkg/apis/meta/v1"'
@@ -18,7 +18,7 @@ def replace_in_file(file_path, search_text, new_text):
 def useRegex(file):
     with open(file) as src:
         input = src.read()
-        res = re.search("type [a-zA-Z]+ struct \{", input)
+        res = re.search("type [a-zA-Z0-9]+ struct \{", input)
         if res:
             return res.group()
         return False
