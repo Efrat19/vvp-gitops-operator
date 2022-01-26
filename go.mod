@@ -10,6 +10,8 @@ require (
 	sigs.k8s.io/controller-runtime v0.11.0
 )
 
+require moul.io/http2curl v1.0.0 // indirect
+
 require (
 	cloud.google.com/go v0.81.0 // indirect
 	github.com/Azure/go-autorest v14.2.0+incompatible // indirect

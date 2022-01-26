@@ -1,0 +1,215 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymentdefaults
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymentdefaults/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymentdefaults/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deployments/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deployments/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymenttargets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymenttargets/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymenttargets/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - events
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - events/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - events/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - jobs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - jobs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - savepoints
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - savepoints/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - savepoints/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - secretvalues
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - secretvalues/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - secretvalues/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - sessionclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - sessionclusters/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - sessionclusters/status
+  verbs:
+  - get
+  - patch
+  - update
