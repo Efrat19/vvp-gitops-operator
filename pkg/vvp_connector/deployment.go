@@ -24,6 +24,9 @@ func (c *VvpConnector) DeploymentExistsInVVP(d *appmanagervvpv1alpha1.Deployment
 
 func (c *VvpConnector) DeleteExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
 	ctx := context.Background()
+	if err := c.cancelStateForDeletion(d); err != nil {
+		return err
+	}
 	_, response, err := c.client.DeploymentResourceApi.DeleteDeploymentUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
@@ -77,4 +80,18 @@ func (c *VvpConnector) vvpDeplomentFromK8sDeployment(d *appmanagervvpv1alpha1.De
 		Status:     &d.Spec.Status,
 	}
 	return deployment
+}
+
+func (c *VvpConnector) cancelStateForDeletion(d *appmanagervvpv1alpha1.Deployment) error {
+	cancelledState := "CANCELLED"
+	status, err := c.GetStatus(d)
+	if err != nil {
+		return err
+	}
+	if status.State != cancelledState {
+		d.Spec.Status.State = cancelledState
+		err := c.UpdateExternalResources(d)
+		return err
+	}
+	return nil
 }

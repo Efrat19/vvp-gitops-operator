@@ -21,6 +21,7 @@ import (
 	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
 	"efrat19.io/vvp-gitops-operator/pkg/vvp_connector"
 	"fmt"
+	"time"
 	// "github.com/fintechstudios/ververica-platform-k8s-operator/pkg/polling"
 	// "github.com/davecgh/go-spew/spew"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -79,6 +80,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		}
 	} else {
 		// The object is being deleted
+		log.Info(fmt.Sprintf("Deleting deployment %s\n", dep.Spec.Metadata.Name))
 		if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
 			// our finalizer is present, so lets handle any external dependency
 			if err := r.vvpConnector.DeleteExternalResources(&dep); err != nil {
@@ -95,10 +97,8 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 				return ctrl.Result{}, err
 			}
 		}
-
-		log.Info(fmt.Sprintf("Deployment %s deleted\n", dep.Spec.Metadata.Name))
 		// Stop reconciliation as the item is being deleted
-		return ctrl.Result{}, nil
+		return ctrl.Result{RequeueAfter: time.Second * 30}, nil
 	}
 	// Create deployment if not exists
 	err, deploymentExists := r.vvpConnector.DeploymentExistsInVVP(&dep)

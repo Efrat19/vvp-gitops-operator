@@ -16,6 +16,6 @@ import (
 
 //+kubebuilder:object:generate=true
 type Quantity struct {
-	Format string `json:"format,omitempty"`
+	Format string            `json:"format,omitempty"`
 	Number resource.Quantity `json:"number,omitempty"`
 }
