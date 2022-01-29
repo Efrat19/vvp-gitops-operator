@@ -10,8 +10,12 @@
 
 package swagger
 
+import (
+	"k8s.io/apimachinery/pkg/api/resource"
+)
+
 //+kubebuilder:object:generate=true
 type Quantity struct {
 	Format string `json:"format,omitempty"`
-	Number string `json:"number,omitempty"`
+	Number resource.Quantity `json:"number,omitempty"`
 }

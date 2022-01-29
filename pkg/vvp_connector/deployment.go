@@ -2,6 +2,7 @@ package vvp_connector
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
@@ -35,27 +36,19 @@ func (c *VvpConnector) DeleteExternalResources(d *appmanagervvpv1alpha1.Deployme
 
 func (c *VvpConnector) CreateExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
 	ctx := context.Background()
-	deployment := appmanager_apis.Deployment{
-		ApiVersion: "v1",
-		Kind:       "Deployment",
-		Metadata:   &d.Spec.Metadata,
-		Spec:       &d.Spec.Spec,
-		Status:     &d.Spec.Status,
+	deployment := c.vvpDeplomentFromK8sDeployment(d)
+	if err := c.validateName(d); err != nil {
+		return err
 	}
-	// spew.Dump(deployment)
-	_, _, err := c.client.DeploymentResourceApi.CreateDeploymentUsingPOST(ctx, deployment, d.Spec.Metadata.Namespace)
-	// spew.Dump(response)
+	_, _, err := c.client.DeploymentResourceApi.CreateDeploymentUsingPOST(ctx, *deployment, d.Spec.Metadata.Namespace)
 	return err
 }
 
 func (c *VvpConnector) UpdateExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
 	ctx := context.Background()
-	deployment := &appmanager_apis.Deployment{
-		ApiVersion: "v1",
-		Kind:       "Deployment",
-		Metadata:   &d.Spec.Metadata,
-		Spec:       &d.Spec.Spec,
-		Status:     &d.Spec.Status,
+	deployment := c.vvpDeplomentFromK8sDeployment(d)
+	if err := c.validateName(d); err != nil {
+		return err
 	}
 	_, _, err := c.client.DeploymentResourceApi.UpdateDeploymentUsingPATCH(ctx, *deployment, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	return err
@@ -65,4 +58,23 @@ func (c *VvpConnector) GetStatus(d *appmanagervvpv1alpha1.Deployment) (*appmanag
 	ctx := context.Background()
 	deployment, _, err := c.client.DeploymentResourceApi.GetDeploymentUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	return deployment.Status, err
+}
+
+func (c *VvpConnector) validateName(d *appmanagervvpv1alpha1.Deployment) error {
+	if d.Spec.Metadata.Name != d.Name {
+		msg := "Validation failed: Deployment name must match deployment.spec.metadata.name"
+		return errors.New(msg)
+	}
+	return nil
+}
+
+func (c *VvpConnector) vvpDeplomentFromK8sDeployment(d *appmanagervvpv1alpha1.Deployment) *appmanager_apis.Deployment {
+	deployment := &appmanager_apis.Deployment{
+		ApiVersion: "v1",
+		Kind:       "Deployment",
+		Metadata:   &d.Spec.Metadata,
+		Spec:       &d.Spec.Spec,
+		Status:     &d.Spec.Status,
+	}
+	return deployment
 }

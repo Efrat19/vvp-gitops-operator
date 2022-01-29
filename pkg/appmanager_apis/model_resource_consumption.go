@@ -10,7 +10,11 @@
 
 package swagger
 
+import (
+	"k8s.io/apimachinery/pkg/api/resource"
+)
+
 //+kubebuilder:object:generate=true
 type ResourceConsumption struct {
-	Cpu string `json:"cpu,omitempty"`
+	Cpu resource.Quantity `json:"cpu,omitempty"`
 }

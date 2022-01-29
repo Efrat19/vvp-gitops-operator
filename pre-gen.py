@@ -6,9 +6,9 @@ DIR = "pkg/appmanager_apis"
 MARKER = '//+kubebuilder:object:generate=true'
 TIME_REPLACE_FROM = '"time"'
 TIME_REPLACE_TO = 'time "k8s.io/apimachinery/pkg/apis/meta/v1"'
-FLOAT_REPLACE_FROM = 'float64'
-FLOAT_REPLACE_TO = 'string'
-FLOAT2_REPLACE_FROM = 'float32'
+# FLOAT_REPLACE_FROM = 'float64'
+# FLOAT_REPLACE_TO = 'string'
+# FLOAT2_REPLACE_FROM = 'float32'
 
 
 def replace_in_file(file_path, search_text, new_text):
@@ -31,8 +31,8 @@ for filename in os.scandir(DIR):
     if filename.is_file():
         if "model" in filename.name:
             replace_in_file(filename.path, TIME_REPLACE_FROM, TIME_REPLACE_TO)
-            replace_in_file(filename.path, FLOAT_REPLACE_FROM, FLOAT_REPLACE_TO)
-            replace_in_file(filename.path, FLOAT2_REPLACE_FROM, FLOAT_REPLACE_TO)
+            # replace_in_file(filename.path, FLOAT_REPLACE_FROM, FLOAT_REPLACE_TO)
+            # replace_in_file(filename.path, FLOAT2_REPLACE_FROM, FLOAT_REPLACE_TO)
             marker_replace_from = useRegex(filename)
             if marker_replace_from:
                 replace_in_file(filename.path, marker_replace_from,

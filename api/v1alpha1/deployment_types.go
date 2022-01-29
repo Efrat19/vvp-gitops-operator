@@ -46,7 +46,7 @@ type DeploymentStatus struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// Deployment is the Schema for the deployments API
+// +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state",description="status of the resource"
 type Deployment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
