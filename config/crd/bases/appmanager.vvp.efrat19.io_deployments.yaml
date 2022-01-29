@@ -18614,7 +18614,11 @@ spec:
                             additionalProperties:
                               properties:
                                 cpu:
-                                  type: string
+                                  anyOf:
+                                  - type: integer
+                                  - type: string
+                                  pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                  x-kubernetes-int-or-string: true
                                 memory:
                                   type: string
                               type: object
@@ -18663,10 +18667,37 @@ spec:
           status:
             description: DeploymentStatus defines the observed state of Deployment
             properties:
-              phase:
+              running:
                 description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
                   of cluster Important: Run "make" to regenerate code after modifying
                   this file'
+                properties:
+                  conditions:
+                    items:
+                      properties:
+                        lastTransitionTime:
+                          format: date-time
+                          type: string
+                        lastUpdateTime:
+                          format: date-time
+                          type: string
+                        message:
+                          type: string
+                        reason:
+                          type: string
+                        status:
+                          type: string
+                        type:
+                          type: string
+                      type: object
+                    type: array
+                  jobId:
+                    type: string
+                  transitionTime:
+                    format: date-time
+                    type: string
+                type: object
+              state:
                 type: string
             type: object
         type: object

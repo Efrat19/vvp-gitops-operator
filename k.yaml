@@ -1,59 +1,4 @@
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
-  name: deploymentdefaults.appmanager.vvp.efrat19.io
-spec:
-  group: appmanager.vvp.efrat19.io
-  names:
-    kind: DeploymentDefaults
-    listKind: DeploymentDefaultsList
-    plural: deploymentdefaults
-    singular: deploymentdefaults
-  scope: Namespaced
-  versions:
-  - name: v1alpha1
-    schema:
-      openAPIV3Schema:
-        description: DeploymentDefaults is the Schema for the deploymentdefaults API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: DeploymentDefaultsSpec defines the desired state of DeploymentDefaults
-            properties:
-              foo:
-                description: Foo is an example field of DeploymentDefaults. Edit deploymentdefaults_types.go
-                  to remove/update
-                type: string
-            type: object
-          status:
-            description: DeploymentDefaultsStatus defines the observed state of DeploymentDefaults
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
----
+
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -358,13 +303,14 @@ spec:
                                                 version. There is currently only one
                                                 possible value: \"FieldsV1\"'
                                               type: string
-                                            manager:
+                                            fieldsV1:
                                               description: FieldsV1 holds the first
                                                 JSON version format as described in
-                                                the \"FieldsV1\" type. FieldsV1 interface{}
-                                                `json:"fieldsV1,omitempty"` Manager
-                                                is an identifier of the workflow managing
-                                                these fields.
+                                                the \"FieldsV1\" type.
+                                              type: string
+                                            manager:
+                                              description: Manager is an identifier
+                                                of the workflow managing these fields.
                                               type: string
                                             operation:
                                               description: Operation is the type of
@@ -7645,15 +7591,17 @@ spec:
                                                                   possible value:
                                                                   \"FieldsV1\"'
                                                                 type: string
-                                                              manager:
+                                                              fieldsV1:
                                                                 description: FieldsV1
                                                                   holds the first
                                                                   JSON version format
                                                                   as described in
                                                                   the \"FieldsV1\"
-                                                                  type. FieldsV1 interface{}
-                                                                  `json:"fieldsV1,omitempty"`
-                                                                  Manager is an identifier
+                                                                  type.
+                                                                type: string
+                                                              manager:
+                                                                description: Manager
+                                                                  is an identifier
                                                                   of the workflow
                                                                   managing these fields.
                                                                 type: string
@@ -9615,13 +9563,14 @@ spec:
                                                 version. There is currently only one
                                                 possible value: \"FieldsV1\"'
                                               type: string
-                                            manager:
+                                            fieldsV1:
                                               description: FieldsV1 holds the first
                                                 JSON version format as described in
-                                                the \"FieldsV1\" type. FieldsV1 interface{}
-                                                `json:"fieldsV1,omitempty"` Manager
-                                                is an identifier of the workflow managing
-                                                these fields.
+                                                the \"FieldsV1\" type.
+                                              type: string
+                                            manager:
+                                              description: Manager is an identifier
+                                                of the workflow managing these fields.
                                               type: string
                                             operation:
                                               description: Operation is the type of
@@ -16902,15 +16851,17 @@ spec:
                                                                   possible value:
                                                                   \"FieldsV1\"'
                                                                 type: string
-                                                              manager:
+                                                              fieldsV1:
                                                                 description: FieldsV1
                                                                   holds the first
                                                                   JSON version format
                                                                   as described in
                                                                   the \"FieldsV1\"
-                                                                  type. FieldsV1 interface{}
-                                                                  `json:"fieldsV1,omitempty"`
-                                                                  Manager is an identifier
+                                                                  type.
+                                                                type: string
+                                                              manager:
+                                                                description: Manager
+                                                                  is an identifier
                                                                   of the workflow
                                                                   managing these fields.
                                                                 type: string
@@ -18663,7 +18614,11 @@ spec:
                             additionalProperties:
                               properties:
                                 cpu:
-                                  type: string
+                                  anyOf:
+                                  - type: integer
+                                  - type: string
+                                  pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                  x-kubernetes-int-or-string: true
                                 memory:
                                   type: string
                               type: object
@@ -18710,349 +18665,36 @@ spec:
                 type: object
             type: object
           status:
-            description: DeploymentStatus defines the observed state of Deployment
             properties:
-              phase:
-                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                  of cluster Important: Run "make" to regenerate code after modifying
-                  this file'
+              running:
+                properties:
+                  conditions:
+                    items:
+                      properties:
+                        lastTransitionTime:
+                          format: date-time
+                          type: string
+                        lastUpdateTime:
+                          format: date-time
+                          type: string
+                        message:
+                          type: string
+                        reason:
+                          type: string
+                        status:
+                          type: string
+                        type:
+                          type: string
+                      type: object
+                    type: array
+                  jobId:
+                    type: string
+                  transitionTime:
+                    format: date-time
+                    type: string
+                type: object
+              state:
                 type: string
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
----
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
-  name: deploymenttargets.appmanager.vvp.efrat19.io
-spec:
-  group: appmanager.vvp.efrat19.io
-  names:
-    kind: DeploymentTarget
-    listKind: DeploymentTargetList
-    plural: deploymenttargets
-    singular: deploymenttarget
-  scope: Namespaced
-  versions:
-  - name: v1alpha1
-    schema:
-      openAPIV3Schema:
-        description: DeploymentTarget is the Schema for the deploymenttargets API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: DeploymentTargetSpec defines the desired state of DeploymentTarget
-            properties:
-              foo:
-                description: Foo is an example field of DeploymentTarget. Edit deploymenttarget_types.go
-                  to remove/update
-                type: string
-            type: object
-          status:
-            description: DeploymentTargetStatus defines the observed state of DeploymentTarget
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
----
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
-  name: events.appmanager.vvp.efrat19.io
-spec:
-  group: appmanager.vvp.efrat19.io
-  names:
-    kind: Event
-    listKind: EventList
-    plural: events
-    singular: event
-  scope: Namespaced
-  versions:
-  - name: v1alpha1
-    schema:
-      openAPIV3Schema:
-        description: Event is the Schema for the events API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: EventSpec defines the desired state of Event
-            properties:
-              foo:
-                description: Foo is an example field of Event. Edit event_types.go
-                  to remove/update
-                type: string
-            type: object
-          status:
-            description: EventStatus defines the observed state of Event
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
----
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
-  name: jobs.appmanager.vvp.efrat19.io
-spec:
-  group: appmanager.vvp.efrat19.io
-  names:
-    kind: Job
-    listKind: JobList
-    plural: jobs
-    singular: job
-  scope: Namespaced
-  versions:
-  - name: v1alpha1
-    schema:
-      openAPIV3Schema:
-        description: Job is the Schema for the jobs API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: JobSpec defines the desired state of Job
-            properties:
-              foo:
-                description: Foo is an example field of Job. Edit job_types.go to
-                  remove/update
-                type: string
-            type: object
-          status:
-            description: JobStatus defines the observed state of Job
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
----
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
-  name: savepoints.appmanager.vvp.efrat19.io
-spec:
-  group: appmanager.vvp.efrat19.io
-  names:
-    kind: Savepoint
-    listKind: SavepointList
-    plural: savepoints
-    singular: savepoint
-  scope: Namespaced
-  versions:
-  - name: v1alpha1
-    schema:
-      openAPIV3Schema:
-        description: Savepoint is the Schema for the savepoints API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: SavepointSpec defines the desired state of Savepoint
-            properties:
-              foo:
-                description: Foo is an example field of Savepoint. Edit savepoint_types.go
-                  to remove/update
-                type: string
-            type: object
-          status:
-            description: SavepointStatus defines the observed state of Savepoint
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
----
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
-  name: secretvalues.appmanager.vvp.efrat19.io
-spec:
-  group: appmanager.vvp.efrat19.io
-  names:
-    kind: SecretValue
-    listKind: SecretValueList
-    plural: secretvalues
-    singular: secretvalue
-  scope: Namespaced
-  versions:
-  - name: v1alpha1
-    schema:
-      openAPIV3Schema:
-        description: SecretValue is the Schema for the secretvalues API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: SecretValueSpec defines the desired state of SecretValue
-            properties:
-              foo:
-                description: Foo is an example field of SecretValue. Edit secretvalue_types.go
-                  to remove/update
-                type: string
-            type: object
-          status:
-            description: SecretValueStatus defines the observed state of SecretValue
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
----
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
-  name: sessionclusters.appmanager.vvp.efrat19.io
-spec:
-  group: appmanager.vvp.efrat19.io
-  names:
-    kind: SessionCluster
-    listKind: SessionClusterList
-    plural: sessionclusters
-    singular: sessioncluster
-  scope: Namespaced
-  versions:
-  - name: v1alpha1
-    schema:
-      openAPIV3Schema:
-        description: SessionCluster is the Schema for the sessionclusters API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: SessionClusterSpec defines the desired state of SessionCluster
-            properties:
-              foo:
-                description: Foo is an example field of SessionCluster. Edit sessioncluster_types.go
-                  to remove/update
-                type: string
-            type: object
-          status:
-            description: SessionClusterStatus defines the observed state of SessionCluster
             type: object
         type: object
     served: true

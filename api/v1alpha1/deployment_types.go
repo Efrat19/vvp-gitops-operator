@@ -39,7 +39,8 @@ type DeploymentSpec struct {
 type DeploymentStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Phase string `json:"phase,omitempty"`
+	Running *appmanager_apis.DeploymentStatusRunning `json:"running,omitempty"`
+	State   string                                   `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true
