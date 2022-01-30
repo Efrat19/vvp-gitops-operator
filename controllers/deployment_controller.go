@@ -56,7 +56,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	var dep appmanagervvpv1alpha1.Deployment
 
 	if err := r.Get(ctx, req.NamespacedName, &dep); err != nil {
-		log.Error(err, "unebale to get deployment")
+		log.Error(err, "unable to get deployment")
 		// log.Error(err, fmt.Sprintf("xxxxxxx %v", reflect.TypeOf(dep)))
 		// we'll ignore not-found errors, since they can't be fixed by an immediate
 		// requeue (we'll need to wait for a new notification), and we can get them
@@ -84,10 +84,10 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
 			// our finalizer is present, so lets handle any external dependency
 			if err := r.vvpConnector.DeleteExternalResources(&dep); err != nil {
-				log.Error(err, fmt.Sprintf("Failed to delete deployment %s in vvp\n", dep.Spec.Metadata.Name))
+				log.Error(err, fmt.Sprintf("Failed to delete deployment %s in vvp, retrying in 30 sec\n", dep.Spec.Metadata.Name))
 				// if fail to delete the external dependency here, return with error
 				// so that it can be retried
-				return ctrl.Result{}, err
+				return ctrl.Result{RequeueAfter: time.Second * 30}, err
 			}
 
 			// remove our finalizer from the list and update it.
@@ -98,7 +98,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 			}
 		}
 		// Stop reconciliation as the item is being deleted
-		return ctrl.Result{RequeueAfter: time.Second * 30}, nil
+		return ctrl.Result{}, nil
 	}
 	// Create deployment if not exists
 	err, deploymentExists := r.vvpConnector.DeploymentExistsInVVP(&dep)

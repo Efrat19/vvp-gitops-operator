@@ -7,6 +7,7 @@ import (
 
 	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
 func (c *VvpConnector) DeploymentExistsInVVP(d *appmanagervvpv1alpha1.Deployment) (error, bool) {
@@ -25,6 +26,8 @@ func (c *VvpConnector) DeploymentExistsInVVP(d *appmanagervvpv1alpha1.Deployment
 func (c *VvpConnector) DeleteExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
 	ctx := context.Background()
 	if err := c.cancelStateForDeletion(d); err != nil {
+		log := log.FromContext(ctx)
+		log.Error(err, "Failed to cancel deployment for deletion")
 		return err
 	}
 	_, response, err := c.client.DeploymentResourceApi.DeleteDeploymentUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
