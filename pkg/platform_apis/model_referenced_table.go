@@ -11,8 +11,8 @@
 package swagger
 
 type ReferencedTable struct {
-	CatalogName string `json:"catalogName,omitempty"`
-	DatabaseName string `json:"databaseName,omitempty"`
-	Table *VvpTable `json:"table,omitempty"`
-	Temporary bool `json:"temporary,omitempty"`
+	CatalogName  string    `json:"catalogName,omitempty"`
+	DatabaseName string    `json:"databaseName,omitempty"`
+	Table        *VvpTable `json:"table,omitempty"`
+	Temporary    bool      `json:"temporary,omitempty"`
 }

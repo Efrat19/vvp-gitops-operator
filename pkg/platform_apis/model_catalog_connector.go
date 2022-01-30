@@ -11,10 +11,10 @@
 package swagger
 
 type CatalogConnector struct {
-	Dependencies []string `json:"dependencies,omitempty"`
-	Name string `json:"name,omitempty"`
-	Packaged bool `json:"packaged,omitempty"`
-	Properties []Property `json:"properties,omitempty"`
-	ReadOnly bool `json:"readOnly,omitempty"`
-	Type_ string `json:"type,omitempty"`
+	Dependencies []string   `json:"dependencies,omitempty"`
+	Name         string     `json:"name,omitempty"`
+	Packaged     bool       `json:"packaged,omitempty"`
+	Properties   []Property `json:"properties,omitempty"`
+	ReadOnly     bool       `json:"readOnly,omitempty"`
+	Type_        string     `json:"type,omitempty"`
 }

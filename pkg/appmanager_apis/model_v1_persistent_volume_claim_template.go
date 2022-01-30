@@ -11,7 +11,8 @@
 package swagger
 
 // PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.
+//+kubebuilder:object:generate=true
 type V1PersistentVolumeClaimTemplate struct {
-	Metadata *V1ObjectMeta `json:"metadata,omitempty"`
-	Spec *V1PersistentVolumeClaimSpec `json:"spec"`
+	Metadata *V1ObjectMeta                `json:"metadata,omitempty"`
+	Spec     *V1PersistentVolumeClaimSpec `json:"spec"`
 }

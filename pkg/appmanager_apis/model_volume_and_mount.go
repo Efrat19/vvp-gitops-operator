@@ -10,8 +10,9 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type VolumeAndMount struct {
-	Name string `json:"name,omitempty"`
-	Volume *JsonNode `json:"volume,omitempty"`
+	Name        string    `json:"name,omitempty"`
+	Volume      *JsonNode `json:"volume,omitempty"`
 	VolumeMount *JsonNode `json:"volumeMount,omitempty"`
 }

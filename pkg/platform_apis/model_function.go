@@ -11,9 +11,9 @@
 package swagger
 
 type Function struct {
-	ClassName string `json:"className,omitempty"`
-	Description string `json:"description,omitempty"`
+	ClassName        string `json:"className,omitempty"`
+	Description      string `json:"description,omitempty"`
 	FunctionLanguage string `json:"functionLanguage,omitempty"`
-	FunctionType string `json:"functionType,omitempty"`
-	Name string `json:"name,omitempty"`
+	FunctionType     string `json:"functionType,omitempty"`
+	Name             string `json:"name,omitempty"`
 }

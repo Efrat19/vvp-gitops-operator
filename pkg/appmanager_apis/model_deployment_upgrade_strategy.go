@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeploymentUpgradeStrategy struct {
 	Kind string `json:"kind,omitempty"`
 }

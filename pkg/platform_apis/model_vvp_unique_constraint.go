@@ -11,8 +11,8 @@
 package swagger
 
 type VvpUniqueConstraint struct {
-	Column []string `json:"column,omitempty"`
-	Enforced bool `json:"enforced,omitempty"`
-	Name string `json:"name,omitempty"`
-	Type_ string `json:"type,omitempty"`
+	Column   []string `json:"column,omitempty"`
+	Enforced bool     `json:"enforced,omitempty"`
+	Name     string   `json:"name,omitempty"`
+	Type_    string   `json:"type,omitempty"`
 }

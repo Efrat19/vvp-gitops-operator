@@ -11,6 +11,7 @@
 package swagger
 
 // SecretKeySelector selects a key of a Secret.
+//+kubebuilder:object:generate=true
 type V1SecretKeySelector struct {
 	// The key of the secret to select from.  Must be a valid secret key.
 	Key string `json:"key"`

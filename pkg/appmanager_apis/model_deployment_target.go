@@ -10,9 +10,10 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeploymentTarget struct {
-	ApiVersion string `json:"apiVersion,omitempty"`
-	Kind string `json:"kind,omitempty"`
-	Metadata *DeploymentTargetMetadata `json:"metadata,omitempty"`
-	Spec *DeploymentTargetSpec `json:"spec,omitempty"`
+	ApiVersion string                    `json:"apiVersion,omitempty"`
+	Kind       string                    `json:"kind,omitempty"`
+	Metadata   *DeploymentTargetMetadata `json:"metadata,omitempty"`
+	Spec       *DeploymentTargetSpec     `json:"spec,omitempty"`
 }

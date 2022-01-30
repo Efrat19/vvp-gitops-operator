@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeploymentTemplateMetadata struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 }

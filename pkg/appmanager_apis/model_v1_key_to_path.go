@@ -11,6 +11,7 @@
 package swagger
 
 // Maps a string key to a path within a volume.
+//+kubebuilder:object:generate=true
 type V1KeyToPath struct {
 	// The key to project.
 	Key string `json:"key"`

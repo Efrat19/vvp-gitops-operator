@@ -11,6 +11,7 @@
 package swagger
 
 // TCPSocketAction describes an action based on opening a socket
+//+kubebuilder:object:generate=true
 type V1TcpSocketAction struct {
 	// Optional: Host name to connect to, defaults to the pod IP.
 	Host string `json:"host,omitempty"`

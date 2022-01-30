@@ -10,10 +10,11 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Job struct {
-	ApiVersion string `json:"apiVersion,omitempty"`
-	Kind string `json:"kind,omitempty"`
-	Metadata *JobMetadata `json:"metadata,omitempty"`
-	Spec *JobSpec `json:"spec,omitempty"`
-	Status *JobStatus `json:"status,omitempty"`
+	ApiVersion string       `json:"apiVersion,omitempty"`
+	Kind       string       `json:"kind,omitempty"`
+	Metadata   *JobMetadata `json:"metadata,omitempty"`
+	Spec       *JobSpec     `json:"spec,omitempty"`
+	Status     *JobStatus   `json:"status,omitempty"`
 }

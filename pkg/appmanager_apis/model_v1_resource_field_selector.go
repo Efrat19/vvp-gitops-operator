@@ -11,6 +11,7 @@
 package swagger
 
 // ResourceFieldSelector represents container resources (cpu, memory) and their output format
+//+kubebuilder:object:generate=true
 type V1ResourceFieldSelector struct {
 	// Container name: required for volumes, optional for env vars
 	ContainerName string `json:"containerName,omitempty"`

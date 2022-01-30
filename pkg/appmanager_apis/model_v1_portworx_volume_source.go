@@ -11,6 +11,7 @@
 package swagger
 
 // PortworxVolumeSource represents a Portworx volume resource.
+//+kubebuilder:object:generate=true
 type V1PortworxVolumeSource struct {
 	// FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\". Implicitly inferred to be \"ext4\" if unspecified.
 	FsType string `json:"fsType,omitempty"`

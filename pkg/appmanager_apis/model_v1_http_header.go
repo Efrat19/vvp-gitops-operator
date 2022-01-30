@@ -11,6 +11,7 @@
 package swagger
 
 // HTTPHeader describes a custom header to be used in HTTP probes
+//+kubebuilder:object:generate=true
 type V1HttpHeader struct {
 	// The header field name
 	Name string `json:"name"`

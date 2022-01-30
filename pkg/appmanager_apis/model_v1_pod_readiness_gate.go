@@ -11,6 +11,7 @@
 package swagger
 
 // PodReadinessGate contains the reference to a pod condition
+//+kubebuilder:object:generate=true
 type V1PodReadinessGate struct {
 	// ConditionType refers to a condition in the pod's condition list with matching type.
 	ConditionType string `json:"conditionType"`

@@ -11,6 +11,7 @@
 package swagger
 
 // ObjectFieldSelector selects an APIVersioned field of an object.
+//+kubebuilder:object:generate=true
 type V1ObjectFieldSelector struct {
 	// Version of the schema the FieldPath is written in terms of, defaults to \"v1\".
 	ApiVersion string `json:"apiVersion,omitempty"`

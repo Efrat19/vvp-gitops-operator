@@ -11,13 +11,14 @@
 package swagger
 
 import (
-	"time"
+	time "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//+kubebuilder:object:generate=true
 type JobStatusStarted struct {
-	FlinkJobId string `json:"flinkJobId,omitempty"`
-	LastUpdateTime time.Time `json:"lastUpdateTime,omitempty"`
-	ObservedFlinkJobRestarts int32 `json:"observedFlinkJobRestarts,omitempty"`
-	ObservedFlinkJobStatus string `json:"observedFlinkJobStatus,omitempty"`
-	StartedAt time.Time `json:"startedAt,omitempty"`
+	FlinkJobId               string    `json:"flinkJobId,omitempty"`
+	LastUpdateTime           time.Time `json:"lastUpdateTime,omitempty"`
+	ObservedFlinkJobRestarts int32     `json:"observedFlinkJobRestarts,omitempty"`
+	ObservedFlinkJobStatus   string    `json:"observedFlinkJobStatus,omitempty"`
+	StartedAt                time.Time `json:"startedAt,omitempty"`
 }

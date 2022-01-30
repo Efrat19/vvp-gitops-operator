@@ -11,6 +11,7 @@
 package swagger
 
 // WindowsSecurityContextOptions contain Windows-specific options and credentials.
+//+kubebuilder:object:generate=true
 type V1WindowsSecurityContextOptions struct {
 	// GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
 	GmsaCredentialSpec string `json:"gmsaCredentialSpec,omitempty"`

@@ -15,17 +15,17 @@ import (
 )
 
 type JobGraph struct {
-	CreateTime time.Time `json:"createTime,omitempty"`
-	ErrorDetails *ErrorDetails `json:"errorDetails,omitempty"`
-	FlinkVersion string `json:"flinkVersion,omitempty"`
+	CreateTime             time.Time         `json:"createTime,omitempty"`
+	ErrorDetails           *ErrorDetails     `json:"errorDetails,omitempty"`
+	FlinkVersion           string            `json:"flinkVersion,omitempty"`
 	FullFlinkConfiguration map[string]string `json:"fullFlinkConfiguration,omitempty"`
-	JarUris []string `json:"jarUris,omitempty"`
-	JobgraphPath string `json:"jobgraphPath,omitempty"`
-	Name string `json:"name,omitempty"`
-	SinkTables []ReferencedTable `json:"sinkTables,omitempty"`
-	SourceTables []ReferencedTable `json:"sourceTables,omitempty"`
-	SqlStatement string `json:"sqlStatement,omitempty"`
-	State string `json:"state,omitempty"`
-	UpdateTime time.Time `json:"updateTime,omitempty"`
+	JarUris                []string          `json:"jarUris,omitempty"`
+	JobgraphPath           string            `json:"jobgraphPath,omitempty"`
+	Name                   string            `json:"name,omitempty"`
+	SinkTables             []ReferencedTable `json:"sinkTables,omitempty"`
+	SourceTables           []ReferencedTable `json:"sourceTables,omitempty"`
+	SqlStatement           string            `json:"sqlStatement,omitempty"`
+	State                  string            `json:"state,omitempty"`
+	UpdateTime             time.Time         `json:"updateTime,omitempty"`
 	UserFlinkConfiguration map[string]string `json:"userFlinkConfiguration,omitempty"`
 }

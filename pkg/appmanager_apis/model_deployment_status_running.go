@@ -11,11 +11,12 @@
 package swagger
 
 import (
-	"time"
+	time "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//+kubebuilder:object:generate=true
 type DeploymentStatusRunning struct {
-	Conditions []DeploymentCondition `json:"conditions,omitempty"`
-	JobId string `json:"jobId,omitempty"`
-	TransitionTime time.Time `json:"transitionTime,omitempty"`
+	Conditions     []DeploymentCondition `json:"conditions,omitempty"`
+	JobId          string                `json:"jobId,omitempty"`
+	TransitionTime time.Time             `json:"transitionTime,omitempty"`
 }

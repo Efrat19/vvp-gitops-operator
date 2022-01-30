@@ -11,6 +11,7 @@
 package swagger
 
 // volumeDevice describes a mapping of a raw block device within a container.
+//+kubebuilder:object:generate=true
 type V1VolumeDevice struct {
 	// devicePath is the path inside of the container that the device will be mapped to.
 	DevicePath string `json:"devicePath"`

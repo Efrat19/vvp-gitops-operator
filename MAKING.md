@@ -17,4 +17,12 @@ mkdir -p pkg/appmanager_apis
 mkdir -p pkg/platform_apis
 docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate  -i http://host.docker.internal:8080/swagger.json -l go -o /local/pkg/platform_apis
 docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate  -i http://host.docker.internal:8080/api/swagger.json -l go -o /local/pkg/appmanager_apis
+
+# Gen k9s files
+python3 pre-gen.py
+make install 
+kustomize build config/crd > k.yaml
+k create k.yaml
+make build
+make run ENABLE_WEBHOOKS=false
 ```

@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -29,19 +30,24 @@ type DeploymentSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Deployment. Edit deployment_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Metadata appmanager_apis.DeploymentMetadata `json:"metadata,omitempty"`
+	Spec     appmanager_apis.DeploymentSpec     `json:"spec,omitempty"`
+	Status   appmanager_apis.DeploymentStatus   `json:"status,omitempty"`
 }
 
 // DeploymentStatus defines the observed state of Deployment
 type DeploymentStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Running *appmanager_apis.DeploymentStatusRunning `json:"running,omitempty"`
+	State   string                                   `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// Deployment is the Schema for the deployments API
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state"
 type Deployment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

@@ -11,7 +11,7 @@
 package swagger
 
 type VvpSchema struct {
-	Column []VvpColumn `json:"column,omitempty"`
-	PrimaryKey *VvpUniqueConstraint `json:"primaryKey,omitempty"`
-	WatermarkSpec []VvpWatermark `json:"watermarkSpec,omitempty"`
+	Column        []VvpColumn          `json:"column,omitempty"`
+	PrimaryKey    *VvpUniqueConstraint `json:"primaryKey,omitempty"`
+	WatermarkSpec []VvpWatermark       `json:"watermarkSpec,omitempty"`
 }

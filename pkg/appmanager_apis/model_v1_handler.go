@@ -11,8 +11,9 @@
 package swagger
 
 // Handler defines a specific action that should be taken
+//+kubebuilder:object:generate=true
 type V1Handler struct {
-	Exec *V1ExecAction `json:"exec,omitempty"`
-	HttpGet *V1HttpGetAction `json:"httpGet,omitempty"`
+	Exec      *V1ExecAction      `json:"exec,omitempty"`
+	HttpGet   *V1HttpGetAction   `json:"httpGet,omitempty"`
 	TcpSocket *V1TcpSocketAction `json:"tcpSocket,omitempty"`
 }

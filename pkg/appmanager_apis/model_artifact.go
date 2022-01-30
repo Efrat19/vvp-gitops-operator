@@ -10,15 +10,16 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Artifact struct {
 	AdditionalDependencies []string `json:"additionalDependencies,omitempty"`
-	EntryClass string `json:"entryClass,omitempty"`
-	FlinkImageRegistry string `json:"flinkImageRegistry,omitempty"`
-	FlinkImageRepository string `json:"flinkImageRepository,omitempty"`
-	FlinkImageTag string `json:"flinkImageTag,omitempty"`
-	FlinkVersion string `json:"flinkVersion,omitempty"`
-	JarUri string `json:"jarUri,omitempty"`
-	Kind string `json:"kind,omitempty"`
-	MainArgs string `json:"mainArgs,omitempty"`
-	SqlScript string `json:"sqlScript,omitempty"`
+	EntryClass             string   `json:"entryClass,omitempty"`
+	FlinkImageRegistry     string   `json:"flinkImageRegistry,omitempty"`
+	FlinkImageRepository   string   `json:"flinkImageRepository,omitempty"`
+	FlinkImageTag          string   `json:"flinkImageTag,omitempty"`
+	FlinkVersion           string   `json:"flinkVersion,omitempty"`
+	JarUri                 string   `json:"jarUri,omitempty"`
+	Kind                   string   `json:"kind,omitempty"`
+	MainArgs               string   `json:"mainArgs,omitempty"`
+	SqlScript              string   `json:"sqlScript,omitempty"`
 }

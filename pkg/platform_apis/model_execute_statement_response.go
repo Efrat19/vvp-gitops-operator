@@ -12,6 +12,6 @@ package swagger
 
 type ExecuteStatementResponse struct {
 	ErrorMessage *ErrorDetails `json:"errorMessage,omitempty"`
-	Result string `json:"result,omitempty"`
-	ResultTable *ResultTable `json:"resultTable,omitempty"`
+	Result       string        `json:"result,omitempty"`
+	ResultTable  *ResultTable  `json:"resultTable,omitempty"`
 }

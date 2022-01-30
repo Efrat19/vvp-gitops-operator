@@ -11,6 +11,6 @@
 package swagger
 
 type CreateUdfArtifactResponse struct {
-	CollidingClasses []UdfClass `json:"collidingClasses,omitempty"`
-	UdfArtifact *UdfArtifact `json:"udfArtifact,omitempty"`
+	CollidingClasses []UdfClass   `json:"collidingClasses,omitempty"`
+	UdfArtifact      *UdfArtifact `json:"udfArtifact,omitempty"`
 }

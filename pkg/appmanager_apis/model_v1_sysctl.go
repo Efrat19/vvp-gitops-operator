@@ -11,6 +11,7 @@
 package swagger
 
 // Sysctl defines a kernel parameter to be set
+//+kubebuilder:object:generate=true
 type V1Sysctl struct {
 	// Name of a property to set
 	Name string `json:"name"`

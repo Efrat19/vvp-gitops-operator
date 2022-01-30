@@ -11,6 +11,7 @@
 package swagger
 
 // ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.  The contents of the target ConfigMap's Data field will represent the key-value pairs as environment variables.
+//+kubebuilder:object:generate=true
 type V1ConfigMapEnvSource struct {
 	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 	Name string `json:"name,omitempty"`

@@ -11,6 +11,7 @@
 package swagger
 
 // FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
+//+kubebuilder:object:generate=true
 type V1FlexVolumeSource struct {
 	// Driver is the name of the driver to use for this volume.
 	Driver string `json:"driver"`
@@ -19,6 +20,6 @@ type V1FlexVolumeSource struct {
 	// Optional: Extra command options if any.
 	Options map[string]string `json:"options,omitempty"`
 	// Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
-	ReadOnly bool `json:"readOnly,omitempty"`
+	ReadOnly  bool                    `json:"readOnly,omitempty"`
 	SecretRef *V1LocalObjectReference `json:"secretRef,omitempty"`
 }

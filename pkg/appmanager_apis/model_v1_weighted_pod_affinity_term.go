@@ -11,6 +11,7 @@
 package swagger
 
 // The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+//+kubebuilder:object:generate=true
 type V1WeightedPodAffinityTerm struct {
 	PodAffinityTerm *V1PodAffinityTerm `json:"podAffinityTerm"`
 	// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.

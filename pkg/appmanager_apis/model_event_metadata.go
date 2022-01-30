@@ -11,17 +11,18 @@
 package swagger
 
 import (
-	"time"
+	time "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//+kubebuilder:object:generate=true
 type EventMetadata struct {
-	CreatedAt time.Time `json:"createdAt,omitempty"`
-	DeploymentId string `json:"deploymentId,omitempty"`
-	Id string `json:"id,omitempty"`
-	JobId string `json:"jobId,omitempty"`
-	Name string `json:"name,omitempty"`
-	Namespace string `json:"namespace,omitempty"`
-	ResourceName string `json:"resourceName,omitempty"`
-	ResourceVersion int32 `json:"resourceVersion,omitempty"`
-	SessionClusterId string `json:"sessionClusterId,omitempty"`
+	CreatedAt        time.Time `json:"createdAt,omitempty"`
+	DeploymentId     string    `json:"deploymentId,omitempty"`
+	Id               string    `json:"id,omitempty"`
+	JobId            string    `json:"jobId,omitempty"`
+	Name             string    `json:"name,omitempty"`
+	Namespace        string    `json:"namespace,omitempty"`
+	ResourceName     string    `json:"resourceName,omitempty"`
+	ResourceVersion  int32     `json:"resourceVersion,omitempty"`
+	SessionClusterId string    `json:"sessionClusterId,omitempty"`
 }

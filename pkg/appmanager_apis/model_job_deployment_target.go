@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type JobDeploymentTarget struct {
 	Kubernetes *KubernetesTarget `json:"kubernetes,omitempty"`
 }

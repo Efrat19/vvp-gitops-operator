@@ -11,6 +11,7 @@
 package swagger
 
 // Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.
+//+kubebuilder:object:generate=true
 type V1HostPathVolumeSource struct {
 	// Path of the directory on the host. If the path is a symlink, it will follow the link to the real path. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
 	Path string `json:"path"`

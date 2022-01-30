@@ -11,16 +11,17 @@
 package swagger
 
 import (
-	"time"
+	time "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//+kubebuilder:object:generate=true
 type SessionClusterMetadata struct {
-	Id string `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
-	Namespace string `json:"namespace,omitempty"`
-	CreatedAt time.Time `json:"createdAt,omitempty"`
-	ModifiedAt time.Time `json:"modifiedAt,omitempty"`
-	Labels map[string]string `json:"labels,omitempty"`
-	Annotations map[string]string `json:"annotations,omitempty"`
-	ResourceVersion int32 `json:"resourceVersion,omitempty"`
+	Id              string            `json:"id,omitempty"`
+	Name            string            `json:"name,omitempty"`
+	Namespace       string            `json:"namespace,omitempty"`
+	CreatedAt       time.Time         `json:"createdAt,omitempty"`
+	ModifiedAt      time.Time         `json:"modifiedAt,omitempty"`
+	Labels          map[string]string `json:"labels,omitempty"`
+	Annotations     map[string]string `json:"annotations,omitempty"`
+	ResourceVersion int32             `json:"resourceVersion,omitempty"`
 }

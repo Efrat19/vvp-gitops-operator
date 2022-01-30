@@ -11,6 +11,7 @@
 package swagger
 
 // Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.
+//+kubebuilder:object:generate=true
 type V1QuobyteVolumeSource struct {
 	// Group to map volume access to Default is no group
 	Group string `json:"group,omitempty"`

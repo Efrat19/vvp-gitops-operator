@@ -10,9 +10,10 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type SecretValue struct {
-	ApiVersion string `json:"apiVersion,omitempty"`
-	Kind string `json:"kind,omitempty"`
-	Metadata *SecretValueMetadata `json:"metadata,omitempty"`
-	Spec *SecretValueSpec `json:"spec,omitempty"`
+	ApiVersion string               `json:"apiVersion,omitempty"`
+	Kind       string               `json:"kind,omitempty"`
+	Metadata   *SecretValueMetadata `json:"metadata,omitempty"`
+	Spec       *SecretValueSpec     `json:"spec,omitempty"`
 }

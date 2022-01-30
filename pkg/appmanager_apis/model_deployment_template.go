@@ -10,7 +10,8 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeploymentTemplate struct {
 	Metadata *DeploymentTemplateMetadata `json:"metadata,omitempty"`
-	Spec *DeploymentTemplateSpec `json:"spec,omitempty"`
+	Spec     *DeploymentTemplateSpec     `json:"spec,omitempty"`
 }

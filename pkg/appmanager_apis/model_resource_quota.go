@@ -10,9 +10,10 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResourceQuota struct {
-	ApiVersion string `json:"apiVersion,omitempty"`
-	Kind string `json:"kind,omitempty"`
-	Spec *ResourceQuotaSpec `json:"spec,omitempty"`
-	Status *ResourceQuotaStatus `json:"status,omitempty"`
+	ApiVersion string               `json:"apiVersion,omitempty"`
+	Kind       string               `json:"kind,omitempty"`
+	Spec       *ResourceQuotaSpec   `json:"spec,omitempty"`
+	Status     *ResourceQuotaStatus `json:"status,omitempty"`
 }

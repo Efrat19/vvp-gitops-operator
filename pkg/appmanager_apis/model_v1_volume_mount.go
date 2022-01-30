@@ -11,6 +11,7 @@
 package swagger
 
 // VolumeMount describes a mounting of a Volume within a container.
+//+kubebuilder:object:generate=true
 type V1VolumeMount struct {
 	// Path within the container at which the volume should be mounted.  Must not contain ':'.
 	MountPath string `json:"mountPath"`

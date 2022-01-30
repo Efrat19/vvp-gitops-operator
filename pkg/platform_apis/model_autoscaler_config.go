@@ -11,9 +11,9 @@
 package swagger
 
 type AutoscalerConfig struct {
-	CooldownMinutes int32 `json:"cooldownMinutes,omitempty"`
-	ExtraConfig map[string]string `json:"extraConfig,omitempty"`
-	MaxParallelism int32 `json:"maxParallelism,omitempty"`
-	MinParallelism int32 `json:"minParallelism,omitempty"`
-	TargetUtilization int32 `json:"targetUtilization,omitempty"`
+	CooldownMinutes   int32             `json:"cooldownMinutes,omitempty"`
+	ExtraConfig       map[string]string `json:"extraConfig,omitempty"`
+	MaxParallelism    int32             `json:"maxParallelism,omitempty"`
+	MinParallelism    int32             `json:"minParallelism,omitempty"`
+	TargetUtilization int32             `json:"targetUtilization,omitempty"`
 }

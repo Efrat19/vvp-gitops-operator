@@ -15,9 +15,9 @@ import (
 )
 
 type AutoscalerStatus struct {
-	LastActionTime time.Time `json:"lastActionTime,omitempty"`
-	Message string `json:"message,omitempty"`
-	Metrics string `json:"metrics,omitempty"`
-	SourceStatus []AutoscalingSourceStatus `json:"sourceStatus,omitempty"`
-	UpdateTime time.Time `json:"updateTime,omitempty"`
+	LastActionTime time.Time                 `json:"lastActionTime,omitempty"`
+	Message        string                    `json:"message,omitempty"`
+	Metrics        string                    `json:"metrics,omitempty"`
+	SourceStatus   []AutoscalingSourceStatus `json:"sourceStatus,omitempty"`
+	UpdateTime     time.Time                 `json:"updateTime,omitempty"`
 }
