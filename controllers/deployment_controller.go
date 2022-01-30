@@ -18,10 +18,12 @@ package controllers
 
 import (
 	"context"
-	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
-	"efrat19.io/vvp-gitops-operator/pkg/vvp_connector"
 	"fmt"
 	"time"
+
+	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+	"efrat19.io/vvp-gitops-operator/pkg/vvp_connector"
+
 	// "github.com/fintechstudios/ververica-platform-k8s-operator/pkg/polling"
 	// "github.com/davecgh/go-spew/spew"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -87,7 +89,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 				log.Error(err, fmt.Sprintf("Failed to delete deployment %s in vvp, retrying in 30 sec\n", dep.Spec.Metadata.Name))
 				// if fail to delete the external dependency here, return with error
 				// so that it can be retried
-				return ctrl.Result{RequeueAfter: time.Second * 30}, err
+				return ctrl.Result{RequeueAfter: time.Second * 10}, err
 			}
 
 			// remove our finalizer from the list and update it.
