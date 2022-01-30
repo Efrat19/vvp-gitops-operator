@@ -37,7 +37,7 @@ import (
 type DeploymentReconciler struct {
 	client.Client
 	Scheme       *runtime.Scheme
-	vvpConnector *vvp_connector.VvpConnector
+	vvpConnector *vvp_connector.VvpDeploymentConnector
 }
 
 //+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deployments,verbs=get;list;watch;create;update;patch;delete
@@ -103,7 +103,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		return ctrl.Result{}, nil
 	}
 	// Create deployment if not exists
-	err, deploymentExists := r.vvpConnector.DeploymentExistsInVVP(&dep)
+	err, deploymentExists := r.vvpConnector.ResourceExistsInVVP(&dep)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp deployment exists")
 		return ctrl.Result{}, nil
@@ -147,7 +147,7 @@ func (r *DeploymentReconciler) updateDeploymentStatus(ctx context.Context, dep *
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *DeploymentReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	r.vvpConnector, _ = vvp_connector.NewConnector()
+	r.vvpConnector.InitConnector()
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&appmanagervvpv1alpha1.Deployment{}).
 		Complete(r)
