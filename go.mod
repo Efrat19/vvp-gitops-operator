@@ -10,9 +10,19 @@ require (
 	sigs.k8s.io/controller-runtime v0.11.0
 )
 
-require moul.io/http2curl v1.0.0
+require (
+	github.com/stretchr/testify v1.7.0
+	moul.io/http2curl v1.0.0
+)
 
-require github.com/fintechstudios/ververica-platform-k8s-operator v0.8.1 // indirect
+require (
+	github.com/golang/mock v1.6.0 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/stretchr/objx v0.2.0 // indirect
+	golang.org/x/mod v0.4.2 // indirect
+	golang.org/x/tools v0.1.6-0.20210820212750-d4cc65f0b2ff // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+)
 
 require (
 	cloud.google.com/go v0.81.0 // indirect
@@ -25,7 +35,7 @@ require (
 	github.com/antihax/optional v1.0.0
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.1 // indirect
-	github.com/davecgh/go-spew v1.1.1
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/evanphx/json-patch v4.12.0+incompatible // indirect
 	github.com/form3tech-oss/jwt-go v3.2.3+incompatible // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
