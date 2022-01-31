@@ -13,16 +13,19 @@ type VvpClient interface {
 }
 
 type vvpClient struct {
+	appManagerClient *appmanager_apis.APIClient
 	deploymentsService
 }
 
 func NewClient() VvpClient {
-	return &vvpClient{}
+	return &vvpClient{
+		appManagerClient: initAppManagerClient(),
+	}
 }
 
 func (v *vvpClient) Deployments() deploymentsService {
 	if &v.deploymentsService == nil {
-		v.deploymentsService = deploymentsService{client: initAppManagerClient()}
+		v.deploymentsService = deploymentsService{client: v.client}
 	}
 	return v.deploymentsService
 }
