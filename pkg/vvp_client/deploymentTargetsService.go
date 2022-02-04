@@ -10,13 +10,13 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
-type DeploymentTargetsService struct {
+type DeploymentDefaultsService struct {
 	client *appmanager_apis.APIClient
 }
 
-func (c DeploymentTargetsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.DeploymentTarget) (error, bool) {
+func (c DeploymentDefaultsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.DeploymentDefaults) (error, bool) {
 	ctx := context.Background()
-	_, response, err := c.client.DeploymentTargetResourceApi.GetDeploymentTargetUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, response, err := c.client.DeploymentDefaultsResourceApi.GetDeploymentDefaultsUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil, false
@@ -27,14 +27,14 @@ func (c DeploymentTargetsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.D
 	return err, true
 }
 
-func (c DeploymentTargetsService) DeleteExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+func (c DeploymentDefaultsService) DeleteExternalResources(d *appmanagervvpv1alpha1.DeploymentDefaults) error {
 	ctx := context.Background()
 	if err := c.cancelStateForDeletion(d); err != nil {
 		log := log.FromContext(ctx)
 		log.Error(err, "Failed to cancel deployment for deletion")
 		return err
 	}
-	_, response, err := c.client.DeploymentTargetResourceApi.DeleteDeploymentTargetUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, response, err := c.client.DeploymentDefaultsResourceApi.DeleteDeploymentDefaultsUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil
@@ -44,44 +44,44 @@ func (c DeploymentTargetsService) DeleteExternalResources(d *appmanagervvpv1alph
 	return err
 }
 
-func (c DeploymentTargetsService) CreateExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+func (c DeploymentDefaultsService) CreateExternalResources(d *appmanagervvpv1alpha1.DeploymentDefaults) error {
 	ctx := context.Background()
-	deployment := c.vvpDeplomentFromK8sDeploymentTarget(d)
+	deployment := c.vvpDeplomentFromK8sDeploymentDefault(d)
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.DeploymentTargetResourceApi.CreateDeploymentTargetUsingPOST(ctx, *deployment, d.Spec.Metadata.Namespace)
+	_, _, err := c.client.DeploymentDefaultsResourceApi.CreateDeploymentDefaultsUsingPOST(ctx, *deployment, d.Spec.Metadata.Namespace)
 	return err
 }
 
-func (c DeploymentTargetsService) UpdateExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+func (c DeploymentDefaultsService) UpdateExternalResources(d *appmanagervvpv1alpha1.DeploymentsDefault) error {
 	ctx := context.Background()
-	deployment := c.vvpDeplomentFromK8sDeploymentTarget(d)
+	deployment := c.vvpDeplomentFromK8sDeploymentDefault(d)
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.DeploymentTargetResourceApi.UpdateDeploymentTargetUsingPATCH(ctx, *deployment, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, _, err := c.client.DeploymentDefaultsResourceApi.UpdateDeploymentDefaultsUsingPATCH(ctx, *deployment, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	return err
 }
 
-func (c DeploymentTargetsService) GetStatus(d *appmanagervvpv1alpha1.DeploymentTarget) (*appmanager_apis.DeploymentTargetStatus, error) {
+func (c DeploymentDefaultsService) GetStatus(d *appmanagervvpv1alpha1.DeploymentsDefault) (*appmanager_apis.DeploymentDefaultsStatus, error) {
 	ctx := context.Background()
-	deployment, _, err := c.client.DeploymentTargetResourceApi.GetDeploymentTargetUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	deployment, _, err := c.client.DeploymentDefaultsResourceApi.GetDeploymentDefaultsUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	return deployment.Status, err
 }
 
-func (c DeploymentTargetsService) validateName(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+func (c DeploymentDefaultsService) validateName(d *appmanagervvpv1alpha1.DeploymentDefaults) error {
 	if d.Spec.Metadata.Name != d.Name {
-		msg := "Validation failed: DeploymentTarget name must match deployment.spec.metadata.name"
+		msg := "Validation failed: DeploymentDefault name must match deployment.spec.metadata.name"
 		return errors.New(msg)
 	}
 	return nil
 }
 
-func (c DeploymentTargetsService) vvpDeplomentFromK8sDeploymentTarget(d *appmanagervvpv1alpha1.DeploymentTarget) *appmanager_apis.DeploymentTarget {
-	deployment := &appmanager_apis.DeploymentTarget{
+func (c DeploymentDefaultsService) vvpDeplomentFromK8sDeploymentDefault(d *appmanagervvpv1alpha1.DeploymentDefaults) *appmanager_apis.DeploymentDefaults {
+	deployment := &appmanager_apis.DeploymentDefaults{
 		ApiVersion: "v1",
-		Kind:       "DeploymentTarget",
+		Kind:       "DeploymentDefault",
 		Metadata:   &d.Spec.Metadata,
 		Spec:       &d.Spec.Spec,
 		Status:     &d.Spec.Status,
@@ -89,7 +89,7 @@ func (c DeploymentTargetsService) vvpDeplomentFromK8sDeploymentTarget(d *appmana
 	return deployment
 }
 
-func (c DeploymentTargetsService) cancelStateForDeletion(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+func (c DeploymentDefaultsService) cancelStateForDeletion(d *appmanagervvpv1alpha1.DeploymentDefaults) error {
 	cancelledState := "CANCELLED"
 	status, err := c.GetStatus(d)
 	if err != nil {
