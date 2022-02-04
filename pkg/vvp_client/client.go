@@ -9,12 +9,19 @@ import (
 )
 
 type VvpClient interface {
-	Deployments() deploymentsService
+	Deployments() DeploymentsService
+	DeploymentDefaults () DeploymentDefaultsService
+	DeploymentTargets () DeploymentTargetsService
+	Events () EventsService
+	Jobs () JobsService
+	SavePoints () SavePointsService
+	SecretValues () SecretValuesService
+	SessionClusters () SessionClustersService 
 }
 
 type vvpClient struct {
-	appManagerClient *appmanager_apis.APIClient
-	deploymentsService
+	appManagerClient   *appmanager_apis.APIClient
+	DeploymentsService DeploymentsService
 }
 
 func NewClient() VvpClient {
@@ -23,11 +30,61 @@ func NewClient() VvpClient {
 	}
 }
 
-func (v *vvpClient) Deployments() deploymentsService {
-	if &v.deploymentsService == nil {
-		v.deploymentsService = deploymentsService{client: v.client}
+
+func (v *vvpClient) Deployments() DeploymentsService {
+	if &v.DeploymentsService == nil {
+		v.DeploymentsService = DeploymentsService{client: v.appManagerClient}
 	}
-	return v.deploymentsService
+	return v.DeploymentsService
+}
+func (v *vvpClient) DeploymentDefaults() DeploymentDefaultsService {
+	if &v.DeploymentDefaultsService == nil {
+		v.DeploymentDefaultsService = DeploymentDefaultsService{client: v.appManagerClient}
+	}
+	return v.DeploymentDefaultsService
+}
+
+func (v *vvpClient) DeploymentTargets() DeploymentTargetsService {
+	if &v.DeploymentTargetsService == nil {
+		v.DeploymentTargetsService = DeploymentTargetsService{client: v.appManagerClient}
+	}
+	return v.DeploymentTargetsService
+}
+
+func (v *vvpClient) Events() EventsService {
+	if &v.EventsService == nil {
+		v.EventsService = EventsService{client: v.appManagerClient}
+	}
+	return v.EventsService
+}
+
+func (v *vvpClient) Jobs() JobsService {
+	if &v.JobsService == nil {
+		v.JobsService = JobsService{client: v.appManagerClient}
+	}
+	return v.JobsService
+}
+
+func (v *vvpClient) SavePoints() SavePointsService {
+	if &v.SavePointsService == nil {
+		v.SavePointsService = SavePointsService{client: v.appManagerClient}
+	}
+	return v.SavePointsService
+}
+
+func (v *vvpClient) SecretValues() SecretValuesService {
+	if &v.SecretValuesService == nil {
+		v.SecretValuesService = SecretValuesService{client: v.appManagerClient}
+	}
+	return v.SecretValuesService
+}
+
+
+func (v *vvpClient) SessionClusters() SessionClustersService {
+	if &v.SessionClustersService == nil {
+		v.SessionClustersService = SessionClustersService{client: v.appManagerClient}
+	}
+	return v.SessionClustersService
 }
 
 func initAppManagerClient() *appmanager_apis.APIClient {

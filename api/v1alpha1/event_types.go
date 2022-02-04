@@ -18,6 +18,8 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -29,17 +31,21 @@ type EventSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Event. Edit event_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Metadata appmanager_apis.EventMetadata `json:"metadata,omitempty"`
+	Spec     appmanager_apis.EventSpec     `json:"spec,omitempty"`
 }
-
 // EventStatus defines the observed state of Event
 type EventStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	State   string                                   `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state"
 
 // Event is the Schema for the events API
 type Event struct {

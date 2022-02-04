@@ -18,6 +18,8 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -28,18 +30,22 @@ type DeploymentDefaultsSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of DeploymentDefaults. Edit deploymentdefaults_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Metadata appmanager_apis.DeploymentDefaultsMetadata `json:"metadata,omitempty"`
+	Spec     appmanager_apis.DeploymentSpec     `json:"spec,omitempty"`
 }
 
 // DeploymentDefaultsStatus defines the observed state of DeploymentDefaults
 type DeploymentDefaultsStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	State   string     
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state"
 
 // DeploymentDefaults is the Schema for the deploymentdefaults API
 type DeploymentDefaults struct {

@@ -18,6 +18,8 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -29,13 +31,17 @@ type SavepointSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Savepoint. Edit savepoint_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Metadata appmanager_apis.SavepointMetadata `json:"metadata,omitempty"`
+	Spec     appmanager_apis.SavepointSpec     `json:"spec,omitempty"`
+	Status   appmanager_apis.SavepointStatus   `json:"status,omitempty"`
 }
 
 // SavepointStatus defines the observed state of Savepoint
 type SavepointStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	State   string   `json:"state,omitempty"`
+	Failure *appmanager_apis.Failure `json:"failure,omitempty"`
 }
 
 //+kubebuilder:object:root=true
@@ -51,6 +57,10 @@ type Savepoint struct {
 }
 
 //+kubebuilder:object:root=true
+
+
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state"
 
 // SavepointList contains a list of Savepoint
 type SavepointList struct {

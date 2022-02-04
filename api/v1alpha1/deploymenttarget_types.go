@@ -18,6 +18,8 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -29,18 +31,23 @@ type DeploymentTargetSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of DeploymentTarget. Edit deploymenttarget_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Metadata appmanager_apis.DeploymentTargetMetadata `json:"metadata,omitempty"`
+	Spec     appmanager_apis.DeploymentTargetSpec    `json:"spec,omitempty"`
 }
 
 // DeploymentTargetStatus defines the observed state of DeploymentTarget
 type DeploymentTargetStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	State   string                                   `json:"state,omitempty"`
+
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state"
 // DeploymentTarget is the Schema for the deploymenttargets API
 type DeploymentTarget struct {
 	metav1.TypeMeta   `json:",inline"`

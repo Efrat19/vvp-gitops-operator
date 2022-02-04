@@ -25,4 +25,6 @@ kustomize build config/crd > k.yaml
 k create k.yaml
 make build
 make run ENABLE_WEBHOOKS=false
+
+mockgen -destination=mocks/vvp_client/client.go efrat19.io/vvp-gitops-operator/pkg/vvp_client VvpClient 
 ```

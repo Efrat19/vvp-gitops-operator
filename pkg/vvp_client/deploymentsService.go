@@ -10,11 +10,11 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
-type deploymentsService struct {
+type DeploymentsService struct {
 	client *appmanager_apis.APIClient
 }
 
-func (c deploymentsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Deployment) (error, bool) {
+func (c DeploymentsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Deployment) (error, bool) {
 	ctx := context.Background()
 	_, response, err := c.client.DeploymentResourceApi.GetDeploymentUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	if err != nil {
@@ -27,7 +27,7 @@ func (c deploymentsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Deploym
 	return err, true
 }
 
-func (c deploymentsService) DeleteExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
+func (c DeploymentsService) DeleteExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
 	ctx := context.Background()
 	if err := c.cancelStateForDeletion(d); err != nil {
 		log := log.FromContext(ctx)
@@ -44,7 +44,7 @@ func (c deploymentsService) DeleteExternalResources(d *appmanagervvpv1alpha1.Dep
 	return err
 }
 
-func (c deploymentsService) CreateExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
+func (c DeploymentsService) CreateExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
 	ctx := context.Background()
 	deployment := c.vvpDeplomentFromK8sDeployment(d)
 	if err := c.validateName(d); err != nil {
@@ -54,7 +54,7 @@ func (c deploymentsService) CreateExternalResources(d *appmanagervvpv1alpha1.Dep
 	return err
 }
 
-func (c deploymentsService) UpdateExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
+func (c DeploymentsService) UpdateExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
 	ctx := context.Background()
 	deployment := c.vvpDeplomentFromK8sDeployment(d)
 	if err := c.validateName(d); err != nil {
@@ -64,13 +64,13 @@ func (c deploymentsService) UpdateExternalResources(d *appmanagervvpv1alpha1.Dep
 	return err
 }
 
-func (c deploymentsService) GetStatus(d *appmanagervvpv1alpha1.Deployment) (*appmanager_apis.DeploymentStatus, error) {
+func (c DeploymentsService) GetStatus(d *appmanagervvpv1alpha1.Deployment) (*appmanager_apis.DeploymentStatus, error) {
 	ctx := context.Background()
 	deployment, _, err := c.client.DeploymentResourceApi.GetDeploymentUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	return deployment.Status, err
 }
 
-func (c deploymentsService) validateName(d *appmanagervvpv1alpha1.Deployment) error {
+func (c DeploymentsService) validateName(d *appmanagervvpv1alpha1.Deployment) error {
 	if d.Spec.Metadata.Name != d.Name {
 		msg := "Validation failed: Deployment name must match deployment.spec.metadata.name"
 		return errors.New(msg)
@@ -78,7 +78,7 @@ func (c deploymentsService) validateName(d *appmanagervvpv1alpha1.Deployment) er
 	return nil
 }
 
-func (c deploymentsService) vvpDeplomentFromK8sDeployment(d *appmanagervvpv1alpha1.Deployment) *appmanager_apis.Deployment {
+func (c DeploymentsService) vvpDeplomentFromK8sDeployment(d *appmanagervvpv1alpha1.Deployment) *appmanager_apis.Deployment {
 	deployment := &appmanager_apis.Deployment{
 		ApiVersion: "v1",
 		Kind:       "Deployment",
@@ -89,7 +89,7 @@ func (c deploymentsService) vvpDeplomentFromK8sDeployment(d *appmanagervvpv1alph
 	return deployment
 }
 
-func (c deploymentsService) cancelStateForDeletion(d *appmanagervvpv1alpha1.Deployment) error {
+func (c DeploymentsService) cancelStateForDeletion(d *appmanagervvpv1alpha1.Deployment) error {
 	cancelledState := "CANCELLED"
 	status, err := c.GetStatus(d)
 	if err != nil {
