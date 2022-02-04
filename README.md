@@ -3,23 +3,23 @@
 supported resources:
 ```bash
 vvp.appmanager.efrat19.io/v1alpha1
-Deployment
-DeploymentDefaults
-DeploymentTarget
-Event
-Job
-Savepoint
-SecretValue
-SessionCluster
+[X] Deployment
+[-] DeploymentDefaults
+[X] DeploymentTarget
+[-] Event
+[-] Job
+[X] Savepoint
+[X] SecretValue
+[X] SessionCluster
 ```
 to be supported:
 ```bash
 vvp.platform.efrat19.io/v1alpha1
-ApiTokens
-Catalogs
-CatalogConnectors
-Connectors
-Formats
-SqlScripts
-UdfArtifacts
+[X] ApiTokens
+[-] Catalogs
+[] CatalogConnectors
+[C] Connectors
+[] Formats
+[X] SqlScripts
+[X] UdfArtifacts
 ```
