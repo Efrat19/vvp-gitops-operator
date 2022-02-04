@@ -37,15 +37,16 @@ type SessionClusterSpec struct {
 
 // SessionClusterStatus defines the observed state of SessionCluster
 type SessionClusterStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	State   string                                       `json:"state,omitempty"`
-	Failure *appmanager_apis.Failure                     `json:"failure,omitempty"`
-	Running *appmanager_apis.SessionClusterStatusRunning `json:"running,omitempty"`
+	LastSync   metav1.Time                                   `json:"lastSync,omitempty"`
+	State   string                                   `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+
+// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="LAST SYNC",type="string",JSONPath=".status.lastSync"
+// +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 
 // SessionCluster is the Schema for the sessionclusters API
 type SessionCluster struct {

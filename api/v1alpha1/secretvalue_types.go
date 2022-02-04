@@ -36,13 +36,16 @@ type SecretValueSpec struct {
 
 // SecretValueStatus defines the observed state of SecretValue
 type SecretValueStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	State string `json:"state,omitempty"`
+	LastSync   metav1.Time                                   `json:"lastSync,omitempty"`
+	State   string                                   `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+
+// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="LAST SYNC",type="string",JSONPath=".status.lastSync"
+// +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 
 // SecretValue is the Schema for the secretvalues API
 type SecretValue struct {

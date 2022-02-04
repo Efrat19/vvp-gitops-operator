@@ -37,14 +37,16 @@ type SavepointSpec struct {
 
 // SavepointStatus defines the observed state of Savepoint
 type SavepointStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	State   string                   `json:"state,omitempty"`
-	Failure *appmanager_apis.Failure `json:"failure,omitempty"`
+	LastSync   metav1.Time                                   `json:"lastSync,omitempty"`
+	State   string                                   `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+
+// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="LAST SYNC",type="string",JSONPath=".status.lastSync"
+// +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 
 // Savepoint is the Schema for the savepoints API
 type Savepoint struct {

@@ -32,7 +32,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
-
 // DeploymentReconciler reconciles a Deployment object
 type DeploymentReconciler struct {
 	client.Client
@@ -56,16 +55,36 @@ type DeploymentReconciler struct {
 func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx)
 	var dep appmanagervvpv1alpha1.Deployment
-
 	if err := r.Get(ctx, req.NamespacedName, &dep); err != nil {
 		log.Error(err, "unable to get deployment")
-		// log.Error(err, fmt.Sprintf("xxxxxxx %v", reflect.TypeOf(dep)))
-		// we'll ignore not-found errors, since they can't be fixed by an immediate
-		// requeue (we'll need to wait for a new notification), and we can get them
-		// on deleted requests.
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
+	r.handleDeploymentDeletionIfNeeded(ctx,dep)
+	r.handleDeploymentCreationIfNeeded(ctx,dep)
+	r.updateDeploymentStatus(ctx, &dep)
+	return ctrl.Result{}, nil
+}
+
+func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) (ctrl.Result, error) {
+	log := log.FromContext(ctx)
+	// Create deployment if not exists
+	err, deploymentExists := r.vvpClient.Deployments().ResourceExistsInVVP(&dep)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp deployment exists")
+		return ctrl.Result{}, nil
+	}
+	if !deploymentExists {
+		log.Info(fmt.Sprintf("Deployment %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))
+		if err := r.vvpClient.Deployments().CreateExternalResources(&dep); err != nil {
+			log.Error(err, "unable to create vvp deployment")
+		}
+	}
+	return ctrl.Result{}, nil
+}
+
+func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) (ctrl.Result, error) {
 	// name of our custom finalizer
+	log := log.FromContext(ctx)
 	appmanagerFinalizer := "appmanager.vvp.efrat19.io/finalizer"
 
 	// examine DeletionTimestamp to determine if object is under deletion
@@ -102,25 +121,6 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		// Stop reconciliation as the item is being deleted
 		return ctrl.Result{}, nil
 	}
-	// Create deployment if not exists
-	err, deploymentExists := r.vvpClient.Deployments().ResourceExistsInVVP(&dep)
-	if err != nil {
-		log.Error(err, "unable to check whether vvp deployment exists")
-		return ctrl.Result{}, nil
-	}
-	if !deploymentExists {
-		log.Info(fmt.Sprintf("Deployment %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))
-		if err := r.vvpClient.Deployments().CreateExternalResources(&dep); err != nil {
-			log.Error(err, "unable to create vvp deployment")
-		}
-	}
-	r.updateDeploymentStatus(ctx, &dep)
-	// update vvp deployment spec from vvp
-	log.Info(fmt.Sprintf("Updating spec for deployment %s \n", dep.Spec.Metadata.Name))
-	if err := r.vvpClient.Deployments().UpdateExternalResources(&dep); err != nil {
-		log.Error(err, "unable to update vvp deployment spec")
-		return ctrl.Result{}, nil
-	}
 	return ctrl.Result{}, nil
 }
 
@@ -141,6 +141,12 @@ func (r *DeploymentReconciler) updateDeploymentStatus(ctx context.Context, dep *
 	if err := r.Status().Update(ctx, dep); err != nil {
 		log.Error(err, "unable to update k8s deployment status")
 		return ctrl.Result{}, err
+	}
+	// update vvp deployment spec from vvp
+	log.Info(fmt.Sprintf("Updating spec for deployment %s \n", dep.Spec.Metadata.Name))
+	if err := r.vvpClient.Deployments().UpdateExternalResources(&dep); err != nil {
+		log.Error(err, "unable to update vvp deployment spec")
+		return ctrl.Result{}, nil
 	}
 	return ctrl.Result{}, nil
 }
