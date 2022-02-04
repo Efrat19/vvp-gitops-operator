@@ -15,7 +15,14 @@ spec:
     singular: deploymenttarget
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.state
+      name: Status
+      type: string
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: DeploymentTarget is the Schema for the deploymenttargets API
@@ -35,13 +42,51 @@ spec:
           spec:
             description: DeploymentTargetSpec defines the desired state of DeploymentTarget
             properties:
-              foo:
+              metadata:
                 description: Foo is an example field of DeploymentTarget. Edit deploymenttarget_types.go
                   to remove/update
-                type: string
+                properties:
+                  annotations:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  createdAt:
+                    format: date-time
+                    type: string
+                  id:
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  modifiedAt:
+                    format: date-time
+                    type: string
+                  name:
+                    type: string
+                  namespace:
+                    type: string
+                  resourceVersion:
+                    format: int32
+                    type: integer
+                type: object
+              spec:
+                properties:
+                  kubernetes:
+                    properties:
+                      namespace:
+                        type: string
+                    type: object
+                type: object
             type: object
           status:
             description: DeploymentTargetStatus defines the observed state of DeploymentTarget
+            properties:
+              state:
+                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                  of cluster Important: Run "make" to regenerate code after modifying
+                  this file'
+                type: string
             type: object
         type: object
     served: true

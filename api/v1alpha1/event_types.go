@@ -17,9 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
-
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -34,11 +33,12 @@ type EventSpec struct {
 	Metadata appmanager_apis.EventMetadata `json:"metadata,omitempty"`
 	Spec     appmanager_apis.EventSpec     `json:"spec,omitempty"`
 }
+
 // EventStatus defines the observed state of Event
 type EventStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	State   string                                   `json:"state,omitempty"`
+	State string `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true

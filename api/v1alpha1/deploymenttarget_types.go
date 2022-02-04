@@ -17,9 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
-
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -32,15 +31,14 @@ type DeploymentTargetSpec struct {
 
 	// Foo is an example field of DeploymentTarget. Edit deploymenttarget_types.go to remove/update
 	Metadata appmanager_apis.DeploymentTargetMetadata `json:"metadata,omitempty"`
-	Spec     appmanager_apis.DeploymentTargetSpec    `json:"spec,omitempty"`
+	Spec     appmanager_apis.DeploymentTargetSpec     `json:"spec,omitempty"`
 }
 
 // DeploymentTargetStatus defines the observed state of DeploymentTarget
 type DeploymentTargetStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	State   string                                   `json:"state,omitempty"`
-
+	State string `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true

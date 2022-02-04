@@ -10,13 +10,13 @@ import (
 
 type VvpClient interface {
 	Deployments() DeploymentsService
-	DeploymentDefaults () DeploymentDefaultsService
-	DeploymentTargets () DeploymentTargetsService
-	Events () EventsService
-	Jobs () JobsService
-	SavePoints () SavePointsService
-	SecretValues () SecretValuesService
-	SessionClusters () SessionClustersService 
+	DeploymentDefaults() DeploymentDefaultsService
+	DeploymentTargets() DeploymentTargetsService
+	Events() EventsService
+	Jobs() JobsService
+	SavePoints() SavePointsService
+	SecretValues() SecretValuesService
+	SessionClusters() SessionClustersService
 }
 
 type vvpClient struct {
@@ -29,7 +29,6 @@ func NewClient() VvpClient {
 		appManagerClient: initAppManagerClient(),
 	}
 }
-
 
 func (v *vvpClient) Deployments() DeploymentsService {
 	if &v.DeploymentsService == nil {
@@ -78,7 +77,6 @@ func (v *vvpClient) SecretValues() SecretValuesService {
 	}
 	return v.SecretValuesService
 }
-
 
 func (v *vvpClient) SessionClusters() SessionClustersService {
 	if &v.SessionClustersService == nil {

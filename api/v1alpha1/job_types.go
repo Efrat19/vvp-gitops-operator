@@ -17,9 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
-
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -34,23 +33,22 @@ type JobSpec struct {
 	Metadata appmanager_apis.JobMetadata `json:"metadata,omitempty"`
 	Spec     appmanager_apis.JobSpec     `json:"spec,omitempty"`
 	Status   appmanager_apis.JobStatus   `json:"status,omitempty"`
-
 }
 
 // JobStatus defines the observed state of Job
 type JobStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Running *appmanager_apis.DeploymentStatusRunning `json:"running,omitempty"`
-	Failure      *appmanager_apis.Failure          `json:"failure,omitempty"`
-	SinkTables   *[]appmanager_apis.JobTable        `json:"sinkTables,omitempty"`
-	SourceTables *[]appmanager_apis.JobTable        `json:"sourceTables,omitempty"`
-	Started      *appmanager_apis.JobStatusStarted `json:"started,omitempty"`
-	State        string            `json:"state,omitempty"`}
+	Running      *appmanager_apis.DeploymentStatusRunning `json:"running,omitempty"`
+	Failure      *appmanager_apis.Failure                 `json:"failure,omitempty"`
+	SinkTables   *[]appmanager_apis.JobTable              `json:"sinkTables,omitempty"`
+	SourceTables *[]appmanager_apis.JobTable              `json:"sourceTables,omitempty"`
+	Started      *appmanager_apis.JobStatusStarted        `json:"started,omitempty"`
+	State        string                                   `json:"state,omitempty"`
+}
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-
 
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state"

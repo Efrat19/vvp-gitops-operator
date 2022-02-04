@@ -17,9 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
-
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -40,7 +39,7 @@ type SessionClusterSpec struct {
 type SessionClusterStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	State   string                       `json:"state,omitempty"`
+	State   string                                       `json:"state,omitempty"`
 	Failure *appmanager_apis.Failure                     `json:"failure,omitempty"`
 	Running *appmanager_apis.SessionClusterStatusRunning `json:"running,omitempty"`
 }

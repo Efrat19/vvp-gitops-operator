@@ -35,13 +35,77 @@ spec:
           spec:
             description: SavepointSpec defines the desired state of Savepoint
             properties:
-              foo:
+              metadata:
                 description: Foo is an example field of Savepoint. Edit savepoint_types.go
                   to remove/update
-                type: string
+                properties:
+                  annotations:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  createdAt:
+                    format: date-time
+                    type: string
+                  deploymentId:
+                    type: string
+                  id:
+                    type: string
+                  jobId:
+                    type: string
+                  modifiedAt:
+                    format: date-time
+                    type: string
+                  namespace:
+                    type: string
+                  origin:
+                    type: string
+                  resourceVersion:
+                    format: int32
+                    type: integer
+                  type:
+                    type: string
+                type: object
+              spec:
+                properties:
+                  flinkSavepointId:
+                    type: string
+                  savepointLocation:
+                    type: string
+                type: object
+              status:
+                properties:
+                  failure:
+                    properties:
+                      failedAt:
+                        format: date-time
+                        type: string
+                      message:
+                        type: string
+                      reason:
+                        type: string
+                    type: object
+                  state:
+                    type: string
+                type: object
             type: object
           status:
             description: SavepointStatus defines the observed state of Savepoint
+            properties:
+              failure:
+                properties:
+                  failedAt:
+                    format: date-time
+                    type: string
+                  message:
+                    type: string
+                  reason:
+                    type: string
+                type: object
+              state:
+                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                  of cluster Important: Run "make" to regenerate code after modifying
+                  this file'
+                type: string
             type: object
         type: object
     served: true

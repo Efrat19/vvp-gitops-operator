@@ -17,9 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
-
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -40,7 +39,7 @@ type SavepointSpec struct {
 type SavepointStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	State   string   `json:"state,omitempty"`
+	State   string                   `json:"state,omitempty"`
 	Failure *appmanager_apis.Failure `json:"failure,omitempty"`
 }
 
@@ -57,7 +56,6 @@ type Savepoint struct {
 }
 
 //+kubebuilder:object:root=true
-
 
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.state"

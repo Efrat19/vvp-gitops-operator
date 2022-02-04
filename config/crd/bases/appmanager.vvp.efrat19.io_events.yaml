@@ -15,7 +15,14 @@ spec:
     singular: event
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.state
+      name: Status
+      type: string
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: Event is the Schema for the events API
@@ -35,19 +42,50 @@ spec:
           spec:
             description: EventSpec defines the desired state of Event
             properties:
-              foo:
+              metadata:
                 description: Foo is an example field of Event. Edit event_types.go
                   to remove/update
-                type: string
+                properties:
+                  createdAt:
+                    format: date-time
+                    type: string
+                  deploymentId:
+                    type: string
+                  id:
+                    type: string
+                  jobId:
+                    type: string
+                  name:
+                    type: string
+                  namespace:
+                    type: string
+                  resourceName:
+                    type: string
+                  resourceVersion:
+                    format: int32
+                    type: integer
+                  sessionClusterId:
+                    type: string
+                type: object
+              spec:
+                properties:
+                  message:
+                    type: string
+                type: object
             type: object
           status:
             description: EventStatus defines the observed state of Event
+            properties:
+              state:
+                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                  of cluster Important: Run "make" to regenerate code after modifying
+                  this file'
+                type: string
             type: object
         type: object
     served: true
     storage: true
-    subresources:
-      status: {}
+    subresources: {}
 status:
   acceptedNames:
     kind: ""
