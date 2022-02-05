@@ -180,6 +180,11 @@ func (c *APIClient) ChangeBasePath(path string) {
 	c.cfg.BasePath = path
 }
 
+// Get base path to allow switching to mocks
+func (c *APIClient) GetBasePath() string {
+	return c.cfg.BasePath
+}
+
 // prepareRequest build the request
 func (c *APIClient) prepareRequest(
 	ctx context.Context,

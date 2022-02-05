@@ -62,8 +62,8 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		log.Error(err, "unable to get deployment")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	if err := r.setStatus(ctx, dep, SynchronizingState); err != nil {
-		return ctrl.Result{}, err
+	if err := r.vvpClient.ProbeServer(ctx); err != nil {
+		return r.handleOutOfSyncError(ctx, dep, err)
 	}
 	if err := r.handleDeploymentDeletionIfNeeded(ctx, dep); err != nil {
 		return r.handleOutOfSyncError(ctx, dep, err)
@@ -74,7 +74,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	if err := r.updateDeploymentSpecInVVP(ctx, dep); err != nil {
 		return r.handleOutOfSyncError(ctx, dep, err)
 	}
-	if err := r.setStatus(ctx, dep, InSyncState); err != nil {
+	if err := r.setStatus(ctx, dep, vvp_client.InSyncState); err != nil {
 		return ctrl.Result{}, err
 	}
 	return ctrl.Result{}, nil
@@ -123,7 +123,7 @@ func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Cont
 				log.Error(err, fmt.Sprintf("Failed to delete deployment %s in vvp, retrying...\n", dep.Spec.Metadata.Name))
 				// if fail to delete the external dependency here, return with error
 				// so that it can be retried
-				return NewRetryableError(err)
+				return vvp_client.NewRetryableError(err)
 			}
 
 			// remove our finalizer from the list and update it.
@@ -140,11 +140,11 @@ func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Cont
 }
 
 func (r *DeploymentReconciler) handleOutOfSyncError(ctx context.Context, dep appmanagervvpv1alpha1.Deployment, err error) (ctrl.Result, error) {
-	if updateErr := r.setStatus(ctx, dep, FormatOutOfSync(err)); updateErr != nil {
+	if updateErr := r.setStatus(ctx, dep, vvp_client.FormatOutOfSync(err)); updateErr != nil {
 		return ctrl.Result{}, updateErr
 	}
-	if errors.Is(err, ErrRetryable) {
-		return ctrl.Result{RequeueAfter: time.Second * 10}, err
+	if errors.Is(err, vvp_client.ErrRetryable) {
+		return ctrl.Result{RequeueAfter: time.Second * 30}, err
 	}
 	return ctrl.Result{}, err
 }

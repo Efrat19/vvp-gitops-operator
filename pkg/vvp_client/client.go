@@ -2,6 +2,10 @@ package vvp_client
 
 import (
 	// appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+	"context"
+	"errors"
+	"fmt"
+
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
 	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"os"
@@ -9,10 +13,10 @@ import (
 )
 
 type VvpClient interface {
+	ProbeServer(ctx context.Context) error
+	MatchServerVersion(ctx context.Context) error
 	Deployments() DeploymentsService
 	// DeploymentTargets() DeploymentTargetsService
-	// Events() EventsService
-	// Jobs() JobsService
 	// SavePoints() SavePointsService
 	// SecretValues() SecretValuesService
 	// SessionClusters() SessionClustersService
@@ -72,6 +76,32 @@ func NewAppManagerClient() *appmanager_apis.APIClient {
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
 	}
 	return appmanager_apis.NewAPIClient(cfg)
+}
+
+func (v *vvpClient) ProbeServer(ctx context.Context) error {
+	if _, _, err := v.appManagerClient.StatusResourceApi.GetStatusUsingGET(ctx); err != nil {
+		return v.ConnectionFailedError()
+	}
+	return nil
+}
+
+func (v *vvpClient) MatchServerVersion(ctx context.Context) error {
+	supportedVersion := "2.6.1"
+	var si appmanager_apis.SystemInformation
+	si, _, err := v.appManagerClient.StatusResourceApi.GetSystemInfoUsingGET(ctx)
+	if err != nil {
+		return v.ConnectionFailedError()
+	}
+	serverVersion := si.Status.RevisionInformation.BuildVersion
+	if serverVersion != supportedVersion {
+		return errors.New(fmt.Sprintf("Error Version Mismatch - vvp server version is %s but the operator only supports %s", serverVersion, supportedVersion))
+	}
+	return nil
+}
+
+func (v *vvpClient) ConnectionFailedError() error {
+	return NewRetryableError(errors.New(fmt.Sprintf("Failed to connect to vvp server at %s, retrying", v.appManagerClient.GetBasePath())))
+
 }
 
 func getEnv(key, fallback string) string {
