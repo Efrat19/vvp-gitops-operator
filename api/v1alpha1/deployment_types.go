@@ -32,14 +32,12 @@ type DeploymentSpec struct {
 	// Foo is an example field of Deployment. Edit deployment_types.go to remove/update
 	Metadata appmanager_apis.DeploymentMetadata `json:"metadata,omitempty"`
 	Spec     appmanager_apis.DeploymentSpec     `json:"spec,omitempty"`
-	Status   appmanager_apis.DeploymentStatus   `json:"status,omitempty"`
 }
-
 
 // DeploymentStatus defines the observed state of Deployment
 type DeploymentStatus struct {
-	LastSync   metav1.Time                                   `json:"lastSync,omitempty"`
-	State   string                                   `json:"status,omitempty"`
+	LastSync metav1.Time `json:"lastSync,omitempty"`
+	State    string      `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true

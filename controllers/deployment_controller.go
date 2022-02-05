@@ -26,12 +26,14 @@ import (
 
 	// "github.com/fintechstudios/ververica-platform-k8s-operator/pkg/polling"
 	// "github.com/davecgh/go-spew/spew"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
+
 // DeploymentReconciler reconciles a Deployment object
 type DeploymentReconciler struct {
 	client.Client
@@ -59,19 +61,41 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		log.Error(err, "unable to get deployment")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	r.handleDeploymentDeletionIfNeeded(ctx,dep)
-	r.handleDeploymentCreationIfNeeded(ctx,dep)
-	r.updateDeploymentStatus(ctx, &dep)
+	if updateErr := r.updateDeploymentStatus(ctx, dep, SynchronizingState); updateErr != nil {
+		return ctrl.Result{}, updateErr
+	}
+	if err := r.handleDeploymentDeletionIfNeeded(ctx, dep); err != nil {
+
+		if updateErr := r.updateDeploymentStatus(ctx, dep, FormatOutOfSync(err)); updateErr != nil {
+			return ctrl.Result{}, updateErr
+		}
+		return ctrl.Result{RequeueAfter: time.Second * 10}, err // Deletion might take
+	}
+	if err := r.handleDeploymentCreationIfNeeded(ctx, dep); err != nil {
+		if updateErr := r.updateDeploymentStatus(ctx, dep, FormatOutOfSync(err)); updateErr != nil {
+			return ctrl.Result{}, updateErr
+		}
+		return ctrl.Result{}, err
+	}
+	if err := r.updateDeploymentSpecInVVP(ctx, dep); err != nil {
+		if updateErr := r.updateDeploymentStatus(ctx, dep, FormatOutOfSync(err)); updateErr != nil {
+			return ctrl.Result{}, updateErr
+		}
+		return ctrl.Result{}, err
+	}
+	if updateErr := r.updateDeploymentStatus(ctx, dep, InSyncState); updateErr != nil {
+		return ctrl.Result{}, updateErr
+	}
 	return ctrl.Result{}, nil
 }
 
-func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) (ctrl.Result, error) {
+func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) error {
 	log := log.FromContext(ctx)
 	// Create deployment if not exists
 	err, deploymentExists := r.vvpClient.Deployments().ResourceExistsInVVP(&dep)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp deployment exists")
-		return ctrl.Result{}, nil
+		return nil
 	}
 	if !deploymentExists {
 		log.Info(fmt.Sprintf("Deployment %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))
@@ -79,10 +103,10 @@ func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(ctx context.Cont
 			log.Error(err, "unable to create vvp deployment")
 		}
 	}
-	return ctrl.Result{}, nil
+	return nil
 }
 
-func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) (ctrl.Result, error) {
+func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) error {
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
 	appmanagerFinalizer := "appmanager.vvp.efrat19.io/finalizer"
@@ -96,7 +120,7 @@ func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Cont
 		if !controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
 			controllerutil.AddFinalizer(&dep, appmanagerFinalizer)
 			if err := r.Update(ctx, &dep); err != nil {
-				return ctrl.Result{}, err
+				return err
 			}
 		}
 	} else {
@@ -108,47 +132,45 @@ func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Cont
 				log.Error(err, fmt.Sprintf("Failed to delete deployment %s in vvp, retrying in 30 sec\n", dep.Spec.Metadata.Name))
 				// if fail to delete the external dependency here, return with error
 				// so that it can be retried
-				return ctrl.Result{RequeueAfter: time.Second * 10}, err
+				return NewRetryableError(err)
 			}
 
 			// remove our finalizer from the list and update it.
 			controllerutil.RemoveFinalizer(&dep, appmanagerFinalizer)
 			if err := r.Update(ctx, &dep); err != nil {
 				log.Error(err, fmt.Sprintf("Failed to remove deployment %s finalizers\n", dep.Spec.Metadata.Name))
-				return ctrl.Result{}, err
+				return err
 			}
 		}
 		// Stop reconciliation as the item is being deleted
-		return ctrl.Result{}, nil
+		return nil
 	}
-	return ctrl.Result{}, nil
+	return nil
 }
 
-func (r *DeploymentReconciler) updateDeploymentStatus(ctx context.Context, dep *appmanagervvpv1alpha1.Deployment) (ctrl.Result, error) {
-	// update k8s deployment status from vvp
+func (r *DeploymentReconciler) updateDeploymentStatus(ctx context.Context, dep appmanagervvpv1alpha1.Deployment, syncState string) error {
 	log := log.FromContext(ctx)
-	// get k8s deployment status from vvp
-	log.Info(fmt.Sprintf("Getting status for deployment %s \n", dep.Spec.Metadata.Name))
-	status, err := r.vvpClient.Deployments().GetStatus(dep)
-	if err != nil {
-		log.Error(err, "unable to get k8s deployment status")
-		return ctrl.Result{}, nil
-	}
-	// update k8s deployment status from vvp
 	log.Info(fmt.Sprintf("Updating status for deployment %s \n", dep.Spec.Metadata.Name))
-	dep.Status.State = status.State
-	dep.Status.Running = status.Running
-	if err := r.Status().Update(ctx, dep); err != nil {
+	dep.Status.State = syncState
+	dep.Status.LastSync = metav1.Now()
+	if err := r.Status().Update(ctx, &dep); err != nil {
 		log.Error(err, "unable to update k8s deployment status")
-		return ctrl.Result{}, err
+		return err
 	}
-	// update vvp deployment spec from vvp
+	return nil
+
+}
+
+func (r *DeploymentReconciler) updateDeploymentSpecInVVP(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) error {
+	log := log.FromContext(ctx)
+	// update vvp deployment spec from k8s
 	log.Info(fmt.Sprintf("Updating spec for deployment %s \n", dep.Spec.Metadata.Name))
 	if err := r.vvpClient.Deployments().UpdateExternalResources(&dep); err != nil {
 		log.Error(err, "unable to update vvp deployment spec")
-		return ctrl.Result{}, nil
+		return nil
 	}
-	return ctrl.Result{}, nil
+	return nil
+
 }
 
 // SetupWithManager sets up the controller with the Manager.

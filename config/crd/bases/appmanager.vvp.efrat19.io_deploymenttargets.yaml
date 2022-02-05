@@ -17,15 +17,17 @@ spec:
   versions:
   - additionalPrinterColumns:
     - jsonPath: .metadata.creationTimestamp
-      name: Age
+      name: AGE
       type: date
+    - jsonPath: .status.lastSync
+      name: LAST SYNC
+      type: string
     - jsonPath: .status.state
-      name: Status
+      name: STATUS
       type: string
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: DeploymentTarget is the Schema for the deploymenttargets API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -82,10 +84,10 @@ spec:
           status:
             description: DeploymentTargetStatus defines the observed state of DeploymentTarget
             properties:
-              state:
-                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                  of cluster Important: Run "make" to regenerate code after modifying
-                  this file'
+              lastSync:
+                format: date-time
+                type: string
+              status:
                 type: string
             type: object
         type: object

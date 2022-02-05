@@ -18,7 +18,6 @@ spec:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Savepoint is the Schema for the savepoints API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -72,39 +71,14 @@ spec:
                   savepointLocation:
                     type: string
                 type: object
-              status:
-                properties:
-                  failure:
-                    properties:
-                      failedAt:
-                        format: date-time
-                        type: string
-                      message:
-                        type: string
-                      reason:
-                        type: string
-                    type: object
-                  state:
-                    type: string
-                type: object
             type: object
           status:
             description: SavepointStatus defines the observed state of Savepoint
             properties:
-              failure:
-                properties:
-                  failedAt:
-                    format: date-time
-                    type: string
-                  message:
-                    type: string
-                  reason:
-                    type: string
-                type: object
-              state:
-                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                  of cluster Important: Run "make" to regenerate code after modifying
-                  this file'
+              lastSync:
+                format: date-time
+                type: string
+              status:
                 type: string
             type: object
         type: object

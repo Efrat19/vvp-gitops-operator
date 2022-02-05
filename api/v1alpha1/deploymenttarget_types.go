@@ -36,8 +36,8 @@ type DeploymentTargetSpec struct {
 
 // DeploymentTargetStatus defines the observed state of DeploymentTarget
 type DeploymentTargetStatus struct {
-	LastSync   metav1.Time                                   `json:"lastSync,omitempty"`
-	State   string                                   `json:"status,omitempty"`
+	LastSync metav1.Time `json:"lastSync,omitempty"`
+	State    string      `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
@@ -46,7 +46,6 @@ type DeploymentTargetStatus struct {
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="LAST SYNC",type="string",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
-// DeploymentTarget is the Schema for the deploymenttargets API
 type DeploymentTarget struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

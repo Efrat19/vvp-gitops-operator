@@ -17,10 +17,13 @@ spec:
   versions:
   - additionalPrinterColumns:
     - jsonPath: .metadata.creationTimestamp
-      name: Age
+      name: AGE
       type: date
+    - jsonPath: .status.lastSync
+      name: LAST SYNC
+      type: string
     - jsonPath: .status.state
-      name: Status
+      name: STATUS
       type: string
     name: v1alpha1
     schema:
@@ -18757,73 +18760,14 @@ spec:
                         type: string
                     type: object
                 type: object
-              status:
-                properties:
-                  running:
-                    properties:
-                      conditions:
-                        items:
-                          properties:
-                            lastTransitionTime:
-                              format: date-time
-                              type: string
-                            lastUpdateTime:
-                              format: date-time
-                              type: string
-                            message:
-                              type: string
-                            reason:
-                              type: string
-                            status:
-                              type: string
-                            type:
-                              type: string
-                          type: object
-                        type: array
-                      jobId:
-                        type: string
-                      transitionTime:
-                        format: date-time
-                        type: string
-                    type: object
-                  state:
-                    type: string
-                type: object
             type: object
           status:
             description: DeploymentStatus defines the observed state of Deployment
             properties:
-              running:
-                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                  of cluster Important: Run "make" to regenerate code after modifying
-                  this file'
-                properties:
-                  conditions:
-                    items:
-                      properties:
-                        lastTransitionTime:
-                          format: date-time
-                          type: string
-                        lastUpdateTime:
-                          format: date-time
-                          type: string
-                        message:
-                          type: string
-                        reason:
-                          type: string
-                        status:
-                          type: string
-                        type:
-                          type: string
-                      type: object
-                    type: array
-                  jobId:
-                    type: string
-                  transitionTime:
-                    format: date-time
-                    type: string
-                type: object
-              state:
+              lastSync:
+                format: date-time
+                type: string
+              status:
                 type: string
             type: object
         type: object

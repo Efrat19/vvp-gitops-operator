@@ -32,23 +32,21 @@ type SessionClusterSpec struct {
 	// Foo is an example field of SessionCluster. Edit sessioncluster_types.go to remove/update
 	Metadata appmanager_apis.SessionClusterMetadata `json:"metadata,omitempty"`
 	Spec     appmanager_apis.SessionClusterSpec     `json:"spec,omitempty"`
-	Status   appmanager_apis.SessionClusterStatus   `json:"status,omitempty"`
 }
 
 // SessionClusterStatus defines the observed state of SessionCluster
 type SessionClusterStatus struct {
-	LastSync   metav1.Time                                   `json:"lastSync,omitempty"`
-	State   string                                   `json:"status,omitempty"`
+	LastSync metav1.Time `json:"lastSync,omitempty"`
+	State    string      `json:"status,omitempty"`
 }
-
-//+kubebuilder:object:root=true
-//+kubebuilder:subresource:status
 
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="LAST SYNC",type="string",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 
-// SessionCluster is the Schema for the sessionclusters API
+//+kubebuilder:object:root=true
+//+kubebuilder:subresource:status
+
 type SessionCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

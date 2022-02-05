@@ -84,7 +84,6 @@ func (c DeploymentsService) vvpDeplomentFromK8sDeployment(d *appmanagervvpv1alph
 		Kind:       "Deployment",
 		Metadata:   &d.Spec.Metadata,
 		Spec:       &d.Spec.Spec,
-		Status:     &d.Spec.Status,
 	}
 	return deployment
 }
@@ -96,7 +95,7 @@ func (c DeploymentsService) cancelStateForDeletion(d *appmanagervvpv1alpha1.Depl
 		return err
 	}
 	if status.State != cancelledState {
-		d.Spec.Status.State = cancelledState
+		d.Spec.Spec.State = cancelledState
 		err := c.UpdateExternalResources(d)
 		return err
 	}

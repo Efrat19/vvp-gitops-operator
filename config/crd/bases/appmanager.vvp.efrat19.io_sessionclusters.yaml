@@ -18,7 +18,6 @@ spec:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SessionCluster is the Schema for the sessionclusters API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -16274,57 +16273,14 @@ spec:
                   state:
                     type: string
                 type: object
-              status:
-                properties:
-                  failure:
-                    properties:
-                      failedAt:
-                        format: date-time
-                        type: string
-                      message:
-                        type: string
-                      reason:
-                        type: string
-                    type: object
-                  running:
-                    properties:
-                      lastUpdateTime:
-                        format: date-time
-                        type: string
-                      startedAt:
-                        format: date-time
-                        type: string
-                    type: object
-                  state:
-                    type: string
-                type: object
             type: object
           status:
             description: SessionClusterStatus defines the observed state of SessionCluster
             properties:
-              failure:
-                properties:
-                  failedAt:
-                    format: date-time
-                    type: string
-                  message:
-                    type: string
-                  reason:
-                    type: string
-                type: object
-              running:
-                properties:
-                  lastUpdateTime:
-                    format: date-time
-                    type: string
-                  startedAt:
-                    format: date-time
-                    type: string
-                type: object
-              state:
-                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                  of cluster Important: Run "make" to regenerate code after modifying
-                  this file'
+              lastSync:
+                format: date-time
+                type: string
+              status:
                 type: string
             type: object
         type: object
