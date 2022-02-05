@@ -144,7 +144,7 @@ func (r *DeploymentReconciler) handleOutOfSyncError(ctx context.Context, dep app
 		return ctrl.Result{}, updateErr
 	}
 	if errors.Is(err, vvp_client.ErrRetryable) {
-		return ctrl.Result{RequeueAfter: time.Second * 30}, err
+		return ctrl.Result{RequeueAfter: time.Second * 30, Requeue: true}, err
 	}
 	return ctrl.Result{}, err
 }
