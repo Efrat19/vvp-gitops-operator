@@ -42,6 +42,10 @@ type DeploymentReconciler struct {
 	vvpClient vvp_client.VvpClient
 }
 
+const (
+	appmanagerFinalizer string = "appmanager.vvp.efrat19.io/finalizer"
+)
+
 //+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deployments/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deployments/finalizers,verbs=update
@@ -62,11 +66,18 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		log.Error(err, "unable to get deployment")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	if err := r.vvpClient.ProbeServer(ctx); err != nil {
+	if err := r.vvpClient.MatchServerVersion(ctx); err != nil {
 		return r.handleOutOfSyncError(ctx, dep, err)
 	}
-	if err := r.handleDeploymentDeletionIfNeeded(ctx, dep); err != nil {
+	if err := r.handleDeploymentFinalizers(ctx, dep); err != nil {
 		return r.handleOutOfSyncError(ctx, dep, err)
+	}
+	// if the deployment needs to be deleted
+	if !dep.ObjectMeta.DeletionTimestamp.IsZero() {
+		if err := r.handleDeploymentDeletion(ctx, dep); err != nil {
+			return r.handleOutOfSyncError(ctx, dep, err)
+		}
+		return ctrl.Result{}, nil
 	}
 	if err := r.handleDeploymentCreationIfNeeded(ctx, &dep); err != nil {
 		return r.handleOutOfSyncError(ctx, dep, err)
@@ -97,10 +108,9 @@ func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(ctx context.Cont
 	return nil
 }
 
-func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) error {
+func (r *DeploymentReconciler) handleDeploymentFinalizers(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) error {
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-	appmanagerFinalizer := "appmanager.vvp.efrat19.io/finalizer"
 
 	// examine DeletionTimestamp to determine if object is under deletion
 	if dep.ObjectMeta.DeletionTimestamp.IsZero() {
@@ -114,28 +124,33 @@ func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Cont
 				return err
 			}
 		}
-	} else {
-		// The object is being deleted
-		log.Info(fmt.Sprintf("Deleting deployment %s\n", dep.Spec.Metadata.Name))
-		if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
-			// our finalizer is present, so lets handle any external dependency
-			if err := r.vvpClient.Deployments().DeleteExternalResources(ctx, &dep); err != nil {
-				log.Error(err, fmt.Sprintf("Failed to delete deployment %s in vvp, retrying...\n", dep.Spec.Metadata.Name))
-				// if fail to delete the external dependency here, return with error
-				// so that it can be retried
-				return vvp_client.NewRetryableError(err)
-			}
-
-			// remove our finalizer from the list and update it.
-			controllerutil.RemoveFinalizer(&dep, appmanagerFinalizer)
-			if err := r.Update(ctx, &dep); err != nil {
-				log.Error(err, fmt.Sprintf("Failed to remove deployment %s finalizers\n", dep.Spec.Metadata.Name))
-				return err
-			}
-		}
-		// Stop reconciliation as the item is being deleted
-		return nil
 	}
+	return nil
+}
+
+func (r *DeploymentReconciler) handleDeploymentDeletion(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) error {
+	// name of our custom finalizer
+	log := log.FromContext(ctx)
+
+	// The object is being deleted
+	log.Info(fmt.Sprintf("Deleting deployment %s\n", dep.Spec.Metadata.Name))
+	if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
+		// our finalizer is present, so lets handle any external dependency
+		if err := r.vvpClient.Deployments().DeleteExternalResources(ctx, &dep); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to delete deployment %s in vvp, retrying...\n", dep.Spec.Metadata.Name))
+			// if fail to delete the external dependency here, return with error
+			// so that it can be retried
+			return vvp_client.NewRetryableError(err)
+		}
+
+		// remove our finalizer from the list and update it.
+		controllerutil.RemoveFinalizer(&dep, appmanagerFinalizer)
+		if err := r.Update(ctx, &dep); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to remove deployment %s finalizers\n", dep.Spec.Metadata.Name))
+			return err
+		}
+	}
+	// Stop reconciliation as the item is being deleted
 	return nil
 }
 

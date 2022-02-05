@@ -7,6 +7,8 @@ import (
 	"fmt"
 
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+	"sigs.k8s.io/controller-runtime/pkg/log"
+
 	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"os"
 	// "github.com/gophercloud/gophercloud/openstack/cdn/v1/base"
@@ -69,7 +71,7 @@ func (v *vvpClient) Deployments() DeploymentsService {
 // }
 
 func NewAppManagerClient() *appmanager_apis.APIClient {
-	basePath := getEnv("VVP_URL", "http://localhost:8080")
+	basePath := getEnv("VVP_URL", "http://vvp.data.yad2.io")
 	cfg := &appmanager_apis.Configuration{
 		BasePath:      basePath,
 		DefaultHeader: make(map[string]string),
@@ -80,6 +82,8 @@ func NewAppManagerClient() *appmanager_apis.APIClient {
 
 func (v *vvpClient) ProbeServer(ctx context.Context) error {
 	if _, _, err := v.appManagerClient.StatusResourceApi.GetStatusUsingGET(ctx); err != nil {
+		log := log.FromContext(ctx)
+		log.Error(err, "error failed to connect")
 		return v.ConnectionFailedError()
 	}
 	return nil
