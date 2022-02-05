@@ -17,6 +17,7 @@ limitations under the License.
 package controllers
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -26,19 +27,21 @@ const (
 	SynchronizingState string = "SYNCHRONIZING"
 )
 
-type RetryableError struct {
+type retryableError struct {
 	msg string
 }
 
-func (err RetryableError) Error() string {
+func (err retryableError) Error() string {
 	return err.msg
 }
 
 func NewRetryableError(err error) error {
-	return RetryableError{
+	return retryableError{
 		msg: err.Error(),
 	}
 }
+
+var ErrRetryable = NewRetryableError(errors.New("error"))
 
 func FormatOutOfSync(err error) string {
 	return fmt.Sprintf("%s: %s", OutOfSyncState, err.Error())
