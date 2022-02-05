@@ -21,7 +21,7 @@ spec:
       type: date
     - jsonPath: .status.lastSync
       name: LAST SYNC
-      type: string
+      type: date
     - jsonPath: .status.state
       name: STATUS
       type: string

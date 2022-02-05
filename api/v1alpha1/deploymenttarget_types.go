@@ -44,7 +44,7 @@ type DeploymentTargetStatus struct {
 //+kubebuilder:subresource:status
 
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:printcolumn:name="LAST SYNC",type="string",JSONPath=".status.lastSync"
+// +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 type DeploymentTarget struct {
 	metav1.TypeMeta   `json:",inline"`
