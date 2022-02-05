@@ -1,6 +1,0 @@
-apiVersion: appmanager.vvp.efrat19.io/v1alpha1
-kind: DeploymentDefaults
-metadata:
-  name: deploymentdefaults-sample
-spec:
-  # TODO(user): Add fields here

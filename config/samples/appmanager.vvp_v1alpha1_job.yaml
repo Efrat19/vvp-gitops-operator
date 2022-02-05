@@ -1,6 +1,0 @@
-apiVersion: appmanager.vvp.efrat19.io/v1alpha1
-kind: Job
-metadata:
-  name: job-sample
-spec:
-  # TODO(user): Add fields here

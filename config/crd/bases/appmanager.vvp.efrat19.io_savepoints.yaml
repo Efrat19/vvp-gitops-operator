@@ -20,23 +20,18 @@ spec:
       openAPIV3Schema:
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: APIVersion defines the versioned schema of this re
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: Kind is a string value representing the REST resou
             type: string
           metadata:
             type: object
           spec:
-            description: SavepointSpec defines the desired state of Savepoint
+            description: SavepointSpec defines the desired state of Savepoi
             properties:
               metadata:
-                description: Foo is an example field of Savepoint. Edit savepoint_types.go
-                  to remove/update
+                description: Foo is an example field of Savepoint.
                 properties:
                   annotations:
                     additionalProperties:
@@ -73,7 +68,7 @@ spec:
                 type: object
             type: object
           status:
-            description: SavepointStatus defines the observed state of Savepoint
+            description: SavepointStatus defines the observed state of Save
             properties:
               lastSync:
                 format: date-time

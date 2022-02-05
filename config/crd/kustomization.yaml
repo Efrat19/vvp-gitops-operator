@@ -3,10 +3,7 @@
 # It should be run by config/default
 resources:
 - bases/appmanager.vvp.efrat19.io_deployments.yaml
-- bases/appmanager.vvp.efrat19.io_deploymentdefaults.yaml
 - bases/appmanager.vvp.efrat19.io_deploymenttargets.yaml
-- bases/appmanager.vvp.efrat19.io_events.yaml
-- bases/appmanager.vvp.efrat19.io_jobs.yaml
 - bases/appmanager.vvp.efrat19.io_savepoints.yaml
 - bases/appmanager.vvp.efrat19.io_secretvalues.yaml
 - bases/appmanager.vvp.efrat19.io_sessionclusters.yaml
@@ -16,10 +13,7 @@ patchesStrategicMerge:
 # [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix.
 # patches here are for enabling the conversion webhook for each CRD
 #- patches/webhook_in_deployments.yaml
-#- patches/webhook_in_deploymentdefaults.yaml
 #- patches/webhook_in_deploymenttargets.yaml
-#- patches/webhook_in_events.yaml
-#- patches/webhook_in_jobs.yaml
 #- patches/webhook_in_savepoints.yaml
 #- patches/webhook_in_secretvalues.yaml
 #- patches/webhook_in_sessionclusters.yaml
@@ -28,10 +22,7 @@ patchesStrategicMerge:
 # [CERTMANAGER] To enable cert-manager, uncomment all the sections with [CERTMANAGER] prefix.
 # patches here are for enabling the CA injection for each CRD
 #- patches/cainjection_in_deployments.yaml
-#- patches/cainjection_in_deploymentdefaults.yaml
 #- patches/cainjection_in_deploymenttargets.yaml
-#- patches/cainjection_in_events.yaml
-#- patches/cainjection_in_jobs.yaml
 #- patches/cainjection_in_savepoints.yaml
 #- patches/cainjection_in_secretvalues.yaml
 #- patches/cainjection_in_sessionclusters.yaml
