@@ -20,20 +20,20 @@ type VvpClient interface {
 
 type vvpClient struct {
 	appManagerClient   *appmanager_apis.APIClient
-	DeploymentsService DeploymentsService
+	DeploymentsService *DeploymentsService
 }
 
 func NewClient() VvpClient {
 	return &vvpClient{
-		appManagerClient: initAppManagerClient(),
+		appManagerClient: NewAppManagerClient(),
 	}
 }
 
 func (v *vvpClient) Deployments() DeploymentsService {
-	if &v.DeploymentsService == nil {
-		v.DeploymentsService = DeploymentsService{client: v.appManagerClient}
+	if v.DeploymentsService == nil {
+		v.DeploymentsService = &DeploymentsService{client: v.appManagerClient}
 	}
-	return v.DeploymentsService
+	return *v.DeploymentsService
 }
 
 // func (v *vvpClient) DeploymentTargets() DeploymentTargetsService {
@@ -41,20 +41,6 @@ func (v *vvpClient) Deployments() DeploymentsService {
 // 		v.DeploymentTargetsService = DeploymentTargetsService{client: v.appManagerClient}
 // 	}
 // 	return v.DeploymentTargetsService
-// }
-
-// func (v *vvpClient) Events() EventsService {
-// 	if &v.EventsService == nil {
-// 		v.EventsService = EventsService{client: v.appManagerClient}
-// 	}
-// 	return v.EventsService
-// }
-
-// func (v *vvpClient) Jobs() JobsService {
-// 	if &v.JobsService == nil {
-// 		v.JobsService = JobsService{client: v.appManagerClient}
-// 	}
-// 	return v.JobsService
 // }
 
 // func (v *vvpClient) SavePoints() SavePointsService {
@@ -78,7 +64,7 @@ func (v *vvpClient) Deployments() DeploymentsService {
 // 	return v.SessionClustersService
 // }
 
-func initAppManagerClient() *appmanager_apis.APIClient {
+func NewAppManagerClient() *appmanager_apis.APIClient {
 	basePath := getEnv("VVP_URL", "http://localhost:8080")
 	cfg := &appmanager_apis.Configuration{
 		BasePath:      basePath,

@@ -68,7 +68,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	if err := r.handleDeploymentDeletionIfNeeded(ctx, dep); err != nil {
 		return r.handleOutOfSyncError(ctx, dep, err)
 	}
-	if err := r.handleDeploymentCreationIfNeeded(ctx, dep); err != nil {
+	if err := r.handleDeploymentCreationIfNeeded(ctx, &dep); err != nil {
 		return r.handleOutOfSyncError(ctx, dep, err)
 	}
 	if err := r.updateDeploymentSpecInVVP(ctx, dep); err != nil {
@@ -80,17 +80,17 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	return ctrl.Result{}, nil
 }
 
-func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(ctx context.Context, dep appmanagervvpv1alpha1.Deployment) error {
+func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(ctx context.Context, dep *appmanagervvpv1alpha1.Deployment) error {
 	log := log.FromContext(ctx)
 	// Create deployment if not exists
-	err, deploymentExists := r.vvpClient.Deployments().ResourceExistsInVVP(&dep)
+	err, deploymentExists := r.vvpClient.Deployments().ResourceExistsInVVP(ctx, dep)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp deployment exists")
 		return nil
 	}
 	if !deploymentExists {
 		log.Info(fmt.Sprintf("Deployment %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))
-		if err := r.vvpClient.Deployments().CreateExternalResources(&dep); err != nil {
+		if err := r.vvpClient.Deployments().CreateExternalResources(ctx, dep); err != nil {
 			log.Error(err, "unable to create vvp deployment")
 		}
 	}
@@ -119,7 +119,7 @@ func (r *DeploymentReconciler) handleDeploymentDeletionIfNeeded(ctx context.Cont
 		log.Info(fmt.Sprintf("Deleting deployment %s\n", dep.Spec.Metadata.Name))
 		if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
 			// our finalizer is present, so lets handle any external dependency
-			if err := r.vvpClient.Deployments().DeleteExternalResources(&dep); err != nil {
+			if err := r.vvpClient.Deployments().DeleteExternalResources(ctx, &dep); err != nil {
 				log.Error(err, fmt.Sprintf("Failed to delete deployment %s in vvp, retrying...\n", dep.Spec.Metadata.Name))
 				// if fail to delete the external dependency here, return with error
 				// so that it can be retried
@@ -165,7 +165,7 @@ func (r *DeploymentReconciler) updateDeploymentSpecInVVP(ctx context.Context, de
 	log := log.FromContext(ctx)
 	// update vvp deployment spec from k8s
 	log.Info(fmt.Sprintf("Updating spec for deployment %s \n", dep.Spec.Metadata.Name))
-	if err := r.vvpClient.Deployments().UpdateExternalResources(&dep); err != nil {
+	if err := r.vvpClient.Deployments().UpdateExternalResources(ctx, &dep); err != nil {
 		log.Error(err, "unable to update vvp deployment spec")
 		return nil
 	}
@@ -175,7 +175,7 @@ func (r *DeploymentReconciler) updateDeploymentSpecInVVP(ctx context.Context, de
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *DeploymentReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	// r.vvpClient = vvp_client.NewClient()
+	r.vvpClient = vvp_client.NewClient()
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&appmanagervvpv1alpha1.Deployment{}).
 		Complete(r)

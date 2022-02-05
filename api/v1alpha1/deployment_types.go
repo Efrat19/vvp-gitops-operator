@@ -37,7 +37,7 @@ type DeploymentSpec struct {
 // DeploymentStatus defines the observed state of Deployment
 type DeploymentStatus struct {
 	LastSync metav1.Time `json:"lastSync,omitempty"`
-	State    string      `json:"status,omitempty"`
+	State    string      `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true

@@ -7,6 +7,7 @@ import (
 
 	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+	// "github.com/davecgh/go-spew/spew"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
@@ -14,8 +15,7 @@ type DeploymentsService struct {
 	client *appmanager_apis.APIClient
 }
 
-func (c DeploymentsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Deployment) (error, bool) {
-	ctx := context.Background()
+func (c DeploymentsService) ResourceExistsInVVP(ctx context.Context, d *appmanagervvpv1alpha1.Deployment) (error, bool) {
 	_, response, err := c.client.DeploymentResourceApi.GetDeploymentUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
@@ -27,9 +27,8 @@ func (c DeploymentsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Deploym
 	return err, true
 }
 
-func (c DeploymentsService) DeleteExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
-	ctx := context.Background()
-	if err := c.cancelStateForDeletion(d); err != nil {
+func (c DeploymentsService) DeleteExternalResources(ctx context.Context, d *appmanagervvpv1alpha1.Deployment) error {
+	if err := c.cancelStateForDeletion(ctx, d); err != nil {
 		log := log.FromContext(ctx)
 		log.Error(err, "Failed to cancel deployment for deletion")
 		return err
@@ -44,8 +43,7 @@ func (c DeploymentsService) DeleteExternalResources(d *appmanagervvpv1alpha1.Dep
 	return err
 }
 
-func (c DeploymentsService) CreateExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
-	ctx := context.Background()
+func (c DeploymentsService) CreateExternalResources(ctx context.Context, d *appmanagervvpv1alpha1.Deployment) error {
 	deployment := c.vvpDeplomentFromK8sDeployment(d)
 	if err := c.validateName(d); err != nil {
 		return err
@@ -54,8 +52,7 @@ func (c DeploymentsService) CreateExternalResources(d *appmanagervvpv1alpha1.Dep
 	return err
 }
 
-func (c DeploymentsService) UpdateExternalResources(d *appmanagervvpv1alpha1.Deployment) error {
-	ctx := context.Background()
+func (c DeploymentsService) UpdateExternalResources(ctx context.Context, d *appmanagervvpv1alpha1.Deployment) error {
 	deployment := c.vvpDeplomentFromK8sDeployment(d)
 	if err := c.validateName(d); err != nil {
 		return err
@@ -64,8 +61,7 @@ func (c DeploymentsService) UpdateExternalResources(d *appmanagervvpv1alpha1.Dep
 	return err
 }
 
-func (c DeploymentsService) GetStatus(d *appmanagervvpv1alpha1.Deployment) (*appmanager_apis.DeploymentStatus, error) {
-	ctx := context.Background()
+func (c DeploymentsService) GetStatus(ctx context.Context, d *appmanagervvpv1alpha1.Deployment) (*appmanager_apis.DeploymentStatus, error) {
 	deployment, _, err := c.client.DeploymentResourceApi.GetDeploymentUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	return deployment.Status, err
 }
@@ -88,15 +84,15 @@ func (c DeploymentsService) vvpDeplomentFromK8sDeployment(d *appmanagervvpv1alph
 	return deployment
 }
 
-func (c DeploymentsService) cancelStateForDeletion(d *appmanagervvpv1alpha1.Deployment) error {
+func (c DeploymentsService) cancelStateForDeletion(ctx context.Context, d *appmanagervvpv1alpha1.Deployment) error {
 	cancelledState := "CANCELLED"
-	status, err := c.GetStatus(d)
+	status, err := c.GetStatus(ctx, d)
 	if err != nil {
 		return err
 	}
 	if status.State != cancelledState {
 		d.Spec.Spec.State = cancelledState
-		err := c.UpdateExternalResources(d)
+		err := c.UpdateExternalResources(ctx, d)
 		return err
 	}
 	return nil

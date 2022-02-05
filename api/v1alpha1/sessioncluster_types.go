@@ -37,7 +37,7 @@ type SessionClusterSpec struct {
 // SessionClusterStatus defines the observed state of SessionCluster
 type SessionClusterStatus struct {
 	LastSync metav1.Time `json:"lastSync,omitempty"`
-	State    string      `json:"status,omitempty"`
+	State    string      `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true
@@ -45,7 +45,6 @@ type SessionClusterStatus struct {
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
-
 
 type SessionCluster struct {
 	metav1.TypeMeta   `json:",inline"`

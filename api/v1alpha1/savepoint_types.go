@@ -37,9 +37,8 @@ type SavepointSpec struct {
 // SavepointStatus defines the observed state of Savepoint
 type SavepointStatus struct {
 	LastSync metav1.Time `json:"lastSync,omitempty"`
-	State    string      `json:"status,omitempty"`
+	State    string      `json:"state,omitempty"`
 }
-
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
