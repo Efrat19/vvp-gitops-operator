@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
 
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -15,8 +16,8 @@ import (
 )
 
 type VvpClient interface {
-	ProbeServer(ctx context.Context) error
-	MatchServerVersion(ctx context.Context) error
+	ProbeServer() error
+	MatchServerVersion() error
 	Deployments() DeploymentsService
 	// DeploymentTargets() DeploymentTargetsService
 	// SavePoints() SavePointsService
@@ -80,8 +81,10 @@ func NewAppManagerClient() *appmanager_apis.APIClient {
 	return appmanager_apis.NewAPIClient(cfg)
 }
 
-func (v *vvpClient) ProbeServer(ctx context.Context) error {
-	if _, _, err := v.appManagerClient.StatusResourceApi.GetStatusUsingGET(ctx); err != nil {
+func (v *vvpClient) ProbeServer() error {
+	ctx := context.Background()
+	_, response, err := v.appManagerClient.StatusResourceApi.GetStatusUsingGET(ctx)
+	if response.StatusCode != http.StatusOK {
 		log := log.FromContext(ctx)
 		log.Error(err, "error failed to connect")
 		return v.ConnectionFailedError()
@@ -89,7 +92,8 @@ func (v *vvpClient) ProbeServer(ctx context.Context) error {
 	return nil
 }
 
-func (v *vvpClient) MatchServerVersion(ctx context.Context) error {
+func (v *vvpClient) MatchServerVersion() error {
+	ctx := context.Background()
 	supportedVersion := "2.6.1"
 	var si appmanager_apis.SystemInformation
 	si, _, err := v.appManagerClient.StatusResourceApi.GetSystemInfoUsingGET(ctx)
