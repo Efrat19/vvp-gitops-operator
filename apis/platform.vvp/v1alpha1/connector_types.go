@@ -25,12 +25,12 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // ConnectorSpec defines the desired state of Connector
-type ConnectorSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+// type ConnectorSpec struct {
+// 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+// 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec platform_apis.Connector `json:"spec,omitempty"`
-}
+// 	Spec platform_apis.Connector `json:"spec,omitempty"`
+// }
 
 // ConnectorsStatus defines the observed state of Connectors
 type ConnectorStatus struct {
@@ -49,8 +49,8 @@ type Connector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ConnectorSpec   `json:"spec,omitempty"`
-	Status ConnectorStatus `json:"status,omitempty"`
+	Spec   platform_apis.Connector `json:"spec,omitempty"`
+	Status ConnectorStatus         `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true

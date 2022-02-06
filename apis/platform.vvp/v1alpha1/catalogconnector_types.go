@@ -25,12 +25,12 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // CatalogConnectorSpec defines the desired state of CatalogConnector
-type CatalogConnectorSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+// type CatalogConnectorSpec struct {
+// 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+// 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec platform_apis.CatalogConnector `json:"spec,omitempty"`
-}
+// 	Spec platform_apis.CatalogConnector `json:"spec,omitempty"`
+// }
 
 // CatalogConnectorsStatus defines the observed state of CatalogConnectors
 type CatalogConnectorStatus struct {
@@ -49,7 +49,7 @@ type CatalogConnector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   CatalogConnectorSpec   `json:"spec,omitempty"`
+	Spec    platform_apis.CatalogConnector   `json:"spec,omitempty"`
 	Status CatalogConnectorStatus `json:"status,omitempty"`
 }
 

@@ -25,6 +25,8 @@ const (
 	InSyncState        string = "IN SYNC"
 	OutOfSyncState     string = "OUT OF SYNC"
 	SynchronizingState string = "SYNCHRONIZING"
+
+	CommunityEditionNamespace = "default"
 )
 
 type retryableError struct {
@@ -46,3 +48,4 @@ var ErrRetryable = NewRetryableError(errors.New("error"))
 func FormatOutOfSync(err error) string {
 	return fmt.Sprintf("%s: %s", OutOfSyncState, err.Error())
 }
+

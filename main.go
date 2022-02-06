@@ -118,13 +118,6 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "SessionCluster")
 		os.Exit(1)
 	}
-	if err = (&platformvvpcontrollers.ApiTokenReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "ApiToken")
-		os.Exit(1)
-	}
 	if err = (&platformvvpcontrollers.CatalogConnectorReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),

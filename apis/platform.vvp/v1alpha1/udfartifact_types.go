@@ -25,12 +25,12 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // UdfArtifactSpec defines the desired state of UdfArtifact
-type UdfArtifactSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+// type UdfArtifactSpec struct {
+// 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+// 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec platform_apis.UdfArtifact `json:"spec,omitempty"`
-}
+// 	Spec platform_apis.UdfArtifact `json:"spec,omitempty"`
+// }
 
 // UdfArtifactsStatus defines the observed state of UdfArtifacts
 type UdfArtifactStatus struct {
@@ -49,7 +49,7 @@ type UdfArtifact struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   UdfArtifactSpec   `json:"spec,omitempty"`
+	Spec   platform_apis.UdfArtifact   `json:"spec,omitempty"`
 	Status UdfArtifactStatus `json:"status,omitempty"`
 }
 

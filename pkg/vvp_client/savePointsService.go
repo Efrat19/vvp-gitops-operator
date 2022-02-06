@@ -16,7 +16,7 @@ type SavePointsService struct {
 
 func (c SavePointsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Savepoint) (error, bool) {
 	ctx := context.Background()
-	_, response, err := c.client.SavepointResourceApi.GetSavepointUsingGET(ctx, d.Spec.Metadata.Namespace, d.Spec.Metadata.Id)
+	_, response, err := c.client.SavepointResourceApi.GetSavepointUsingGET(ctx, CommunityEditionNamespace, d.Spec.Metadata.Id)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil, false
@@ -32,7 +32,7 @@ func (c SavePointsService) DeleteExternalResources(d *appmanagervvpv1alpha1.Save
 	options := &appmanager_apis.SavepointResourceApiDeleteSavepointUsingDELETEOpts{
 		Force: optional.NewBool(force),
 	}
-	response, err := c.client.SavepointResourceApi.DeleteSavepointUsingDELETE(ctx, d.Spec.Metadata.Namespace, d.Spec.Metadata.Id, options)
+	response, err := c.client.SavepointResourceApi.DeleteSavepointUsingDELETE(ctx, CommunityEditionNamespace, d.Spec.Metadata.Id, options)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil
@@ -48,7 +48,7 @@ func (c SavePointsService) CreateExternalResources(d *appmanagervvpv1alpha1.Save
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.SavepointResourceApi.CreateSavepointUsingPOST(ctx, d.Spec.Metadata.Namespace, *sp)
+	_, _, err := c.client.SavepointResourceApi.CreateSavepointUsingPOST(ctx, CommunityEditionNamespace, *sp)
 	return err
 }
 

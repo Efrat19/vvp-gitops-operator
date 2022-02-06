@@ -39,25 +39,21 @@ spec:
           metadata:
             type: object
           spec:
-            description: SqlScriptSpec defines the desired state of SqlScri
             properties:
-              spec:
-                properties:
-                  createTime:
-                    format: date-time
-                    type: string
-                  description:
-                    type: string
-                  displayName:
-                    type: string
-                  name:
-                    type: string
-                  script:
-                    type: string
-                  updateTime:
-                    format: date-time
-                    type: string
-                type: object
+              createTime:
+                format: date-time
+                type: string
+              description:
+                type: string
+              displayName:
+                type: string
+              name:
+                type: string
+              script:
+                type: string
+              updateTime:
+                format: date-time
+                type: string
             type: object
           status:
             description: SqlScriptsStatus defines the observed state of Sql

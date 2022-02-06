@@ -25,12 +25,12 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // FormatSpec defines the desired state of Format
-type FormatSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+// type FormatSpec struct {
+// 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+// 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec platform_apis.Format `json:"spec,omitempty"`
-}
+// 	Spec platform_apis.Format `json:"spec,omitempty"`
+// }
 
 // FormatsStatus defines the observed state of Formats
 type FormatStatus struct {
@@ -48,7 +48,7 @@ type Format struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   FormatSpec   `json:"spec,omitempty"`
+	Spec   platform_apis.Format   `json:"spec,omitempty"`
 	Status FormatStatus `json:"status,omitempty"`
 }
 

@@ -56,15 +56,6 @@ resources:
   controller: true
   domain: efrat19.io
   group: platform.vvp
-  kind: ApiToken
-  path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
-  version: v1alpha1
-- api:
-    crdVersion: v1
-    namespaced: true
-  controller: true
-  domain: efrat19.io
-  group: platform.vvp
   kind: CatalogConnector
   path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
   version: v1alpha1

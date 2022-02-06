@@ -39,40 +39,36 @@ spec:
           metadata:
             type: object
           spec:
-            description: FormatSpec defines the desired state of Format
             properties:
-              spec:
-                properties:
-                  dependencies:
-                    items:
-                      type: string
-                    type: array
-                  name:
-                    type: string
-                  packaged:
-                    type: boolean
+              dependencies:
+                items:
+                  type: string
+                type: array
+              name:
+                type: string
+              packaged:
+                type: boolean
+              properties:
+                items:
                   properties:
-                    items:
-                      properties:
-                        defaultValue:
-                          type: string
-                        definesFormat:
-                          type: boolean
-                        description:
-                          type: string
-                        key:
-                          type: string
-                        required:
-                          type: boolean
-                      type: object
-                    type: array
-                  sink:
-                    type: boolean
-                  source:
-                    type: boolean
-                  type:
-                    type: string
-                type: object
+                    defaultValue:
+                      type: string
+                    definesFormat:
+                      type: boolean
+                    description:
+                      type: string
+                    key:
+                      type: string
+                    required:
+                      type: boolean
+                  type: object
+                type: array
+              sink:
+                type: boolean
+              source:
+                type: boolean
+              type:
+                type: string
             type: object
           status:
             description: FormatsStatus defines the observed state of Format

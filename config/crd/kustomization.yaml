@@ -7,7 +7,6 @@ resources:
 - bases/appmanager.vvp.efrat19.io_savepoints.yaml
 - bases/appmanager.vvp.efrat19.io_secretvalues.yaml
 - bases/appmanager.vvp.efrat19.io_sessionclusters.yaml
-- bases/platform.vvp.efrat19.io_apitokens.yaml
 - bases/platform.vvp.efrat19.io_catalogconnectors.yaml
 - bases/platform.vvp.efrat19.io_connectors.yaml
 - bases/platform.vvp.efrat19.io_formats.yaml

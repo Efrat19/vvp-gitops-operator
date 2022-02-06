@@ -39,39 +39,35 @@ spec:
           metadata:
             type: object
           spec:
-            description: UdfArtifactSpec defines the desired state of UdfAr
             properties:
-              spec:
-                properties:
-                  createTime:
-                    format: date-time
-                    type: string
-                  jarUpdateTime:
-                    format: date-time
-                    type: string
-                  jarUrl:
-                    type: string
-                  name:
-                    type: string
-                  udfClasses:
-                    items:
-                      properties:
-                        className:
-                          type: string
-                        classType:
-                          type: string
-                        functionNames:
-                          items:
-                            type: string
-                          type: array
-                        udfArtifactName:
-                          type: string
-                      type: object
-                    type: array
-                  updateTime:
-                    format: date-time
-                    type: string
-                type: object
+              createTime:
+                format: date-time
+                type: string
+              jarUpdateTime:
+                format: date-time
+                type: string
+              jarUrl:
+                type: string
+              name:
+                type: string
+              udfClasses:
+                items:
+                  properties:
+                    className:
+                      type: string
+                    classType:
+                      type: string
+                    functionNames:
+                      items:
+                        type: string
+                      type: array
+                    udfArtifactName:
+                      type: string
+                  type: object
+                type: array
+              updateTime:
+                format: date-time
+                type: string
             type: object
           status:
             description: UdfArtifactsStatus defines the observed state of U

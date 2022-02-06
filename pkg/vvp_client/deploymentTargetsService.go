@@ -15,7 +15,7 @@ type DeploymentTargetsService struct {
 
 func (c DeploymentTargetsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.DeploymentTarget) (error, bool) {
 	ctx := context.Background()
-	_, response, err := c.client.DeploymentTargetResourceApi.GetDeploymentTargetsUsingGET(ctx, d.Spec.Metadata.Namespace)
+	_, response, err := c.client.DeploymentTargetResourceApi.GetDeploymentTargetsUsingGET(ctx, CommunityEditionNamespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil, false
@@ -28,7 +28,7 @@ func (c DeploymentTargetsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.D
 
 func (c DeploymentTargetsService) DeleteExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget, force bool) error {
 	ctx := context.Background()
-	_, response, err := c.client.DeploymentTargetResourceApi.DeleteDeploymentTargetUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, response, err := c.client.DeploymentTargetResourceApi.DeleteDeploymentTargetUsingDELETE(ctx, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil
@@ -44,7 +44,7 @@ func (c DeploymentTargetsService) CreateExternalResources(d *appmanagervvpv1alph
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.DeploymentTargetResourceApi.CreateDeploymentTargetUsingPOST(ctx, *dt, d.Spec.Metadata.Namespace)
+	_, _, err := c.client.DeploymentTargetResourceApi.CreateDeploymentTargetUsingPOST(ctx, *dt, CommunityEditionNamespace)
 	return err
 }
 
@@ -54,7 +54,7 @@ func (c DeploymentTargetsService) UpdateExternalResources(d *appmanagervvpv1alph
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.DeploymentTargetResourceApi.UpsertDeploymentTargetUsingPUT(ctx, *dt, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, _, err := c.client.DeploymentTargetResourceApi.UpsertDeploymentTargetUsingPUT(ctx, *dt, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	return err
 }
 

@@ -15,7 +15,7 @@ type SecretValuesService struct {
 
 func (c SecretValuesService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.SecretValue) (error, bool) {
 	ctx := context.Background()
-	_, response, err := c.client.SecretValueResourceApi.GetSecretValueUsingGET(ctx, d.Spec.Metadata.Namespace, d.Spec.Metadata.Id)
+	_, response, err := c.client.SecretValueResourceApi.GetSecretValueUsingGET(ctx, CommunityEditionNamespace, d.Spec.Metadata.Id)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil, false
@@ -28,7 +28,7 @@ func (c SecretValuesService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Secret
 
 func (c SecretValuesService) DeleteExternalResources(d *appmanagervvpv1alpha1.SecretValue, force bool) error {
 	ctx := context.Background()
-	_, response, err := c.client.SecretValueResourceApi.DeleteSecretValueUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, response, err := c.client.SecretValueResourceApi.DeleteSecretValueUsingDELETE(ctx, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil
@@ -44,7 +44,7 @@ func (c SecretValuesService) CreateExternalResources(d *appmanagervvpv1alpha1.Se
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.SecretValueResourceApi.CreateSecretValueUsingPOST(ctx, d.Spec.Metadata.Namespace, *sv)
+	_, _, err := c.client.SecretValueResourceApi.CreateSecretValueUsingPOST(ctx, CommunityEditionNamespace, *sv)
 	return err
 }
 
@@ -72,6 +72,6 @@ func (c SecretValuesService) UpdateExternalResources(d *appmanagervvpv1alpha1.Se
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.SecretValueResourceApi.UpdateSecretValueUsingPATCH(ctx, *sv, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, _, err := c.client.SecretValueResourceApi.UpdateSecretValueUsingPATCH(ctx, *sv, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	return err
 }

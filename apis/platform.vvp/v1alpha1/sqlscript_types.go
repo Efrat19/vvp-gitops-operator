@@ -25,12 +25,12 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // SqlScriptSpec defines the desired state of SqlScript
-type SqlScriptSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+// type SqlScriptSpec struct {
+// 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+// 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec platform_apis.SqlScript `json:"spec,omitempty"`
-}
+// 	Spec platform_apis.SqlScript `json:"spec,omitempty"`
+// }
 
 // SqlScriptsStatus defines the observed state of SqlScripts
 type SqlScriptStatus struct {
@@ -49,8 +49,8 @@ type SqlScript struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   SqlScriptSpec   `json:"spec,omitempty"`
-	Status SqlScriptStatus `json:"status,omitempty"`
+	Spec   platform_apis.SqlScript `json:"spec,omitempty"`
+	Status SqlScriptStatus         `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true

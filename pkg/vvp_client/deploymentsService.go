@@ -52,7 +52,7 @@ func (c DeploymentsService) CreateExternalResources(d *appmanagervvpv1alpha1.Dep
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.DeploymentResourceApi.CreateDeploymentUsingPOST(ctx, *deployment, d.Spec.Metadata.Namespace)
+	_, _, err := c.client.DeploymentResourceApi.CreateDeploymentUsingPOST(ctx, *deployment, CommunityEditionNamespace)
 	return err
 }
 
@@ -62,13 +62,13 @@ func (c DeploymentsService) UpdateExternalResources(d *appmanagervvpv1alpha1.Dep
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.DeploymentResourceApi.UpdateDeploymentUsingPATCH(ctx, *deployment, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, _, err := c.client.DeploymentResourceApi.UpdateDeploymentUsingPATCH(ctx, *deployment, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	return err
 }
 
 func (c DeploymentsService) GetStatus(d *appmanagervvpv1alpha1.Deployment) (*appmanager_apis.DeploymentStatus, error) {
 	ctx := context.Background()
-	deployment, _, err := c.client.DeploymentResourceApi.GetDeploymentUsingGET(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	deployment, _, err := c.client.DeploymentResourceApi.GetDeploymentUsingGET(ctx, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	return deployment.Status, err
 }
 

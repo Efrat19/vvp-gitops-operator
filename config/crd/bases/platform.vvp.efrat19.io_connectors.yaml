@@ -39,46 +39,42 @@ spec:
           metadata:
             type: object
           spec:
-            description: ConnectorSpec defines the desired state of Connect
             properties:
-              spec:
-                properties:
-                  dependencies:
-                    items:
-                      type: string
-                    type: array
-                  lookup:
-                    type: boolean
-                  name:
-                    type: string
-                  packaged:
-                    type: boolean
+              dependencies:
+                items:
+                  type: string
+                type: array
+              lookup:
+                type: boolean
+              name:
+                type: string
+              packaged:
+                type: boolean
+              properties:
+                items:
                   properties:
-                    items:
-                      properties:
-                        defaultValue:
-                          type: string
-                        definesFormat:
-                          type: boolean
-                        description:
-                          type: string
-                        key:
-                          type: string
-                        required:
-                          type: boolean
-                      type: object
-                    type: array
-                  sink:
-                    type: boolean
-                  source:
-                    type: boolean
-                  supportedFormats:
-                    items:
+                    defaultValue:
                       type: string
-                    type: array
-                  type:
-                    type: string
-                type: object
+                    definesFormat:
+                      type: boolean
+                    description:
+                      type: string
+                    key:
+                      type: string
+                    required:
+                      type: boolean
+                  type: object
+                type: array
+              sink:
+                type: boolean
+              source:
+                type: boolean
+              supportedFormats:
+                items:
+                  type: string
+                type: array
+              type:
+                type: string
             type: object
           status:
             description: ConnectorsStatus defines the observed state of Con

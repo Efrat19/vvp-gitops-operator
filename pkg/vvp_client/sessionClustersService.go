@@ -15,7 +15,7 @@ type SessionClustersService struct {
 
 func (c SessionClustersService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.SessionCluster) (error, bool) {
 	ctx := context.Background()
-	_, response, err := c.client.SessionClusterResourceApi.GetSessionClusterUsingGET(ctx, d.Spec.Metadata.Namespace, d.Spec.Metadata.Id)
+	_, response, err := c.client.SessionClusterResourceApi.GetSessionClusterUsingGET(ctx, CommunityEditionNamespace, d.Spec.Metadata.Id)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil, false
@@ -28,7 +28,7 @@ func (c SessionClustersService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Ses
 
 func (c SessionClustersService) DeleteExternalResources(d *appmanagervvpv1alpha1.SessionCluster, force bool) error {
 	ctx := context.Background()
-	_, response, err := c.client.SessionClusterResourceApi.DeleteSessionClusterUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, response, err := c.client.SessionClusterResourceApi.DeleteSessionClusterUsingDELETE(ctx, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil
@@ -44,7 +44,7 @@ func (c SessionClustersService) CreateExternalResources(d *appmanagervvpv1alpha1
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.SessionClusterResourceApi.CreateSessionClusterUsingPOST(ctx, d.Spec.Metadata.Namespace, *sc)
+	_, _, err := c.client.SessionClusterResourceApi.CreateSessionClusterUsingPOST(ctx, CommunityEditionNamespace, *sc)
 	return err
 }
 
@@ -72,6 +72,6 @@ func (c SessionClustersService) UpdateExternalResources(d *appmanagervvpv1alpha1
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.SessionClusterResourceApi.UpdateSessionClusterUsingPATCH(ctx, *sc, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, _, err := c.client.SessionClusterResourceApi.UpdateSessionClusterUsingPATCH(ctx, *sc, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	return err
 }
