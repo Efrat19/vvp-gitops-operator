@@ -1,4 +1,4 @@
-package controllers
+package appmanagervvp
 
 // import (
 // 	"testing"
@@ -7,8 +7,8 @@ package controllers
 // 	"github.com/golang/mock/gomock"
 // 	user "github.com/golang/mock/sample"
 // 	"github.com/golang/mock/sample/imp1"
-// 	v1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
-// 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+// appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/appmanager.vvp/v1alpha1"
+// appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/appmanager.vvp/v1alpha1"
 // 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 // )

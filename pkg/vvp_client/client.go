@@ -1,7 +1,6 @@
 package vvp_client
 
 import (
-	// appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
 	"context"
 	"errors"
 	"fmt"

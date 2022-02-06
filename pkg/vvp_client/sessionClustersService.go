@@ -5,7 +5,7 @@ import (
 	"errors"
 	"net/http"
 
-	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/appmanager.vvp/v1alpha1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
 )
 
@@ -28,7 +28,7 @@ func (c SessionClustersService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Ses
 
 func (c SessionClustersService) DeleteExternalResources(d *appmanagervvpv1alpha1.SessionCluster, force bool) error {
 	ctx := context.Background()
-    _, response, err := c.client.SessionClusterResourceApi.DeleteSessionClusterUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, response, err := c.client.SessionClusterResourceApi.DeleteSessionClusterUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil
@@ -44,7 +44,7 @@ func (c SessionClustersService) CreateExternalResources(d *appmanagervvpv1alpha1
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.SessionClusterResourceApi.CreateSessionClusterUsingPOST(ctx, d.Spec.Metadata.Namespace, *sc )
+	_, _, err := c.client.SessionClusterResourceApi.CreateSessionClusterUsingPOST(ctx, d.Spec.Metadata.Namespace, *sc)
 	return err
 }
 
@@ -56,7 +56,6 @@ func (c SessionClustersService) validateName(d *appmanagervvpv1alpha1.SessionClu
 	return nil
 }
 
-
 func (c SessionClustersService) vvpScFromK8sSc(d *appmanagervvpv1alpha1.SessionCluster) *appmanager_apis.SessionCluster {
 	sc := &appmanager_apis.SessionCluster{
 		ApiVersion: "v1",
@@ -66,7 +65,6 @@ func (c SessionClustersService) vvpScFromK8sSc(d *appmanagervvpv1alpha1.SessionC
 	}
 	return sc
 }
-
 
 func (c SessionClustersService) UpdateExternalResources(d *appmanagervvpv1alpha1.SessionCluster) error {
 	ctx := context.Background()

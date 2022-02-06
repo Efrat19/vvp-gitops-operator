@@ -5,7 +5,7 @@ import (
 	"errors"
 	"net/http"
 
-	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/appmanager.vvp/v1alpha1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
 )
 
@@ -26,7 +26,7 @@ func (c DeploymentTargetsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.D
 	return err, true
 }
 
-func (c DeploymentTargetsService) DeleteExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget,force bool) error {
+func (c DeploymentTargetsService) DeleteExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget, force bool) error {
 	ctx := context.Background()
 	_, response, err := c.client.DeploymentTargetResourceApi.DeleteDeploymentTargetUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	if err != nil {

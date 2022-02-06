@@ -5,7 +5,7 @@ import (
 	"errors"
 	"net/http"
 
-	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/appmanager.vvp/v1alpha1"
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
 )
 
@@ -28,7 +28,7 @@ func (c SecretValuesService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Secret
 
 func (c SecretValuesService) DeleteExternalResources(d *appmanagervvpv1alpha1.SecretValue, force bool) error {
 	ctx := context.Background()
-    _, response, err := c.client.SecretValueResourceApi.DeleteSecretValueUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	_, response, err := c.client.SecretValueResourceApi.DeleteSecretValueUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil
@@ -44,7 +44,7 @@ func (c SecretValuesService) CreateExternalResources(d *appmanagervvpv1alpha1.Se
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.SecretValueResourceApi.CreateSecretValueUsingPOST(ctx, d.Spec.Metadata.Namespace, *sv )
+	_, _, err := c.client.SecretValueResourceApi.CreateSecretValueUsingPOST(ctx, d.Spec.Metadata.Namespace, *sv)
 	return err
 }
 
@@ -56,7 +56,6 @@ func (c SecretValuesService) validateName(d *appmanagervvpv1alpha1.SecretValue) 
 	return nil
 }
 
-
 func (c SecretValuesService) vvpSvFromK8sSv(d *appmanagervvpv1alpha1.SecretValue) *appmanager_apis.SecretValue {
 	sv := &appmanager_apis.SecretValue{
 		ApiVersion: "v1",
@@ -66,7 +65,6 @@ func (c SecretValuesService) vvpSvFromK8sSv(d *appmanagervvpv1alpha1.SecretValue
 	}
 	return sv
 }
-
 
 func (c SecretValuesService) UpdateExternalResources(d *appmanagervvpv1alpha1.SecretValue) error {
 	ctx := context.Background()

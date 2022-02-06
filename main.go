@@ -31,9 +31,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/appmanager.vvp/v1alpha1"
 	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
-	"efrat19.io/vvp-gitops-operator/controllers"
+	controllers "efrat19.io/vvp-gitops-operator/controllers/appmanager.vvp"
 	platformvvpcontrollers "efrat19.io/vvp-gitops-operator/controllers/platform.vvp"
 	//+kubebuilder:scaffold:imports
 )
