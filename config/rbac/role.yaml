@@ -86,7 +86,7 @@ rules:
 - apiGroups:
   - appmanager.vvp.efrat19.io
   resources:
-  - secretvalues
+  - secretValues
   verbs:
   - create
   - delete
@@ -98,13 +98,13 @@ rules:
 - apiGroups:
   - appmanager.vvp.efrat19.io
   resources:
-  - secretvalues/finalizers
+  - secretValues/finalizers
   verbs:
   - update
 - apiGroups:
   - appmanager.vvp.efrat19.io
   resources:
-  - secretvalues/status
+  - secretValues/status
   verbs:
   - get
   - patch
