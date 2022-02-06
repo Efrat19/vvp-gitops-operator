@@ -74,6 +74,6 @@ func (c SqlScriptsService) UpdateExternalResources(d *platformvvpv1alpha1.SqlScr
 	if err := c.validateName(d); err != nil {
 		return err
 	}
-	_, _, err := c.client.SqlControllerApi.UpdateSqlScriptUsingPUT(ctx,  CommunityEditionNamespace, *at, d.Spec.Name)
+	_, _, err := c.client.SqlControllerApi.UpdateSqlScriptUsingPUT(ctx, CommunityEditionNamespace, *at, d.Spec.Name)
 	return err
 }

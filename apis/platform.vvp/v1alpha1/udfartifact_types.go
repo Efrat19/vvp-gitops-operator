@@ -49,8 +49,8 @@ type UdfArtifact struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   platform_apis.UdfArtifact   `json:"spec,omitempty"`
-	Status UdfArtifactStatus `json:"status,omitempty"`
+	Spec   platform_apis.UdfArtifact `json:"spec,omitempty"`
+	Status UdfArtifactStatus         `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true

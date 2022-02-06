@@ -49,8 +49,8 @@ type CatalogConnector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec    platform_apis.CatalogConnector   `json:"spec,omitempty"`
-	Status CatalogConnectorStatus `json:"status,omitempty"`
+	Spec   platform_apis.CatalogConnector `json:"spec,omitempty"`
+	Status CatalogConnectorStatus         `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true

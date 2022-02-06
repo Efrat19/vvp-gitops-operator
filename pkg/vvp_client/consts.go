@@ -48,4 +48,3 @@ var ErrRetryable = NewRetryableError(errors.New("error"))
 func FormatOutOfSync(err error) string {
 	return fmt.Sprintf("%s: %s", OutOfSyncState, err.Error())
 }
-

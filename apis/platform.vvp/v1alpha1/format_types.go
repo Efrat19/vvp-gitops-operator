@@ -48,8 +48,8 @@ type Format struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   platform_apis.Format   `json:"spec,omitempty"`
-	Status FormatStatus `json:"status,omitempty"`
+	Spec   platform_apis.Format `json:"spec,omitempty"`
+	Status FormatStatus         `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
