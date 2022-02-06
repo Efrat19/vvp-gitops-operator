@@ -22,7 +22,7 @@ func (c SecretValuesService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Secret
 		}
 		return err, false
 	}
-	// savepoint exists
+	// secretvalue exists
 	return err, true
 }
 

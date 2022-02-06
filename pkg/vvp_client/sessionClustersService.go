@@ -22,7 +22,7 @@ func (c SessionClustersService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.Ses
 		}
 		return err, false
 	}
-	// savepoint exists
+	// sessioncluster exists
 	return err, true
 }
 
