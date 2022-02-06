@@ -17,6 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
+	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
+
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -29,18 +31,20 @@ type ConnectorsSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Connectors. Edit connectors_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Spec     platform_apis.Connector     `json:"spec,omitempty"`
 }
 
 // ConnectorsStatus defines the observed state of Connectors
 type ConnectorsStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	LastSync metav1.Time `json:"lastSync,omitempty"`
+	State    string      `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-
+// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
+// +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 // Connectors is the Schema for the connectors API
 type Connectors struct {
 	metav1.TypeMeta   `json:",inline"`

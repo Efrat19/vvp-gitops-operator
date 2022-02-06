@@ -41,7 +41,6 @@ spec:
             description: DeploymentSpec defines the desired state of Deploy
             properties:
               metadata:
-                description: Foo is an example field of Deployment.
                 properties:
                   annotations:
                     additionalProperties:

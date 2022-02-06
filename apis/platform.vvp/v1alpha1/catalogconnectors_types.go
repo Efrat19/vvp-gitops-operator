@@ -18,6 +18,8 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
+
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -29,19 +31,20 @@ type CatalogConnectorsSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of CatalogConnectors. Edit catalogconnectors_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Spec     platform_apis.CatalogConnector     `json:"spec,omitempty"`
 }
 
 // CatalogConnectorsStatus defines the observed state of CatalogConnectors
 type CatalogConnectorsStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	LastSync metav1.Time `json:"lastSync,omitempty"`
+	State    string      `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-
-// CatalogConnectors is the Schema for the catalogconnectors API
+// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
+// +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 type CatalogConnectors struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

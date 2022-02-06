@@ -17,6 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
+	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
+
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -29,18 +31,20 @@ type FormatsSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Formats. Edit formats_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Spec     platform_apis.Format     `json:"spec,omitempty"`
 }
 
 // FormatsStatus defines the observed state of Formats
 type FormatsStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	LastSync metav1.Time `json:"lastSync,omitempty"`
+	State    string      `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-
+// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
+// +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 // Formats is the Schema for the formats API
 type Formats struct {
 	metav1.TypeMeta   `json:",inline"`

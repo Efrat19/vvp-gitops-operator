@@ -28,19 +28,20 @@ import (
 type ApiTokensSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-
+	Spec     platform_apis.ApiToken     `json:"spec,omitempty"`
 }
 
 // ApiTokensStatus defines the observed state of ApiTokens
 type ApiTokensStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	LastSync metav1.Time `json:"lastSync,omitempty"`
+	State    string      `json:"state,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
-
-// ApiTokens is the Schema for the apitokens API
+// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
+// +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
 type ApiTokens struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
