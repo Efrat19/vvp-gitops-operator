@@ -69,3 +69,15 @@ func (c SavePointsService) vvpSpFromK8sSp(d *appmanagervvpv1alpha1.Savepoint) *a
 	}
 	return sp
 }
+
+func (c SavePointsService) UpdateExternalResources(k8ssp *appmanagervvpv1alpha1.Savepoint) error {
+	ctx := context.Background()
+	vvpsp, _, err := c.client.SavepointResourceApi.GetSavepointUsingGET(ctx, CommunityEditionNamespace, k8ssp.Spec.Metadata.Id)
+	if err != nil {
+		return err
+	}
+	if &k8ssp.Spec.Spec != vvpsp.Spec {
+		return errors.New("SavePoint cannot be updated after creation. Delete the savepoint and recreate it.")
+	}
+	return nil
+}

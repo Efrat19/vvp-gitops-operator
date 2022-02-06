@@ -18,24 +18,34 @@ package appmanagervvp
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"time"
 
+	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/appmanager.vvp/v1alpha1"
+
+	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
+
+	// "github.com/fintechstudios/ververica-platform-k8s-operator/pkg/polling"
+	// "github.com/davecgh/go-spew/spew"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/log"
-
-	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/appmanager.vvp/v1alpha1"
 )
 
 // DeploymentTargetReconciler reconciles a DeploymentTarget object
 type DeploymentTargetReconciler struct {
 	client.Client
-	Scheme *runtime.Scheme
+	Scheme    *runtime.Scheme
+	vvpClient vvp_client.VvpClient
 }
 
-//+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deploymenttargets,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deploymenttargets/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deploymenttargets/finalizers,verbs=update
+//+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deploymentTargets,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deploymentTargets/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=appmanager.vvp.efrat19.io,resources=deploymentTargets/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -47,15 +57,143 @@ type DeploymentTargetReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.11.0/pkg/reconcile
 func (r *DeploymentTargetReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
-
-	// TODO(user): your logic here
-
+	log := log.FromContext(ctx)
+	var dep appmanagervvpv1alpha1.DeploymentTarget
+	if err := r.Get(ctx, req.NamespacedName, &dep); err != nil {
+		log.Error(err, "unable to get deploymentTarget")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+	if err := r.vvpClient.MatchServerVersion(); err != nil {
+		return r.handleOutOfSyncError(dep, err)
+	}
+	if err := r.handleDeploymentTargetFinalizers(dep); err != nil {
+		return r.handleOutOfSyncError(dep, err)
+	}
+	// if the deploymentTarget needs to be deleted
+	if !dep.ObjectMeta.DeletionTimestamp.IsZero() {
+		if err := r.handleDeploymentTargetDeletion(dep); err != nil {
+			return r.handleOutOfSyncError(dep, err)
+		}
+		return ctrl.Result{}, nil
+	}
+	if err := r.handleDeploymentTargetCreationIfNeeded(&dep); err != nil {
+		return r.handleOutOfSyncError(dep, err)
+	}
+	if err := r.updateDeploymentTargetSpecInVVP(dep); err != nil {
+		return r.handleOutOfSyncError(dep, err)
+	}
+	if err := r.setStatus(dep, vvp_client.InSyncState); err != nil {
+		return ctrl.Result{}, err
+	}
 	return ctrl.Result{}, nil
+}
+
+func (r *DeploymentTargetReconciler) handleDeploymentTargetCreationIfNeeded(dep *appmanagervvpv1alpha1.DeploymentTarget) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	// Create deploymentTarget if not exists
+	err, deploymentTargetExists := r.vvpClient.DeploymentTargets().ResourceExistsInVVP(dep)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp deploymentTarget exists")
+		return nil
+	}
+	if !deploymentTargetExists {
+		log.Info(fmt.Sprintf("DeploymentTarget %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))
+		if err := r.vvpClient.DeploymentTargets().CreateExternalResources(dep); err != nil {
+			log.Error(err, "unable to create vvp deploymentTarget")
+		}
+	}
+	return nil
+}
+
+func (r *DeploymentTargetReconciler) handleDeploymentTargetFinalizers(dep appmanagervvpv1alpha1.DeploymentTarget) error {
+	ctx := context.Background()
+	// name of our custom finalizer
+	log := log.FromContext(ctx)
+
+	// examine DeletionTimestamp to determine if object is under deletion
+	if dep.ObjectMeta.DeletionTimestamp.IsZero() {
+		log.Info(fmt.Sprintf("Attaching finalizers to deploymentTarget %s\n", dep.Spec.Metadata.Name))
+		// The object is not being deleted, so if it does not have our finalizer,
+		// then lets add the finalizer and update the object. This is equivalent
+		// registering our finalizer.
+		if !controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
+			controllerutil.AddFinalizer(&dep, appmanagerFinalizer)
+			if err := r.Update(ctx, &dep); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (r *DeploymentTargetReconciler) handleDeploymentTargetDeletion(dep appmanagervvpv1alpha1.DeploymentTarget) error {
+	ctx := context.Background()
+	// name of our custom finalizer
+	log := log.FromContext(ctx)
+
+	// The object is being deleted
+	log.Info(fmt.Sprintf("Deleting deploymentTarget %s\n", dep.Spec.Metadata.Name))
+	if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
+		// our finalizer is present, so lets handle any external dependency
+		forceDelete := false
+		if err := r.vvpClient.DeploymentTargets().DeleteExternalResources(&dep, forceDelete); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to delete deploymentTarget %s in vvp, retrying...\n", dep.Spec.Metadata.Name))
+			// if fail to delete the external dependency here, return with error
+			// so that it can be retried
+			return vvp_client.NewRetryableError(err)
+		}
+
+		// remove our finalizer from the list and update it.
+		controllerutil.RemoveFinalizer(&dep, appmanagerFinalizer)
+		if err := r.Update(ctx, &dep); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to remove deploymentTarget %s finalizers\n", dep.Spec.Metadata.Name))
+			return err
+		}
+	}
+	// Stop reconciliation as the item is being deleted
+	return nil
+}
+
+func (r *DeploymentTargetReconciler) handleOutOfSyncError(dep appmanagervvpv1alpha1.DeploymentTarget, err error) (ctrl.Result, error) {
+	if updateErr := r.setStatus(dep, vvp_client.FormatOutOfSync(err)); updateErr != nil {
+		return ctrl.Result{}, updateErr
+	}
+	if errors.Is(err, vvp_client.ErrRetryable) {
+		return ctrl.Result{RequeueAfter: time.Second * 30, Requeue: true}, err
+	}
+	return ctrl.Result{}, err
+}
+
+func (r *DeploymentTargetReconciler) setStatus(dep appmanagervvpv1alpha1.DeploymentTarget, syncState string) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	log.Info(fmt.Sprintf("Updating status for deploymentTarget %s \n", dep.Spec.Metadata.Name))
+	dep.Status.State = syncState
+	dep.Status.LastSync = metav1.Now()
+	if err := r.Status().Update(ctx, &dep); err != nil {
+		log.Error(err, "unable to update k8s deploymentTarget status")
+		return err
+	}
+	return nil
+}
+
+func (r *DeploymentTargetReconciler) updateDeploymentTargetSpecInVVP(dep appmanagervvpv1alpha1.DeploymentTarget) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	// update vvp deploymentTarget spec from k8s
+	log.Info(fmt.Sprintf("Updating spec for deploymentTarget %s \n", dep.Spec.Metadata.Name))
+	if err := r.vvpClient.DeploymentTargets().UpdateExternalResources(&dep); err != nil {
+		log.Error(err, "unable to update vvp deploymentTarget spec")
+		return nil
+	}
+	return nil
+
 }
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *DeploymentTargetReconciler) SetupWithManager(mgr ctrl.Manager) error {
+	r.vvpClient = vvp_client.NewClient()
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&appmanagervvpv1alpha1.DeploymentTarget{}).
 		Complete(r)

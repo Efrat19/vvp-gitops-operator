@@ -8,6 +8,32 @@ rules:
 - apiGroups:
   - appmanager.vvp.efrat19.io
   resources:
+  - deploymentTargets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymentTargets/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymentTargets/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
   - deployments
   verbs:
   - create
@@ -27,32 +53,6 @@ rules:
   - appmanager.vvp.efrat19.io
   resources:
   - deployments/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - appmanager.vvp.efrat19.io
-  resources:
-  - deploymenttargets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - appmanager.vvp.efrat19.io
-  resources:
-  - deploymenttargets/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - appmanager.vvp.efrat19.io
-  resources:
-  - deploymenttargets/status
   verbs:
   - get
   - patch
