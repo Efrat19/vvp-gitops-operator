@@ -11,12 +11,12 @@ kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind SessionC
 
 kubebuilder edit --multigroup=true
 
-kubebuilder create api --group platform.vvp --version v1alpha1 --kind ApiTokens
-kubebuilder create api --group platform.vvp --version v1alpha1 --kind CatalogConnectors
-kubebuilder create api --group platform.vvp --version v1alpha1 --kind Connectors
-kubebuilder create api --group platform.vvp --version v1alpha1 --kind Formats
-kubebuilder create api --group platform.vvp --version v1alpha1 --kind SqlScripts
-kubebuilder create api --group platform.vvp --version v1alpha1 --kind UdfArtifacts
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind ApiToken
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind CatalogConnector
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind Connector
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind Format
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind SqlScript
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind UdfArtifact
 
 # Create VVP Client for ververica platform 2.6.1
 mkdir -p pkg/appmanager_apis

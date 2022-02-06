@@ -24,15 +24,16 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// ApiTokensSpec defines the desired state of ApiTokens
-type ApiTokensSpec struct {
+// UdfArtifactSpec defines the desired state of UdfArtifact
+type UdfArtifactSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Spec     platform_apis.ApiToken     `json:"spec,omitempty"`
+
+	Spec     platform_apis.UdfArtifact     `json:"spec,omitempty"`
 }
 
-// ApiTokensStatus defines the observed state of ApiTokens
-type ApiTokensStatus struct {
+// UdfArtifactsStatus defines the observed state of UdfArtifacts
+type UdfArtifactStatus struct {
 	LastSync metav1.Time `json:"lastSync,omitempty"`
 	State    string      `json:"state,omitempty"`
 }
@@ -42,23 +43,25 @@ type ApiTokensStatus struct {
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
-type ApiTokens struct {
+
+// UdfArtifact is the Schema for the udfartifacts API
+type UdfArtifact struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ApiTokensSpec   `json:"spec,omitempty"`
-	Status ApiTokensStatus `json:"status,omitempty"`
+	Spec   UdfArtifactSpec   `json:"spec,omitempty"`
+	Status UdfArtifactStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// ApiTokensList contains a list of ApiTokens
-type ApiTokensList struct {
+// UdfArtifactList contains a list of UdfArtifact
+type UdfArtifactList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []ApiTokens `json:"items"`
+	Items           []UdfArtifact `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&ApiTokens{}, &ApiTokensList{})
+	SchemeBuilder.Register(&UdfArtifact{}, &UdfArtifactList{})
 }

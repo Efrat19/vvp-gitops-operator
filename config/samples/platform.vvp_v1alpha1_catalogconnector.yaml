@@ -1,0 +1,6 @@
+apiVersion: platform.vvp.efrat19.io/v1alpha1
+kind: CatalogConnector
+metadata:
+  name: catalogconnector-sample
+spec:
+  # TODO(user): Add fields here

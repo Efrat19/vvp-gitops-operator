@@ -9,10 +9,10 @@ metadata:
 spec:
   group: platform.vvp.efrat19.io
   names:
-    kind: SqlScripts
-    listKind: SqlScriptsList
+    kind: SqlScript
+    listKind: SqlScriptList
     plural: sqlscripts
-    singular: sqlscripts
+    singular: sqlscript
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -28,7 +28,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SqlScripts is the Schema for the sqlscripts API
+        description: SqlScript is the Schema for the sqlscripts API
         properties:
           apiVersion:
             description: APIVersion defines the versioned schema of this re
@@ -39,10 +39,9 @@ spec:
           metadata:
             type: object
           spec:
-            description: SqlScriptsSpec defines the desired state of SqlScr
+            description: SqlScriptSpec defines the desired state of SqlScri
             properties:
               spec:
-                description: Foo is an example field of SqlScripts.
                 properties:
                   createTime:
                     format: date-time

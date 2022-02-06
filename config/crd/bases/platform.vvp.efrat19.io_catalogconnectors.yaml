@@ -9,10 +9,10 @@ metadata:
 spec:
   group: platform.vvp.efrat19.io
   names:
-    kind: CatalogConnectors
-    listKind: CatalogConnectorsList
+    kind: CatalogConnector
+    listKind: CatalogConnectorList
     plural: catalogconnectors
-    singular: catalogconnectors
+    singular: catalogconnector
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -28,6 +28,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
+        description: CatalogConnector is the Schema for the catalogconn
         properties:
           apiVersion:
             description: APIVersion defines the versioned schema of this re
@@ -38,10 +39,9 @@ spec:
           metadata:
             type: object
           spec:
-            description: CatalogConnectorsSpec defines the desired state of
+            description: 'CatalogConnectorSpec defines the desired state of '
             properties:
               spec:
-                description: Foo is an example field of CatalogConnectors.
                 properties:
                   dependencies:
                     items:

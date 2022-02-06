@@ -9,10 +9,10 @@ metadata:
 spec:
   group: platform.vvp.efrat19.io
   names:
-    kind: Formats
-    listKind: FormatsList
+    kind: Format
+    listKind: FormatList
     plural: formats
-    singular: formats
+    singular: format
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -28,7 +28,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Formats is the Schema for the formats API
+        description: Format is the Schema for the formats API
         properties:
           apiVersion:
             description: APIVersion defines the versioned schema of this re
@@ -39,10 +39,9 @@ spec:
           metadata:
             type: object
           spec:
-            description: FormatsSpec defines the desired state of Formats
+            description: FormatSpec defines the desired state of Format
             properties:
               spec:
-                description: Foo is an example field of Formats.
                 properties:
                   dependencies:
                     items:

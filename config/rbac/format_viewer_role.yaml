@@ -1,0 +1,20 @@
+# permissions for end users to view formats.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: format-viewer-role
+rules:
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - formats
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - formats/status
+  verbs:
+  - get

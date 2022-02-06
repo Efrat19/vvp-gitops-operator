@@ -27,26 +27,26 @@ import (
 	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
 )
 
-// FormatsReconciler reconciles a Formats object
-type FormatsReconciler struct {
+// ConnectorReconciler reconciles a Connector object
+type ConnectorReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=formats,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=formats/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=formats/finalizers,verbs=update
+//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=connectors,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=connectors/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=connectors/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 // TODO(user): Modify the Reconcile function to compare the state specified by
-// the Formats object against the actual cluster state, and then
+// the Connector object against the actual cluster state, and then
 // perform operations to make the cluster state reflect the state specified by
 // the user.
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.11.0/pkg/reconcile
-func (r *FormatsReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *ConnectorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
@@ -55,8 +55,8 @@ func (r *FormatsReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *FormatsReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *ConnectorReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&platformvvpv1alpha1.Formats{}).
+		For(&platformvvpv1alpha1.Connector{}).
 		Complete(r)
 }

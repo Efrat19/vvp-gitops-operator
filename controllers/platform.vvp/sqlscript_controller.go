@@ -27,26 +27,26 @@ import (
 	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
 )
 
-// ConnectorsReconciler reconciles a Connectors object
-type ConnectorsReconciler struct {
+// SqlScriptReconciler reconciles a SqlScript object
+type SqlScriptReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=connectors,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=connectors/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=connectors/finalizers,verbs=update
+//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=sqlscripts,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=sqlscripts/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=sqlscripts/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 // TODO(user): Modify the Reconcile function to compare the state specified by
-// the Connectors object against the actual cluster state, and then
+// the SqlScript object against the actual cluster state, and then
 // perform operations to make the cluster state reflect the state specified by
 // the user.
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.11.0/pkg/reconcile
-func (r *ConnectorsReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *SqlScriptReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
@@ -55,8 +55,8 @@ func (r *ConnectorsReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *ConnectorsReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *SqlScriptReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&platformvvpv1alpha1.Connectors{}).
+		For(&platformvvpv1alpha1.SqlScript{}).
 		Complete(r)
 }

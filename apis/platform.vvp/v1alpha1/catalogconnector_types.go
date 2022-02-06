@@ -18,24 +18,22 @@ package v1alpha1
 
 import (
 	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// FormatsSpec defines the desired state of Formats
-type FormatsSpec struct {
+// CatalogConnectorSpec defines the desired state of CatalogConnector
+type CatalogConnectorSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Formats. Edit formats_types.go to remove/update
-	Spec     platform_apis.Format     `json:"spec,omitempty"`
+	Spec     platform_apis.CatalogConnector     `json:"spec,omitempty"`
 }
 
-// FormatsStatus defines the observed state of Formats
-type FormatsStatus struct {
+// CatalogConnectorsStatus defines the observed state of CatalogConnectors
+type CatalogConnectorStatus struct {
 	LastSync metav1.Time `json:"lastSync,omitempty"`
 	State    string      `json:"state,omitempty"`
 }
@@ -45,24 +43,25 @@ type FormatsStatus struct {
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
-// Formats is the Schema for the formats API
-type Formats struct {
+
+// CatalogConnector is the Schema for the catalogconnectors API
+type CatalogConnector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   FormatsSpec   `json:"spec,omitempty"`
-	Status FormatsStatus `json:"status,omitempty"`
+	Spec   CatalogConnectorSpec   `json:"spec,omitempty"`
+	Status CatalogConnectorStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// FormatsList contains a list of Formats
-type FormatsList struct {
+// CatalogConnectorList contains a list of CatalogConnector
+type CatalogConnectorList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Formats `json:"items"`
+	Items           []CatalogConnector `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&Formats{}, &FormatsList{})
+	SchemeBuilder.Register(&CatalogConnector{}, &CatalogConnectorList{})
 }

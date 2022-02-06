@@ -24,17 +24,16 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// UdfArtifactsSpec defines the desired state of UdfArtifacts
-type UdfArtifactsSpec struct {
+// FormatSpec defines the desired state of Format
+type FormatSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of UdfArtifacts. Edit udfartifacts_types.go to remove/update
-	Spec     platform_apis.UdfArtifact     `json:"spec,omitempty"`
+	Spec     platform_apis.Format     `json:"spec,omitempty"`
 }
 
-// UdfArtifactsStatus defines the observed state of UdfArtifacts
-type UdfArtifactsStatus struct {
+// FormatsStatus defines the observed state of Formats
+type FormatStatus struct {
 	LastSync metav1.Time `json:"lastSync,omitempty"`
 	State    string      `json:"state,omitempty"`
 }
@@ -44,24 +43,24 @@ type UdfArtifactsStatus struct {
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
-// UdfArtifacts is the Schema for the udfartifacts API
-type UdfArtifacts struct {
+// Format is the Schema for the formats API
+type Format struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   UdfArtifactsSpec   `json:"spec,omitempty"`
-	Status UdfArtifactsStatus `json:"status,omitempty"`
+	Spec   FormatSpec   `json:"spec,omitempty"`
+	Status FormatStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// UdfArtifactsList contains a list of UdfArtifacts
-type UdfArtifactsList struct {
+// FormatList contains a list of Format
+type FormatList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []UdfArtifacts `json:"items"`
+	Items           []Format `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&UdfArtifacts{}, &UdfArtifactsList{})
+	SchemeBuilder.Register(&Format{}, &FormatList{})
 }

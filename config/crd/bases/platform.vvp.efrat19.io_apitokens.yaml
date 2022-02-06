@@ -9,10 +9,10 @@ metadata:
 spec:
   group: platform.vvp.efrat19.io
   names:
-    kind: ApiTokens
-    listKind: ApiTokensList
+    kind: ApiToken
+    listKind: ApiTokenList
     plural: apitokens
-    singular: apitokens
+    singular: apitoken
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -28,6 +28,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
+        description: ApiToken is the Schema for the apitokens API
         properties:
           apiVersion:
             description: APIVersion defines the versioned schema of this re
@@ -38,7 +39,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ApiTokensSpec defines the desired state of ApiToke
+            description: ApiTokenSpec defines the desired state of ApiToken
             properties:
               spec:
                 description: INSERT ADDITIONAL SPEC FIELDS - desired state of c

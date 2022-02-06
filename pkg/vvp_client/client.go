@@ -22,6 +22,12 @@ type VvpClient interface {
 	SavePoints() SavePointsService
 	SecretValues() SecretValuesService
 	SessionClusters() SessionClustersService
+	// ApiTokens() ApiTokensService
+	// CatalogConnectors() CatalogConnectorsService
+	// Connectors() ConnectorsService
+	// Formats() FormatsService
+	// SqlScripts() SqlScriptsService
+	// UdfArtifacts() UdfArtifactsService
 }
 
 type vvpClient struct {

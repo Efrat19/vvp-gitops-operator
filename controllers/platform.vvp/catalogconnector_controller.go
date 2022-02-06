@@ -27,8 +27,8 @@ import (
 	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
 )
 
-// CatalogConnectorsReconciler reconciles a CatalogConnectors object
-type CatalogConnectorsReconciler struct {
+// CatalogConnectorReconciler reconciles a CatalogConnector object
+type CatalogConnectorReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 }
@@ -40,13 +40,13 @@ type CatalogConnectorsReconciler struct {
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 // TODO(user): Modify the Reconcile function to compare the state specified by
-// the CatalogConnectors object against the actual cluster state, and then
+// the CatalogConnector object against the actual cluster state, and then
 // perform operations to make the cluster state reflect the state specified by
 // the user.
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.11.0/pkg/reconcile
-func (r *CatalogConnectorsReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *CatalogConnectorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
@@ -55,8 +55,8 @@ func (r *CatalogConnectorsReconciler) Reconcile(ctx context.Context, req ctrl.Re
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *CatalogConnectorsReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *CatalogConnectorReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&platformvvpv1alpha1.CatalogConnectors{}).
+		For(&platformvvpv1alpha1.CatalogConnector{}).
 		Complete(r)
 }

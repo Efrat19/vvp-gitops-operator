@@ -9,10 +9,10 @@ metadata:
 spec:
   group: platform.vvp.efrat19.io
   names:
-    kind: UdfArtifacts
-    listKind: UdfArtifactsList
+    kind: UdfArtifact
+    listKind: UdfArtifactList
     plural: udfartifacts
-    singular: udfartifacts
+    singular: udfartifact
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -28,7 +28,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: UdfArtifacts is the Schema for the udfartifacts AP
+        description: UdfArtifact is the Schema for the udfartifacts API
         properties:
           apiVersion:
             description: APIVersion defines the versioned schema of this re
@@ -39,10 +39,9 @@ spec:
           metadata:
             type: object
           spec:
-            description: UdfArtifactsSpec defines the desired state of UdfA
+            description: UdfArtifactSpec defines the desired state of UdfAr
             properties:
               spec:
-                description: Foo is an example field of UdfArtifacts.
                 properties:
                   createTime:
                     format: date-time

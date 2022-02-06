@@ -1,0 +1,6 @@
+apiVersion: platform.vvp.efrat19.io/v1alpha1
+kind: UdfArtifact
+metadata:
+  name: udfartifact-sample
+spec:
+  # TODO(user): Add fields here

@@ -1,0 +1,6 @@
+apiVersion: platform.vvp.efrat19.io/v1alpha1
+kind: Format
+metadata:
+  name: format-sample
+spec:
+  # TODO(user): Add fields here

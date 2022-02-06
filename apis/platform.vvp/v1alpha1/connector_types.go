@@ -17,25 +17,23 @@ limitations under the License.
 package v1alpha1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
-
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// CatalogConnectorsSpec defines the desired state of CatalogConnectors
-type CatalogConnectorsSpec struct {
+// ConnectorSpec defines the desired state of Connector
+type ConnectorSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of CatalogConnectors. Edit catalogconnectors_types.go to remove/update
-	Spec     platform_apis.CatalogConnector     `json:"spec,omitempty"`
+	Spec     platform_apis.Connector     `json:"spec,omitempty"`
 }
 
-// CatalogConnectorsStatus defines the observed state of CatalogConnectors
-type CatalogConnectorsStatus struct {
+// ConnectorsStatus defines the observed state of Connectors
+type ConnectorStatus struct {
 	LastSync metav1.Time `json:"lastSync,omitempty"`
 	State    string      `json:"state,omitempty"`
 }
@@ -45,23 +43,25 @@ type CatalogConnectorsStatus struct {
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
-type CatalogConnectors struct {
+
+// Connector is the Schema for the connectors API
+type Connector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   CatalogConnectorsSpec   `json:"spec,omitempty"`
-	Status CatalogConnectorsStatus `json:"status,omitempty"`
+	Spec   ConnectorSpec   `json:"spec,omitempty"`
+	Status ConnectorStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// CatalogConnectorsList contains a list of CatalogConnectors
-type CatalogConnectorsList struct {
+// ConnectorList contains a list of Connector
+type ConnectorList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []CatalogConnectors `json:"items"`
+	Items           []Connector `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&CatalogConnectors{}, &CatalogConnectorsList{})
+	SchemeBuilder.Register(&Connector{}, &ConnectorList{})
 }

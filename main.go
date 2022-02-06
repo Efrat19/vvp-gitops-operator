@@ -160,6 +160,48 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "UdfArtifacts")
 		os.Exit(1)
 	}
+	if err = (&platformvvpcontrollers.ApiTokenReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "ApiToken")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.CatalogConnectorReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "CatalogConnector")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.ConnectorReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "Connector")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.FormatReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "Format")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.SqlScriptReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "SqlScript")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.UdfArtifactReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "UdfArtifact")
+		os.Exit(1)
+	}
 	//+kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("healthz", healthz.Ping); err != nil {

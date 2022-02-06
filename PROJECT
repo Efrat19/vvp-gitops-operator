@@ -56,7 +56,7 @@ resources:
   controller: true
   domain: efrat19.io
   group: platform.vvp
-  kind: ApiTokens
+  kind: ApiToken
   path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
   version: v1alpha1
 - api:
@@ -65,7 +65,7 @@ resources:
   controller: true
   domain: efrat19.io
   group: platform.vvp
-  kind: CatalogConnectors
+  kind: CatalogConnector
   path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
   version: v1alpha1
 - api:
@@ -74,7 +74,7 @@ resources:
   controller: true
   domain: efrat19.io
   group: platform.vvp
-  kind: Connectors
+  kind: Connector
   path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
   version: v1alpha1
 - api:
@@ -83,7 +83,7 @@ resources:
   controller: true
   domain: efrat19.io
   group: platform.vvp
-  kind: Formats
+  kind: Format
   path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
   version: v1alpha1
 - api:
@@ -92,7 +92,7 @@ resources:
   controller: true
   domain: efrat19.io
   group: platform.vvp
-  kind: SqlScripts
+  kind: SqlScript
   path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
   version: v1alpha1
 - api:
@@ -101,7 +101,7 @@ resources:
   controller: true
   domain: efrat19.io
   group: platform.vvp
-  kind: UdfArtifacts
+  kind: UdfArtifact
   path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
   version: v1alpha1
 version: "3"

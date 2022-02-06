@@ -9,10 +9,10 @@ metadata:
 spec:
   group: platform.vvp.efrat19.io
   names:
-    kind: Connectors
-    listKind: ConnectorsList
+    kind: Connector
+    listKind: ConnectorList
     plural: connectors
-    singular: connectors
+    singular: connector
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -28,7 +28,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Connectors is the Schema for the connectors API
+        description: Connector is the Schema for the connectors API
         properties:
           apiVersion:
             description: APIVersion defines the versioned schema of this re
@@ -39,10 +39,9 @@ spec:
           metadata:
             type: object
           spec:
-            description: ConnectorsSpec defines the desired state of Connec
+            description: ConnectorSpec defines the desired state of Connect
             properties:
               spec:
-                description: Foo is an example field of Connectors.
                 properties:
                   dependencies:
                     items:

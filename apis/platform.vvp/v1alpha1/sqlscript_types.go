@@ -18,24 +18,22 @@ package v1alpha1
 
 import (
 	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// ConnectorsSpec defines the desired state of Connectors
-type ConnectorsSpec struct {
+// SqlScriptSpec defines the desired state of SqlScript
+type SqlScriptSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Connectors. Edit connectors_types.go to remove/update
-	Spec     platform_apis.Connector     `json:"spec,omitempty"`
+	Spec     platform_apis.SqlScript     `json:"spec,omitempty"`
 }
 
-// ConnectorsStatus defines the observed state of Connectors
-type ConnectorsStatus struct {
+// SqlScriptsStatus defines the observed state of SqlScripts
+type SqlScriptStatus struct {
 	LastSync metav1.Time `json:"lastSync,omitempty"`
 	State    string      `json:"state,omitempty"`
 }
@@ -45,24 +43,25 @@ type ConnectorsStatus struct {
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="LAST SYNC",type="date",JSONPath=".status.lastSync"
 // +kubebuilder:printcolumn:name="STATUS",type="string",JSONPath=".status.state"
-// Connectors is the Schema for the connectors API
-type Connectors struct {
+
+// SqlScript is the Schema for the sqlscripts API
+type SqlScript struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ConnectorsSpec   `json:"spec,omitempty"`
-	Status ConnectorsStatus `json:"status,omitempty"`
+	Spec   SqlScriptSpec   `json:"spec,omitempty"`
+	Status SqlScriptStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// ConnectorsList contains a list of Connectors
-type ConnectorsList struct {
+// SqlScriptList contains a list of SqlScript
+type SqlScriptList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Connectors `json:"items"`
+	Items           []SqlScript `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&Connectors{}, &ConnectorsList{})
+	SchemeBuilder.Register(&SqlScript{}, &SqlScriptList{})
 }
