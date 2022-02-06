@@ -17,9 +17,9 @@ to be supported:
 vvp.platform.efrat19.io/v1alpha1
 [X] ApiTokens
 [-] Catalogs
-[] CatalogConnectors
-[C] Connectors
-[] Formats
+[X] CatalogConnectors
+[X] Connectors
+[X] Formats
 [X] SqlScripts
 [X] UdfArtifacts
 ```

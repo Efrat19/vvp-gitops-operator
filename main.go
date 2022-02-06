@@ -32,7 +32,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
 	"efrat19.io/vvp-gitops-operator/controllers"
+	platformvvpcontrollers "efrat19.io/vvp-gitops-operator/controllers/platform.vvp"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -45,6 +47,7 @@ func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
 	utilruntime.Must(appmanagervvpv1alpha1.AddToScheme(scheme))
+	utilruntime.Must(platformvvpv1alpha1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -113,6 +116,48 @@ func main() {
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "SessionCluster")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.ApiTokensReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "ApiTokens")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.CatalogConnectorsReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "CatalogConnectors")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.ConnectorsReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "Connectors")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.FormatsReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "Formats")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.SqlScriptsReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "SqlScripts")
+		os.Exit(1)
+	}
+	if err = (&platformvvpcontrollers.UdfArtifactsReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "UdfArtifacts")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

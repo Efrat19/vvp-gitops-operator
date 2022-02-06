@@ -135,3 +135,159 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - apitokens
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - apitokens/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - apitokens/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - catalogconnectors
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - catalogconnectors/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - catalogconnectors/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - connectors
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - connectors/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - connectors/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - formats
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - formats/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - formats/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - sqlscripts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - sqlscripts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - sqlscripts/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - udfartifacts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - udfartifacts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - udfartifacts/status
+  verbs:
+  - get
+  - patch
+  - update

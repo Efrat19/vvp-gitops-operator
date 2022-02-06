@@ -1,6 +1,7 @@
 domain: efrat19.io
 layout:
 - go.kubebuilder.io/v3
+multigroup: true
 projectName: vvp-gitops-operator
 repo: efrat19.io/vvp-gitops-operator
 resources:
@@ -48,5 +49,59 @@ resources:
   group: appmanager.vvp
   kind: SessionCluster
   path: efrat19.io/vvp-gitops-operator/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: efrat19.io
+  group: platform.vvp
+  kind: ApiTokens
+  path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: efrat19.io
+  group: platform.vvp
+  kind: CatalogConnectors
+  path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: efrat19.io
+  group: platform.vvp
+  kind: Connectors
+  path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: efrat19.io
+  group: platform.vvp
+  kind: Formats
+  path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: efrat19.io
+  group: platform.vvp
+  kind: SqlScripts
+  path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: efrat19.io
+  group: platform.vvp
+  kind: UdfArtifacts
+  path: efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1
   version: v1alpha1
 version: "3"

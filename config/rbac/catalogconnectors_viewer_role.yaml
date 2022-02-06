@@ -1,0 +1,20 @@
+# permissions for end users to view catalogconnectors.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: catalogconnectors-viewer-role
+rules:
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - catalogconnectors
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - catalogconnectors/status
+  verbs:
+  - get

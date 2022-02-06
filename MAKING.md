@@ -4,13 +4,19 @@ kubebuilder init --domain efrat19.io --repo efrat19.io/vvp-gitops-operator
 
 # Create CRDs:
 kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind Deployment
-kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind DeploymentDefaults
 kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind DeploymentTarget
-kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind Event
-kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind Job
 kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind Savepoint
 kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind SecretValue
 kubebuilder create api --group appmanager.vvp --version v1alpha1 --kind SessionCluster
+
+kubebuilder edit --multigroup=true
+
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind ApiTokens
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind CatalogConnectors
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind Connectors
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind Formats
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind SqlScripts
+kubebuilder create api --group platform.vvp --version v1alpha1 --kind UdfArtifacts
 
 # Create VVP Client for ververica platform 2.6.1
 mkdir -p pkg/appmanager_apis

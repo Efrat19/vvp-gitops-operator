@@ -1,0 +1,51 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: catalogconnectors.platform.vvp.efrat19.io
+spec:
+  group: platform.vvp.efrat19.io
+  names:
+    kind: CatalogConnectors
+    listKind: CatalogConnectorsList
+    plural: catalogconnectors
+    singular: catalogconnectors
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: CatalogConnectors is the Schema for the catalogcon
+        properties:
+          apiVersion:
+            description: APIVersion defines the versioned schema of this re
+            type: string
+          kind:
+            description: Kind is a string value representing the REST resou
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: CatalogConnectorsSpec defines the desired state of
+            properties:
+              foo:
+                description: Foo is an example field of CatalogConnectors.
+                type: string
+            type: object
+          status:
+            description: CatalogConnectorsStatus defines the observed state
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
