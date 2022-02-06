@@ -1,78 +1,78 @@
 package vvp_client
 
-// import (
-// 	"context"
-// 	"errors"
-// 	"net/http"
+import (
+	"context"
+	"errors"
+	"net/http"
 
-// 	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
-// 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
-// 	"sigs.k8s.io/controller-runtime/pkg/log"
-// )
+	appmanagervvpv1alpha1 "efrat19.io/vvp-gitops-operator/api/v1alpha1"
+	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+	"sigs.k8s.io/controller-runtime/pkg/log"
+)
 
-// type DeploymentTargetsService struct {
-// 	client *appmanager_apis.APIClient
-// }
+type DeploymentTargetsService struct {
+	client *appmanager_apis.APIClient
+}
 
-// func (c DeploymentTargetsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.DeploymentTarget) (error, bool) {
-// 	ctx := context.Background()
-// 	_, response, err := c.client.DeploymentTargetResourceApi.GetDeploymentTargetsUsingGET(ctx, d.Spec.Metadata.Namespace)
-// 	if err != nil {
-// 		if response.StatusCode == http.StatusNotFound {
-// 			return nil, false
-// 		}
-// 		return err, false
-// 	}
-// 	// deployment exists
-// 	return err, true
-// }
+func (c DeploymentTargetsService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.DeploymentTarget) (error, bool) {
+	ctx := context.Background()
+	_, response, err := c.client.DeploymentTargetResourceApi.GetDeploymentTargetsUsingGET(ctx, d.Spec.Metadata.Namespace)
+	if err != nil {
+		if response.StatusCode == http.StatusNotFound {
+			return nil, false
+		}
+		return err, false
+	}
+	// deployment exists
+	return err, true
+}
 
-// func (c DeploymentTargetsService) DeleteExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
-// 	ctx := context.Background()
-// 	_, response, err := c.client.DeploymentTargetResourceApi.DeleteDeploymentTargetsUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
-// 	if err != nil {
-// 		if response.StatusCode == http.StatusNotFound {
-// 			return nil
-// 		}
-// 		return err
-// 	}
-// 	return err
-// }
+func (c DeploymentTargetsService) DeleteExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+	ctx := context.Background()
+	_, response, err := c.client.DeploymentTargetResourceApi.DeleteDeploymentTargetsUsingDELETE(ctx, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	if err != nil {
+		if response.StatusCode == http.StatusNotFound {
+			return nil
+		}
+		return err
+	}
+	return err
+}
 
-// func (c DeploymentTargetsService) CreateExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
-// 	ctx := context.Background()
-// 	deployment := c.vvpDeplomentFromK8sDeploymentDefault(d)
-// 	if err := c.validateName(d); err != nil {
-// 		return err
-// 	}
-// 	_, _, err := c.client.DeploymentTargetResourceApi.CreateDeploymentTargetsUsingPOST(ctx, *deployment, d.Spec.Metadata.Namespace)
-// 	return err
-// }
+func (c DeploymentTargetsService) CreateExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+	ctx := context.Background()
+	deployment := c.vvpDeplomentFromK8sDeploymentDefault(d)
+	if err := c.validateName(d); err != nil {
+		return err
+	}
+	_, _, err := c.client.DeploymentTargetResourceApi.CreateDeploymentTargetsUsingPOST(ctx, *deployment, d.Spec.Metadata.Namespace)
+	return err
+}
 
-// func (c DeploymentTargetsService) UpdateExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
-// 	ctx := context.Background()
-// 	deployment := c.vvpDeplomentFromK8sDeploymentDefault(d)
-// 	if err := c.validateName(d); err != nil {
-// 		return err
-// 	}
-// 	_, _, err := c.client.DeploymentTargetsResourceApi.UpdateDeploymentTargetsUsingPATCH(ctx, *deployment, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
-// 	return err
-// }
+func (c DeploymentTargetsService) UpdateExternalResources(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+	ctx := context.Background()
+	deployment := c.vvpDeplomentFromK8sDeploymentDefault(d)
+	if err := c.validateName(d); err != nil {
+		return err
+	}
+	_, _, err := c.client.DeploymentTargetsResourceApi.UpdateDeploymentTargetsUsingPATCH(ctx, *deployment, d.Spec.Metadata.Name, d.Spec.Metadata.Namespace)
+	return err
+}
 
-// func (c DeploymentTargetsService) validateName(d *appmanagervvpv1alpha1.DeploymentTarget) error {
-// 	if d.Spec.Metadata.Name != d.Name {
-// 		msg := "Validation failed: DeploymentDefault name must match deployment.spec.metadata.name"
-// 		return errors.New(msg)
-// 	}
-// 	return nil
-// }
+func (c DeploymentTargetsService) validateName(d *appmanagervvpv1alpha1.DeploymentTarget) error {
+	if d.Spec.Metadata.Name != d.Name {
+		msg := "Validation failed: DeploymentDefault name must match deployment.spec.metadata.name"
+		return errors.New(msg)
+	}
+	return nil
+}
 
-// func (c DeploymentTargetsService) vvpDeplomentFromK8sDeploymentDefault(d *appmanagervvpv1alpha1.DeploymentTarget) *appmanager_apis.DeploymentTarget {
-// 	dt := &appmanager_apis.DeploymentTarget{
-// 		ApiVersion: "v1",
-// 		Kind:       "DeploymentDefault",
-// 		Metadata:   &d.Spec.Metadata,
-// 		Spec:       &d.Spec.Spec,
-// 	}
-// 	return dt
-// }
+func (c DeploymentTargetsService) vvpDeplomentFromK8sDeploymentDefault(d *appmanagervvpv1alpha1.DeploymentTarget) *appmanager_apis.DeploymentTarget {
+	dt := &appmanager_apis.DeploymentTarget{
+		ApiVersion: "v1",
+		Kind:       "DeploymentDefault",
+		Metadata:   &d.Spec.Metadata,
+		Spec:       &d.Spec.Spec,
+	}
+	return dt
+}
