@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
+	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -32,16 +33,24 @@ type VvpClient interface {
 
 type vvpClient struct {
 	appManagerClient         *appmanager_apis.APIClient
+	platformClient           *platform_apis.APIClient
 	DeploymentsService       *DeploymentsService
 	DeploymentTargetsService *DeploymentTargetsService
 	SavePointsService        *SavePointsService
 	SecretValuesService      *SecretValuesService
 	SessionClustersService   *SessionClustersService
+	// ApiTokensService         *ApiTokensService
+	// CatalogConnectorsService *CatalogConnectorsService
+	// ConnectorsService        *ConnectorsService
+	// FormatsService           *FormatsService
+	// SqlScriptsService        *SqlScriptsService
+	// UdfArtifactsService      *UdfArtifactsService
 }
 
 func NewClient() VvpClient {
 	return &vvpClient{
 		appManagerClient: NewAppManagerClient(),
+		platformClient:   NewPlatformClient(),
 	}
 }
 
@@ -80,6 +89,48 @@ func (v *vvpClient) SessionClusters() SessionClustersService {
 	return *v.SessionClustersService
 }
 
+// func (v *vvpClient) ApiTokens() ApiTokensService {
+// 	if &v.ApiTokensService == nil {
+// 		v.ApiTokensService = &ApiTokensService{client: v.platformClient}
+// 	}
+// 	return *v.ApiTokensService
+// }
+
+// func (v *vvpClient) CatalogConnectors() CatalogConnectorsService {
+// 	if &v.CatalogConnectorsService == nil {
+// 		v.CatalogConnectorsService = &CatalogConnectorsService{client: v.platformClient}
+// 	}
+// 	return *v.CatalogConnectorsService
+// }
+
+// func (v *vvpClient) Connectors() ConnectorsService {
+// 	if &v.ConnectorsService == nil {
+// 		v.ConnectorsService = &ConnectorsService{client: v.platformClient}
+// 	}
+// 	return *v.ConnectorsService
+// }
+
+// func (v *vvpClient) Formats() FormatsService {
+// 	if &v.FormatsService == nil {
+// 		v.FormatsService = &FormatsService{client: v.platformClient}
+// 	}
+// 	return *v.FormatsService
+// }
+
+// func (v *vvpClient) SqlScripts() SqlScriptsService {
+// 	if &v.SqlScriptsService == nil {
+// 		v.SqlScriptsService = &SqlScriptsService{client: v.platformClient}
+// 	}
+// 	return *v.SqlScriptsService
+// }
+
+// func (v *vvpClient) UdfArtifacts() UdfArtifactsService {
+// 	if &v.UdfArtifactsService == nil {
+// 		v.UdfArtifactsService = &UdfArtifactsService{client: v.platformClient}
+// 	}
+// 	return *v.UdfArtifactsService
+// }
+
 func NewAppManagerClient() *appmanager_apis.APIClient {
 	basePath := getEnv("VVP_URL", "http://vvp.data.yad2.io")
 	cfg := &appmanager_apis.Configuration{
@@ -88,6 +139,16 @@ func NewAppManagerClient() *appmanager_apis.APIClient {
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
 	}
 	return appmanager_apis.NewAPIClient(cfg)
+}
+
+func NewPlatformClient() *platform_apis.APIClient {
+	basePath := getEnv("VVP_URL", "http://vvp.data.yad2.io")
+	cfg := &platform_apis.Configuration{
+		BasePath:      basePath,
+		DefaultHeader: make(map[string]string),
+		UserAgent:     "Swagger-Codegen/1.0.0/go",
+	}
+	return platform_apis.NewAPIClient(cfg)
 }
 
 func (v *vvpClient) ProbeServer() error {

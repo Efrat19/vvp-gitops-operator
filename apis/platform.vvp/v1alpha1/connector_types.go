@@ -29,7 +29,7 @@ type ConnectorSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec     platform_apis.Connector     `json:"spec,omitempty"`
+	Spec platform_apis.Connector `json:"spec,omitempty"`
 }
 
 // ConnectorsStatus defines the observed state of Connectors

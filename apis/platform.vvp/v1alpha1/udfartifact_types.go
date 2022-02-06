@@ -29,7 +29,7 @@ type UdfArtifactSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec     platform_apis.UdfArtifact     `json:"spec,omitempty"`
+	Spec platform_apis.UdfArtifact `json:"spec,omitempty"`
 }
 
 // UdfArtifactsStatus defines the observed state of UdfArtifacts

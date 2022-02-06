@@ -29,7 +29,7 @@ type SqlScriptSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec     platform_apis.SqlScript     `json:"spec,omitempty"`
+	Spec platform_apis.SqlScript `json:"spec,omitempty"`
 }
 
 // SqlScriptsStatus defines the observed state of SqlScripts

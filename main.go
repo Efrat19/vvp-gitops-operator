@@ -118,48 +118,6 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "SessionCluster")
 		os.Exit(1)
 	}
-	if err = (&platformvvpcontrollers.ApiTokensReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "ApiTokens")
-		os.Exit(1)
-	}
-	if err = (&platformvvpcontrollers.CatalogConnectorsReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "CatalogConnectors")
-		os.Exit(1)
-	}
-	if err = (&platformvvpcontrollers.ConnectorsReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Connectors")
-		os.Exit(1)
-	}
-	if err = (&platformvvpcontrollers.FormatsReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Formats")
-		os.Exit(1)
-	}
-	if err = (&platformvvpcontrollers.SqlScriptsReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "SqlScripts")
-		os.Exit(1)
-	}
-	if err = (&platformvvpcontrollers.UdfArtifactsReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "UdfArtifacts")
-		os.Exit(1)
-	}
 	if err = (&platformvvpcontrollers.ApiTokenReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),

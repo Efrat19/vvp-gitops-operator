@@ -29,7 +29,7 @@ type CatalogConnectorSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	Spec     platform_apis.CatalogConnector     `json:"spec,omitempty"`
+	Spec platform_apis.CatalogConnector `json:"spec,omitempty"`
 }
 
 // CatalogConnectorsStatus defines the observed state of CatalogConnectors
