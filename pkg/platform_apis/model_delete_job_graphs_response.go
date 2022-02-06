@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeleteJobGraphsResponse struct {
 	DeletedJobGraphs []DeleteJobGraphResponse `json:"deletedJobGraphs,omitempty"`
 }

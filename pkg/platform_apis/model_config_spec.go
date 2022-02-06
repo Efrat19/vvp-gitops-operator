@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ConfigSpec struct {
 	FlinkVersion string            `json:"flinkVersion,omitempty"`
 	NewConfig    map[string]string `json:"newConfig,omitempty"`

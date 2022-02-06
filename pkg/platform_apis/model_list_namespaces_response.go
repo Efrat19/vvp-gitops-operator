@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ListNamespacesResponse struct {
 	Namespaces []Namespace `json:"namespaces,omitempty"`
 }

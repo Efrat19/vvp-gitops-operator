@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ListTablesReferencingConnectorResponse struct {
 	Tables []TableReference `json:"tables,omitempty"`
 }

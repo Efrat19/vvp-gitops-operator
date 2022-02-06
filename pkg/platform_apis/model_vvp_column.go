@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type VvpColumn struct {
 	Expression string         `json:"expression,omitempty"`
 	Meta       *VvpColumnMeta `json:"meta,omitempty"`

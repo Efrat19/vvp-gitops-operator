@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ValidateConfigChangeResponse struct {
 	UnsupportedConfigOptions []string `json:"unsupportedConfigOptions,omitempty"`
 }

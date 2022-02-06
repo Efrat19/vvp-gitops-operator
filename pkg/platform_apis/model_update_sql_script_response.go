@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type UpdateSqlScriptResponse struct {
 	SqlScript *SqlScript `json:"sqlScript,omitempty"`
 }

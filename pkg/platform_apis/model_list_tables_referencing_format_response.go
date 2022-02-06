@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ListTablesReferencingFormatResponse struct {
 	Tables []TableReference `json:"tables,omitempty"`
 }

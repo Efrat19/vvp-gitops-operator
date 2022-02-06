@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ExecuteStatementResponse struct {
 	ErrorMessage *ErrorDetails `json:"errorMessage,omitempty"`
 	Result       string        `json:"result,omitempty"`

@@ -25,12 +25,12 @@ type VvpClient interface {
 }
 
 type vvpClient struct {
-	appManagerClient   *appmanager_apis.APIClient
-	DeploymentsService *DeploymentsService
+	appManagerClient         *appmanager_apis.APIClient
+	DeploymentsService       *DeploymentsService
 	DeploymentTargetsService *DeploymentTargetsService
-	SavePointsService *SavePointsService
-	SecretValuesService *SecretValuesService
-	SessionClustersService *SessionClustersService
+	SavePointsService        *SavePointsService
+	SecretValuesService      *SecretValuesService
+	SessionClustersService   *SessionClustersService
 }
 
 func NewClient() VvpClient {
@@ -73,7 +73,6 @@ func (v *vvpClient) SessionClusters() SessionClustersService {
 	}
 	return *v.SessionClustersService
 }
-
 
 func NewAppManagerClient() *appmanager_apis.APIClient {
 	basePath := getEnv("VVP_URL", "http://vvp.data.yad2.io")

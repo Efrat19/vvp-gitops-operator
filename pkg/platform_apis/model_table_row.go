@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type TableRow struct {
 	Cells []TableCell `json:"cells,omitempty"`
 }

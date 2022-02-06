@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ListCatalogsReferencingCatalogConnectorResponse struct {
 	Catalogs []CatalogReference `json:"catalogs,omitempty"`
 }

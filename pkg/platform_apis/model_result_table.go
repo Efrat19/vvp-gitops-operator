@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ResultTable struct {
 	Headers []TableHeader `json:"headers,omitempty"`
 	Rows    []TableRow    `json:"rows,omitempty"`

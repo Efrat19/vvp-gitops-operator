@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type CreateFormatResponse struct {
 	Format *Format `json:"format,omitempty"`
 }

@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ListConnectorsResponse struct {
 	Connectors []Connector `json:"connectors,omitempty"`
 }

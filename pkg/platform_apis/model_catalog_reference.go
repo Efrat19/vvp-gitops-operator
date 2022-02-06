@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type CatalogReference struct {
 	Name string `json:"name,omitempty"`
 }

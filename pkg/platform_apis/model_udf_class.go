@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type UdfClass struct {
 	ClassName       string   `json:"className,omitempty"`
 	ClassType       string   `json:"classType,omitempty"`

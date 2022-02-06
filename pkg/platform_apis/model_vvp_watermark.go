@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type VvpWatermark struct {
 	TimeColumn          string `json:"timeColumn,omitempty"`
 	WatermarkExpression string `json:"watermarkExpression,omitempty"`

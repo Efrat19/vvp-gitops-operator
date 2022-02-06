@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ListUdfArtifactsResponse struct {
 	UdfArtifacts []UdfArtifact `json:"udfArtifacts,omitempty"`
 }

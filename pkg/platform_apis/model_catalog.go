@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Catalog struct {
 	Name       string            `json:"name,omitempty"`
 	Properties map[string]string `json:"properties,omitempty"`

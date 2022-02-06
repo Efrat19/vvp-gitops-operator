@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type CreateApiTokenResponse struct {
 	ApiToken *ApiToken `json:"apiToken,omitempty"`
 }

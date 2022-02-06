@@ -29,7 +29,6 @@ type DeploymentSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Deployment. Edit deployment_types.go to remove/update
 	Metadata appmanager_apis.DeploymentMetadata `json:"metadata,omitempty"`
 	Spec     appmanager_apis.DeploymentSpec     `json:"spec,omitempty"`
 }

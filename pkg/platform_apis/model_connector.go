@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Connector struct {
 	Dependencies     []string   `json:"dependencies,omitempty"`
 	Lookup           bool       `json:"lookup,omitempty"`

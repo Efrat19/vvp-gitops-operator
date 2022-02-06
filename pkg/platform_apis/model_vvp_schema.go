@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type VvpSchema struct {
 	Column        []VvpColumn          `json:"column,omitempty"`
 	PrimaryKey    *VvpUniqueConstraint `json:"primaryKey,omitempty"`

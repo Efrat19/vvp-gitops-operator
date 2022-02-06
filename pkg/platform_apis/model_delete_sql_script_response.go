@@ -10,5 +10,6 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeleteSqlScriptResponse struct {
 }

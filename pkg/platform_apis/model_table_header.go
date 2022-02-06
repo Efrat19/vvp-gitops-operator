@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type TableHeader struct {
 	Name string `json:"name,omitempty"`
 }

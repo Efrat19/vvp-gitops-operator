@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type SetPreviewSessionClusterRequest struct {
 	Name                      string `json:"name,omitempty"`
 	PreviewSessionClusterName string `json:"previewSessionClusterName,omitempty"`

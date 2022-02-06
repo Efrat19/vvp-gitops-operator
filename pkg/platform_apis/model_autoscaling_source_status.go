@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type AutoscalingSourceStatus struct {
 	Capacity                float64 `json:"capacity,omitempty"`
 	EstimatedCatchUpSeconds int32   `json:"estimatedCatchUpSeconds,omitempty"`

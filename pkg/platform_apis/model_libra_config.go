@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type LibraConfig struct {
 	CooldownMinutes int32             `json:"cooldownMinutes,omitempty"`
 	ExtraConfig     map[string]string `json:"extraConfig,omitempty"`

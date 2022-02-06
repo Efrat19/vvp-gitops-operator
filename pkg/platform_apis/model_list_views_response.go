@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ListViewsResponse struct {
 	Views []VvpView `json:"views,omitempty"`
 }

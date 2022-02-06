@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type CreateUdfArtifactResponse struct {
 	CollidingClasses []UdfClass   `json:"collidingClasses,omitempty"`
 	UdfArtifact      *UdfArtifact `json:"udfArtifact,omitempty"`

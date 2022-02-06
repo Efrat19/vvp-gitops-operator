@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Property struct {
 	DefaultValue  string `json:"defaultValue,omitempty"`
 	DefinesFormat bool   `json:"definesFormat,omitempty"`

@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type VvpColumnMeta struct {
 	Name    string `json:"name,omitempty"`
 	Virtual bool   `json:"virtual,omitempty"`

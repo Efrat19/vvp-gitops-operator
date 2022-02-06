@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type SuggestSqlScriptCompletionsResponse struct {
 	Completions []SqlScriptCompletion `json:"completions,omitempty"`
 }

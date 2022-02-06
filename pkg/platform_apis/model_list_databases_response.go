@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ListDatabasesResponse struct {
 	Databases []Database `json:"databases,omitempty"`
 }

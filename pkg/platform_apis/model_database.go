@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type Database struct {
 	Comment    string            `json:"comment,omitempty"`
 	Name       string            `json:"name,omitempty"`

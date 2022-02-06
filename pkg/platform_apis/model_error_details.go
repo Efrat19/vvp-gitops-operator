@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ErrorDetails struct {
 	ColumnNumber    int32  `json:"columnNumber,omitempty"`
 	EndColumnNumber int32  `json:"endColumnNumber,omitempty"`

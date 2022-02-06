@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type JobGraphSpec struct {
 	AllowNonRestoredState  bool              `json:"allowNonRestoredState,omitempty"`
 	FlinkVersion           string            `json:"flinkVersion,omitempty"`

@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type UpdateCatalogConnectorResponse struct {
 	CatalogConnector *CatalogConnector `json:"catalogConnector,omitempty"`
 }

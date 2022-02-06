@@ -11,9 +11,10 @@
 package swagger
 
 import (
-	"time"
+	time "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//+kubebuilder:object:generate=true
 type Namespace struct {
 	CreateTime                time.Time     `json:"createTime,omitempty"`
 	LifecyclePhase            string        `json:"lifecyclePhase,omitempty"`

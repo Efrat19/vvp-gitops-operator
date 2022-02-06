@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type RoleBinding struct {
 	Members []string `json:"members,omitempty"`
 	Role    string   `json:"role,omitempty"`

@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type CatalogConnector struct {
 	Dependencies []string   `json:"dependencies,omitempty"`
 	Name         string     `json:"name,omitempty"`

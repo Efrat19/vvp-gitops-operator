@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type JarUris struct {
 	JarUris []JarUri `json:"jarUris,omitempty"`
 }

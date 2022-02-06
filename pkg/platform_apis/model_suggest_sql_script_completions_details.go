@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type SuggestSqlScriptCompletionsDetails struct {
 	Position  int32  `json:"position,omitempty"`
 	SqlScript string `json:"sqlScript,omitempty"`

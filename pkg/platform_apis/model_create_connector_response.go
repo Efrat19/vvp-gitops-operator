@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type CreateConnectorResponse struct {
 	Connector *Connector `json:"connector,omitempty"`
 }

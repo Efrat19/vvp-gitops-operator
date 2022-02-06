@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeleteConnectorResponse struct {
 	AffectedTables []TableReference `json:"affectedTables,omitempty"`
 }

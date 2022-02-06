@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -28,8 +29,6 @@ type ApiTokensSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of ApiTokens. Edit apitokens_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
 }
 
 // ApiTokensStatus defines the observed state of ApiTokens

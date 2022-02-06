@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type GetFunctionResponse struct {
 	Function *Function `json:"function,omitempty"`
 }

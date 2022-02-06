@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type CreateJobGraphResponse struct {
 	Jobgraph *JobGraph `json:"jobgraph,omitempty"`
 }

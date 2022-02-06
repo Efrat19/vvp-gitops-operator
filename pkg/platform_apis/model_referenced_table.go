@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ReferencedTable struct {
 	CatalogName  string    `json:"catalogName,omitempty"`
 	DatabaseName string    `json:"databaseName,omitempty"`

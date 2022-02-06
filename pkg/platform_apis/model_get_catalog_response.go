@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type GetCatalogResponse struct {
 	Catalog *Catalog `json:"catalog,omitempty"`
 }

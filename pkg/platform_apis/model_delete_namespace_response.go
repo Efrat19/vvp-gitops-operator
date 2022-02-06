@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeleteNamespaceResponse struct {
 	Namespace *Namespace `json:"namespace,omitempty"`
 }

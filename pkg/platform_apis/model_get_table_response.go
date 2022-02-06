@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type GetTableResponse struct {
 	Table *VvpTable `json:"table,omitempty"`
 }

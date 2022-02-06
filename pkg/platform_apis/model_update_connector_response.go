@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type UpdateConnectorResponse struct {
 	AffectedTables []TableReference `json:"affectedTables,omitempty"`
 	Connector      *Connector       `json:"connector,omitempty"`

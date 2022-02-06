@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ExecuteStatementsResponse struct {
 	Responses []ExecuteStatementResponse `json:"responses,omitempty"`
 }

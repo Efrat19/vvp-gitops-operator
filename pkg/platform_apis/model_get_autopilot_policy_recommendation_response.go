@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type GetAutopilotPolicyRecommendationResponse struct {
 	Recommendation *AutopilotPolicyRecommendation `json:"recommendation,omitempty"`
 }

@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeleteJobGraphResponse struct {
 	NotDeletedFiles []string `json:"notDeletedFiles,omitempty"`
 }

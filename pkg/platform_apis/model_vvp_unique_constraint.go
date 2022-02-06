@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type VvpUniqueConstraint struct {
 	Column   []string `json:"column,omitempty"`
 	Enforced bool     `json:"enforced,omitempty"`

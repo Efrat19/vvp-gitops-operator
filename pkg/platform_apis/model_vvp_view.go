@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type VvpView struct {
 	Comment       string            `json:"comment,omitempty"`
 	ExpandedQuery string            `json:"expandedQuery,omitempty"`

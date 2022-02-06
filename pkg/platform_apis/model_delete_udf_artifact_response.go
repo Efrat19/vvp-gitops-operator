@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type DeleteUdfArtifactResponse struct {
 	ReferencedClasses []UdfClass `json:"referencedClasses,omitempty"`
 }

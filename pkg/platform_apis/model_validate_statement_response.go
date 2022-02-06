@@ -10,6 +10,7 @@
 
 package swagger
 
+//+kubebuilder:object:generate=true
 type ValidateStatementResponse struct {
 	ErrorDetails     *ErrorDetails `json:"errorDetails,omitempty"`
 	ValidationResult string        `json:"validationResult,omitempty"`
