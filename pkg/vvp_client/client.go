@@ -19,15 +19,19 @@ type VvpClient interface {
 	ProbeServer() error
 	MatchServerVersion() error
 	Deployments() DeploymentsService
-	// DeploymentTargets() DeploymentTargetsService
-	// SavePoints() SavePointsService
-	// SecretValues() SecretValuesService
-	// SessionClusters() SessionClustersService
+	DeploymentTargets() DeploymentTargetsService
+	SavePoints() SavePointsService
+	SecretValues() SecretValuesService
+	SessionClusters() SessionClustersService
 }
 
 type vvpClient struct {
 	appManagerClient   *appmanager_apis.APIClient
 	DeploymentsService *DeploymentsService
+	DeploymentTargetsService *DeploymentTargetsService
+	SavePointsService *SavePointsService
+	SecretValuesService *SecretValuesService
+	SessionClustersService *SessionClustersService
 }
 
 func NewClient() VvpClient {
@@ -43,33 +47,34 @@ func (v *vvpClient) Deployments() DeploymentsService {
 	return *v.DeploymentsService
 }
 
-// func (v *vvpClient) DeploymentTargets() DeploymentTargetsService {
-// 	if &v.DeploymentTargetsService == nil {
-// 		v.DeploymentTargetsService = DeploymentTargetsService{client: v.appManagerClient}
-// 	}
-// 	return v.DeploymentTargetsService
-// }
+func (v *vvpClient) DeploymentTargets() DeploymentTargetsService {
+	if &v.DeploymentTargetsService == nil {
+		v.DeploymentTargetsService = &DeploymentTargetsService{client: v.appManagerClient}
+	}
+	return *v.DeploymentTargetsService
+}
 
-// func (v *vvpClient) SavePoints() SavePointsService {
-// 	if &v.SavePointsService == nil {
-// 		v.SavePointsService = SavePointsService{client: v.appManagerClient}
-// 	}
-// 	return v.SavePointsService
-// }
+func (v *vvpClient) SavePoints() SavePointsService {
+	if &v.SavePointsService == nil {
+		v.SavePointsService = &SavePointsService{client: v.appManagerClient}
+	}
+	return *v.SavePointsService
+}
 
-// func (v *vvpClient) SecretValues() SecretValuesService {
-// 	if &v.SecretValuesService == nil {
-// 		v.SecretValuesService = SecretValuesService{client: v.appManagerClient}
-// 	}
-// 	return v.SecretValuesService
-// }
+func (v *vvpClient) SecretValues() SecretValuesService {
+	if &v.SecretValuesService == nil {
+		v.SecretValuesService = &SecretValuesService{client: v.appManagerClient}
+	}
+	return *v.SecretValuesService
+}
 
-// func (v *vvpClient) SessionClusters() SessionClustersService {
-// 	if &v.SessionClustersService == nil {
-// 		v.SessionClustersService = SessionClustersService{client: v.appManagerClient}
-// 	}
-// 	return v.SessionClustersService
-// }
+func (v *vvpClient) SessionClusters() SessionClustersService {
+	if &v.SessionClustersService == nil {
+		v.SessionClustersService = &SessionClustersService{client: v.appManagerClient}
+	}
+	return *v.SessionClustersService
+}
+
 
 func NewAppManagerClient() *appmanager_apis.APIClient {
 	basePath := getEnv("VVP_URL", "http://vvp.data.yad2.io")

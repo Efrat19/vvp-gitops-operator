@@ -1,5 +1,3 @@
-- add polling to watch for state changes
+- add polling to watch for events for deployments and session clusters
 - fix resources types https://github.com/Efrat19/vvp-gitops-operator/pull/2/commits/7a14ad02ef2cb656d7df08bd7af7dbac14d113d8
-- validate Metadata.Name == Spec.Metadata.Name
 - Add Validation
-- set vvp api url to use env var
