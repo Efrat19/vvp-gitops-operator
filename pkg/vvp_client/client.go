@@ -23,12 +23,11 @@ type VvpClient interface {
 	SavePoints() SavePointsService
 	SecretValues() SecretValuesService
 	SessionClusters() SessionClustersService
-	// ApiTokens() ApiTokensService
-	// CatalogConnectors() CatalogConnectorsService
-	// Connectors() ConnectorsService
-	// Formats() FormatsService
-	// SqlScripts() SqlScriptsService
-	// UdfArtifacts() UdfArtifactsService
+	CatalogConnectors() CatalogConnectorsService
+	Connectors() ConnectorsService
+	Formats() FormatsService
+	SqlScripts() SqlScriptsService
+	UdfArtifacts() UdfArtifactsService
 }
 
 type vvpClient struct {
@@ -39,12 +38,11 @@ type vvpClient struct {
 	SavePointsService        *SavePointsService
 	SecretValuesService      *SecretValuesService
 	SessionClustersService   *SessionClustersService
-	// ApiTokensService         *ApiTokensService
-	// CatalogConnectorsService *CatalogConnectorsService
-	// ConnectorsService        *ConnectorsService
-	// FormatsService           *FormatsService
-	// SqlScriptsService        *SqlScriptsService
-	// UdfArtifactsService      *UdfArtifactsService
+	CatalogConnectorsService *CatalogConnectorsService
+	ConnectorsService        *ConnectorsService
+	FormatsService           *FormatsService
+	SqlScriptsService        *SqlScriptsService
+	UdfArtifactsService      *UdfArtifactsService
 }
 
 func NewClient() VvpClient {
@@ -89,47 +87,40 @@ func (v *vvpClient) SessionClusters() SessionClustersService {
 	return *v.SessionClustersService
 }
 
-// func (v *vvpClient) ApiTokens() ApiTokensService {
-// 	if &v.ApiTokensService == nil {
-// 		v.ApiTokensService = &ApiTokensService{client: v.platformClient}
-// 	}
-// 	return *v.ApiTokensService
-// }
+func (v *vvpClient) CatalogConnectors() CatalogConnectorsService {
+	if &v.CatalogConnectorsService == nil {
+		v.CatalogConnectorsService = &CatalogConnectorsService{client: v.platformClient}
+	}
+	return *v.CatalogConnectorsService
+}
 
-// func (v *vvpClient) CatalogConnectors() CatalogConnectorsService {
-// 	if &v.CatalogConnectorsService == nil {
-// 		v.CatalogConnectorsService = &CatalogConnectorsService{client: v.platformClient}
-// 	}
-// 	return *v.CatalogConnectorsService
-// }
+func (v *vvpClient) Connectors() ConnectorsService {
+	if &v.ConnectorsService == nil {
+		v.ConnectorsService = &ConnectorsService{client: v.platformClient}
+	}
+	return *v.ConnectorsService
+}
 
-// func (v *vvpClient) Connectors() ConnectorsService {
-// 	if &v.ConnectorsService == nil {
-// 		v.ConnectorsService = &ConnectorsService{client: v.platformClient}
-// 	}
-// 	return *v.ConnectorsService
-// }
+func (v *vvpClient) Formats() FormatsService {
+	if &v.FormatsService == nil {
+		v.FormatsService = &FormatsService{client: v.platformClient}
+	}
+	return *v.FormatsService
+}
 
-// func (v *vvpClient) Formats() FormatsService {
-// 	if &v.FormatsService == nil {
-// 		v.FormatsService = &FormatsService{client: v.platformClient}
-// 	}
-// 	return *v.FormatsService
-// }
+func (v *vvpClient) SqlScripts() SqlScriptsService {
+	if &v.SqlScriptsService == nil {
+		v.SqlScriptsService = &SqlScriptsService{client: v.platformClient}
+	}
+	return *v.SqlScriptsService
+}
 
-// func (v *vvpClient) SqlScripts() SqlScriptsService {
-// 	if &v.SqlScriptsService == nil {
-// 		v.SqlScriptsService = &SqlScriptsService{client: v.platformClient}
-// 	}
-// 	return *v.SqlScriptsService
-// }
-
-// func (v *vvpClient) UdfArtifacts() UdfArtifactsService {
-// 	if &v.UdfArtifactsService == nil {
-// 		v.UdfArtifactsService = &UdfArtifactsService{client: v.platformClient}
-// 	}
-// 	return *v.UdfArtifactsService
-// }
+func (v *vvpClient) UdfArtifacts() UdfArtifactsService {
+	if &v.UdfArtifactsService == nil {
+		v.UdfArtifactsService = &UdfArtifactsService{client: v.platformClient}
+	}
+	return *v.UdfArtifactsService
+}
 
 func NewAppManagerClient() *appmanager_apis.APIClient {
 	basePath := getEnv("VVP_URL", "http://vvp.data.yad2.io")
