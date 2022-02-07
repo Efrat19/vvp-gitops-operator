@@ -3,6 +3,7 @@ package vvp_client
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 
 	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
@@ -61,7 +62,7 @@ func (c SqlScriptsService) vvpAtFromK8sAt(d *platformvvpv1alpha1.SqlScript) *pla
 		CreateTime:  d.Spec.CreateTime,
 		Description: d.Spec.Description,
 		DisplayName: d.Spec.DisplayName,
-		Name:        d.Spec.Name,
+		Name:        fmt.Sprintf("namespaces/%s/sqlscripts/%s", CommunityEditionNamespace, d.Spec.Name),
 		Script:      d.Spec.Script,
 		UpdateTime:  d.Spec.UpdateTime,
 	}
