@@ -18,20 +18,20 @@ package platformvvp
 
 import (
 	"context"
+	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
 	"errors"
 	"fmt"
 	"time"
-	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
 
 	// "github.com/fintechstudios/ververica-platform-k8s-operator/pkg/polling"
 	// "github.com/davecgh/go-spew/spew"
+	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/log"
-	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
 )
 
 // SqlScriptReconciler reconciles a SqlScript object
@@ -44,6 +44,7 @@ type SqlScriptReconciler struct {
 const (
 	platformFinalizer string = "appmanager.vvp.efrat19.io/finalizer"
 )
+
 //+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=sqlscripts,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=sqlscripts/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=platform.vvp.efrat19.io,resources=sqlscripts/finalizers,verbs=update

@@ -60,63 +60,63 @@ func (v *vvpClient) Deployments() DeploymentsService {
 }
 
 func (v *vvpClient) DeploymentTargets() DeploymentTargetsService {
-	if &v.DeploymentTargetsService == nil {
+	if v.DeploymentTargetsService == nil {
 		v.DeploymentTargetsService = &DeploymentTargetsService{client: v.appManagerClient}
 	}
 	return *v.DeploymentTargetsService
 }
 
 func (v *vvpClient) SavePoints() SavePointsService {
-	if &v.SavePointsService == nil {
+	if v.SavePointsService == nil {
 		v.SavePointsService = &SavePointsService{client: v.appManagerClient}
 	}
 	return *v.SavePointsService
 }
 
 func (v *vvpClient) SecretValues() SecretValuesService {
-	if &v.SecretValuesService == nil {
+	if v.SecretValuesService == nil {
 		v.SecretValuesService = &SecretValuesService{client: v.appManagerClient}
 	}
 	return *v.SecretValuesService
 }
 
 func (v *vvpClient) SessionClusters() SessionClustersService {
-	if &v.SessionClustersService == nil {
+	if v.SessionClustersService == nil {
 		v.SessionClustersService = &SessionClustersService{client: v.appManagerClient}
 	}
 	return *v.SessionClustersService
 }
 
 func (v *vvpClient) CatalogConnectors() CatalogConnectorsService {
-	if &v.CatalogConnectorsService == nil {
+	if v.CatalogConnectorsService == nil {
 		v.CatalogConnectorsService = &CatalogConnectorsService{client: v.platformClient}
 	}
 	return *v.CatalogConnectorsService
 }
 
 func (v *vvpClient) Connectors() ConnectorsService {
-	if &v.ConnectorsService == nil {
+	if v.ConnectorsService == nil {
 		v.ConnectorsService = &ConnectorsService{client: v.platformClient}
 	}
 	return *v.ConnectorsService
 }
 
 func (v *vvpClient) Formats() FormatsService {
-	if &v.FormatsService == nil {
+	if v.FormatsService == nil {
 		v.FormatsService = &FormatsService{client: v.platformClient}
 	}
 	return *v.FormatsService
 }
 
 func (v *vvpClient) SqlScripts() SqlScriptsService {
-	if &v.SqlScriptsService == nil {
+	if v.SqlScriptsService == nil {
 		v.SqlScriptsService = &SqlScriptsService{client: v.platformClient}
 	}
 	return *v.SqlScriptsService
 }
 
 func (v *vvpClient) UdfArtifacts() UdfArtifactsService {
-	if &v.UdfArtifactsService == nil {
+	if v.UdfArtifactsService == nil {
 		v.UdfArtifactsService = &UdfArtifactsService{client: v.platformClient}
 	}
 	return *v.UdfArtifactsService

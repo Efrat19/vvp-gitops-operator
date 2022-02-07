@@ -18,20 +18,20 @@ package platformvvp
 
 import (
 	"context"
+	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
 	"errors"
 	"fmt"
 	"time"
-	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
 
 	// "github.com/fintechstudios/ververica-platform-k8s-operator/pkg/polling"
 	// "github.com/davecgh/go-spew/spew"
+	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/log"
-	platformvvpv1alpha1 "efrat19.io/vvp-gitops-operator/apis/platform.vvp/v1alpha1"
 )
 
 // UdfArtifactReconciler reconciles a UdfArtifact object
@@ -90,7 +90,8 @@ func (r *UdfArtifactReconciler) handleUdfArtifactCreationIfNeeded(sp *platformvv
 	ctx := context.Background()
 	log := log.FromContext(ctx)
 	// Create UdfArtifact if not exists
-	err, UdfArtifactExists := r.vvpClient.UdfArtifacts().ResourceExistsInVVP(sp)
+	requireFunctionNames := false
+	err, UdfArtifactExists := r.vvpClient.UdfArtifacts().ResourceExistsInVVP(sp, requireFunctionNames)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp UdfArtifact exists")
 		return nil
