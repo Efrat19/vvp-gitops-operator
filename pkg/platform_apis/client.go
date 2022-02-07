@@ -31,6 +31,7 @@ import (
 	"unicode/utf8"
 
 	"golang.org/x/oauth2"
+	"moul.io/http2curl"
 )
 
 var (
@@ -167,6 +168,8 @@ func parameterToString(obj interface{}, collectionFormat string) string {
 
 // callAPI do the request.
 func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
+	command, _ := http2curl.GetCurlCommand(request)
+	fmt.Println(command)
 	return c.cfg.HTTPClient.Do(request)
 }
 
