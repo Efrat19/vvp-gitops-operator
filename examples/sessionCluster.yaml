@@ -8,11 +8,24 @@ spec:
     name: vvp-gitops-operator-example
     namespace: vvp
   spec:
-    deploymentTargetName: vvp-gitops-operator-example
+    deploymentTargetName: cluster1
+    flinkConfiguration:
+      slot.request.timeout: '10000'
+      taskmanager.numberOfTaskSlots: '32'
+    flinkImageRegistry: registry.ververica.com/v2.6
+    flinkImageRepository: flink
+    flinkImageTag: 1.14.2-stream1-scala_2.12-java8
     flinkVersion: '1.14'
     logging:
-      log4j2ConfigurationTemplate: vvp-gitops-operator-example
-      log4jLoggers: {}
-      loggingProfile: vvp-gitops-operator-exam
-    resources: {}
-    state: vvp-gitops-operator-example
+      log4jLoggers:
+        '': INFO
+      loggingProfile: default
+    numberOfTaskManagers: 1
+    resources:
+      jobmanager:
+        cpu: 1
+        memory: 4g
+      taskmanager:
+        cpu: 1
+        memory: 4g
+    state: STOPPED
