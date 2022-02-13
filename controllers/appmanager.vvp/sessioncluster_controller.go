@@ -63,7 +63,7 @@ func (r *SessionClusterReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		log.Error(err, "unable to get SessionCluster")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	if err := r.vvpClient.MatchServerVersion(); err != nil {
+	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
 	if err := r.handleSessionClusterFinalizers(sp); err != nil {

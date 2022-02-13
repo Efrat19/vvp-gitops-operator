@@ -62,7 +62,7 @@ func (r *UdfArtifactReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		log.Error(err, "unable to get UdfArtifact")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	if err := r.vvpClient.MatchServerVersion(); err != nil {
+	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
 	if err := r.handleUdfArtifactFinalizers(sp); err != nil {

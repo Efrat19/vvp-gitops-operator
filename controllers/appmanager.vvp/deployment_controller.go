@@ -67,7 +67,7 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		log.Error(err, "unable to get deployment")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	if err := r.vvpClient.MatchServerVersion(); err != nil {
+	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(dep, err)
 	}
 	if err := r.handleDeploymentFinalizers(dep); err != nil {

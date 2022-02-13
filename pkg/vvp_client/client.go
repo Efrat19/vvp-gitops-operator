@@ -4,20 +4,17 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
 
 	appmanager_apis "efrat19.io/vvp-gitops-operator/pkg/appmanager_apis"
 	platform_apis "efrat19.io/vvp-gitops-operator/pkg/platform_apis"
-	"sigs.k8s.io/controller-runtime/pkg/log"
-
-	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"os"
-	// "github.com/gophercloud/gophercloud/openstack/cdn/v1/base"
 )
 
+const (
+	supportedVersion string = "2.6.1"
+)
 type VvpClient interface {
 	ProbeServer() error
-	MatchServerVersion() error
 	Deployments() DeploymentsService
 	DeploymentTargets() DeploymentTargetsService
 	SavePoints() SavePointsService
@@ -144,18 +141,6 @@ func NewPlatformClient() *platform_apis.APIClient {
 
 func (v *vvpClient) ProbeServer() error {
 	ctx := context.Background()
-	_, response, err := v.appManagerClient.StatusResourceApi.GetStatusUsingGET(ctx)
-	if response.StatusCode != http.StatusOK {
-		log := log.FromContext(ctx)
-		log.Error(err, "error failed to connect")
-		return v.ConnectionFailedError()
-	}
-	return nil
-}
-
-func (v *vvpClient) MatchServerVersion() error {
-	ctx := context.Background()
-	supportedVersion := "2.6.1"
 	var si appmanager_apis.SystemInformation
 	si, _, err := v.appManagerClient.StatusResourceApi.GetSystemInfoUsingGET(ctx)
 	if err != nil {

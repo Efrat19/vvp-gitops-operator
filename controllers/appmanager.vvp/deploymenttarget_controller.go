@@ -63,7 +63,7 @@ func (r *DeploymentTargetReconciler) Reconcile(ctx context.Context, req ctrl.Req
 		log.Error(err, "unable to get deploymentTarget")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	if err := r.vvpClient.MatchServerVersion(); err != nil {
+	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(dep, err)
 	}
 	if err := r.handleDeploymentTargetFinalizers(dep); err != nil {

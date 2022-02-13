@@ -63,7 +63,7 @@ func (r *SavepointReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		log.Error(err, "unable to get Savepoint")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	if err := r.vvpClient.MatchServerVersion(); err != nil {
+	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
 	if err := r.handleSavepointFinalizers(sp); err != nil {

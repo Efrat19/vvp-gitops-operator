@@ -18,10 +18,11 @@ package platformvvp
 
 import (
 	"context"
-	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
 	"errors"
 	"fmt"
 	"time"
+
+	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
 
 	// "github.com/fintechstudios/ververica-platform-k8s-operator/pkg/polling"
 	// "github.com/davecgh/go-spew/spew"
@@ -61,7 +62,7 @@ func (r *ConnectorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		log.Error(err, "unable to get Connector")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	if err := r.vvpClient.MatchServerVersion(); err != nil {
+	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
 	if err := r.handleConnectorFinalizers(sp); err != nil {
