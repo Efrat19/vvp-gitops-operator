@@ -101,6 +101,7 @@ func (r *ConnectorReconciler) handleConnectorCreationIfNeeded(sp *platformvvpv1a
 		log.Info(fmt.Sprintf("Connector %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))
 		if err := r.vvpClient.Connectors().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp Connector")
+			return err
 		}
 	}
 	return nil

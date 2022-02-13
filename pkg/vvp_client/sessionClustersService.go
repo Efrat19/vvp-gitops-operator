@@ -15,7 +15,7 @@ type SessionClustersService struct {
 
 func (c SessionClustersService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.SessionCluster) (error, bool) {
 	ctx := context.Background()
-	_, response, err := c.client.SessionClusterResourceApi.GetSessionClusterUsingGET(ctx, CommunityEditionNamespace, d.Spec.Metadata.Id)
+	_, response, err := c.client.SessionClusterResourceApi.GetSessionClusterUsingGET(ctx, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil, false
@@ -49,7 +49,7 @@ func (c SessionClustersService) CreateExternalResources(d *appmanagervvpv1alpha1
 }
 
 func (c SessionClustersService) validateName(d *appmanagervvpv1alpha1.SessionCluster) error {
-	if d.Spec.Metadata.Id != d.Name {
+	if d.Spec.Metadata.Name != d.Name {
 		msg := "Validation failed: SavePoint name must match SessionCluster.spec.metadata.name"
 		return errors.New(msg)
 	}

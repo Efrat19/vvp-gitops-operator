@@ -15,7 +15,7 @@ type SecretValuesService struct {
 
 func (c SecretValuesService) ResourceExistsInVVP(d *appmanagervvpv1alpha1.SecretValue) (error, bool) {
 	ctx := context.Background()
-	_, response, err := c.client.SecretValueResourceApi.GetSecretValueUsingGET(ctx, CommunityEditionNamespace, d.Spec.Metadata.Id)
+	_, response, err := c.client.SecretValueResourceApi.GetSecretValueUsingGET(ctx, d.Spec.Metadata.Name, CommunityEditionNamespace)
 	if err != nil {
 		if response.StatusCode == http.StatusNotFound {
 			return nil, false
@@ -49,7 +49,7 @@ func (c SecretValuesService) CreateExternalResources(d *appmanagervvpv1alpha1.Se
 }
 
 func (c SecretValuesService) validateName(d *appmanagervvpv1alpha1.SecretValue) error {
-	if d.Spec.Metadata.Id != d.Name {
+	if d.Spec.Metadata.Name != d.Name {
 		msg := "Validation failed: SavePoint name must match secretvalue.spec.metadata.name"
 		return errors.New(msg)
 	}

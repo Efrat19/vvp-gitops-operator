@@ -101,6 +101,7 @@ func (r *CatalogConnectorReconciler) handleCatalogConnectorCreationIfNeeded(sp *
 		log.Info(fmt.Sprintf("CatalogConnector %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))
 		if err := r.vvpClient.CatalogConnectors().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp CatalogConnector")
+			return err
 		}
 	}
 	return nil

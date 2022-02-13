@@ -102,6 +102,7 @@ func (r *SecretValueReconciler) handleSecretValueCreationIfNeeded(sp *appmanager
 		log.Info(fmt.Sprintf("SecretValue %s doesnt exist in vvp, attempting to create\n", sp.Spec.Metadata.Id))
 		if err := r.vvpClient.SecretValues().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp SecretValue")
+			return err
 		}
 	}
 	return nil

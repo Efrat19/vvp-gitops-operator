@@ -101,6 +101,7 @@ func (r *FormatReconciler) handleFormatCreationIfNeeded(sp *platformvvpv1alpha1.
 		log.Info(fmt.Sprintf("Format %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))
 		if err := r.vvpClient.Formats().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp Format")
+			return err
 		}
 	}
 	return nil

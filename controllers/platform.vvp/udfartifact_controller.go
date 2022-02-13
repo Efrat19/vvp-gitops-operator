@@ -102,6 +102,7 @@ func (r *UdfArtifactReconciler) handleUdfArtifactCreationIfNeeded(sp *platformvv
 		log.Info(fmt.Sprintf("UdfArtifact %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))
 		if err := r.vvpClient.UdfArtifacts().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp UdfArtifact")
+			return err
 		}
 	}
 	return nil

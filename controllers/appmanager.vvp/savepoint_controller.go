@@ -102,6 +102,7 @@ func (r *SavepointReconciler) handleSavepointCreationIfNeeded(sp *appmanagervvpv
 		log.Info(fmt.Sprintf("Savepoint %s doesnt exist in vvp, attempting to create\n", sp.Spec.Metadata.Id))
 		if err := r.vvpClient.SavePoints().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp Savepoint")
+			return err
 		}
 	}
 	return nil
