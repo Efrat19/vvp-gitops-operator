@@ -66,9 +66,6 @@ func (r *DeploymentTargetReconciler) Reconcile(ctx context.Context, req ctrl.Req
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(dep, err)
 	}
-	if err := r.handleDeploymentTargetFinalizers(dep); err != nil {
-		return r.handleOutOfSyncError(dep, err)
-	}
 	// if the deploymentTarget needs to be deleted
 	if !dep.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleDeploymentTargetDeletion(dep); err != nil {
@@ -95,6 +92,10 @@ func (r *DeploymentTargetReconciler) handleDeploymentTargetCreationIfNeeded(dep 
 	err, deploymentTargetExists := r.vvpClient.DeploymentTargets().ResourceExistsInVVP(dep)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp deploymentTarget exists")
+		return err
+	}
+	if err := r.handleDeploymentTargetFinalizers(*dep); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !deploymentTargetExists {

@@ -65,9 +65,6 @@ func (r *CatalogConnectorReconciler) Reconcile(ctx context.Context, req ctrl.Req
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
-	if err := r.handleCatalogConnectorFinalizers(sp); err != nil {
-		return r.handleOutOfSyncError(sp, err)
-	}
 	// if the CatalogConnector needs to be deleted
 	if !sp.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleCatalogConnectorDeletion(sp); err != nil {
@@ -94,6 +91,10 @@ func (r *CatalogConnectorReconciler) handleCatalogConnectorCreationIfNeeded(sp *
 	err, CatalogConnectorExists := r.vvpClient.CatalogConnectors().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp CatalogConnector exists")
+		return err
+	}
+	if err := r.handleCatalogConnectorFinalizers(*sp); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !CatalogConnectorExists {

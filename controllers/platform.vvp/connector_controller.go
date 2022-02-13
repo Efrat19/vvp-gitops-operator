@@ -65,9 +65,6 @@ func (r *ConnectorReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
-	if err := r.handleConnectorFinalizers(sp); err != nil {
-		return r.handleOutOfSyncError(sp, err)
-	}
 	// if the Connector needs to be deleted
 	if !sp.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleConnectorDeletion(sp); err != nil {
@@ -94,6 +91,10 @@ func (r *ConnectorReconciler) handleConnectorCreationIfNeeded(sp *platformvvpv1a
 	err, ConnectorExists := r.vvpClient.Connectors().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp Connector exists")
+		return err
+	}
+	if err := r.handleConnectorFinalizers(*sp); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !ConnectorExists {

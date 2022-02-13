@@ -66,9 +66,6 @@ func (r *SessionClusterReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
-	if err := r.handleSessionClusterFinalizers(sp); err != nil {
-		return r.handleOutOfSyncError(sp, err)
-	}
 	// if the SessionCluster needs to be deleted
 	if !sp.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleSessionClusterDeletion(sp); err != nil {
@@ -95,6 +92,10 @@ func (r *SessionClusterReconciler) handleSessionClusterCreationIfNeeded(sp *appm
 	err, SessionClusterExists := r.vvpClient.SessionClusters().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp SessionCluster exists")
+		return err
+	}
+	if err := r.handleSessionClusterFinalizers(*sp); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !SessionClusterExists {

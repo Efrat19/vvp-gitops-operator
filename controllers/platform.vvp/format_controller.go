@@ -65,9 +65,6 @@ func (r *FormatReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
-	if err := r.handleFormatFinalizers(sp); err != nil {
-		return r.handleOutOfSyncError(sp, err)
-	}
 	// if the Format needs to be deleted
 	if !sp.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleFormatDeletion(sp); err != nil {
@@ -94,6 +91,10 @@ func (r *FormatReconciler) handleFormatCreationIfNeeded(sp *platformvvpv1alpha1.
 	err, FormatExists := r.vvpClient.Formats().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp Format exists")
+		return err
+	}
+	if err := r.handleFormatFinalizers(*sp); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !FormatExists {

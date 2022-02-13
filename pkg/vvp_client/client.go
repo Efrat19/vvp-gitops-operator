@@ -13,6 +13,7 @@ import (
 const (
 	supportedVersion string = "2.6.1"
 )
+
 type VvpClient interface {
 	ProbeServer() error
 	Deployments() DeploymentsService

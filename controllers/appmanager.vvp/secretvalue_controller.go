@@ -66,9 +66,6 @@ func (r *SecretValueReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
-	if err := r.handleSecretValueFinalizers(sp); err != nil {
-		return r.handleOutOfSyncError(sp, err)
-	}
 	// if the SecretValue needs to be deleted
 	if !sp.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleSecretValueDeletion(sp); err != nil {
@@ -95,6 +92,10 @@ func (r *SecretValueReconciler) handleSecretValueCreationIfNeeded(sp *appmanager
 	err, SecretValueExists := r.vvpClient.SecretValues().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp SecretValue exists")
+		return err
+	}
+	if err := r.handleSecretValueFinalizers(*sp); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !SecretValueExists {

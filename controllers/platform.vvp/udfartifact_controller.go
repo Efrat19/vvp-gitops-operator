@@ -65,9 +65,6 @@ func (r *UdfArtifactReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
-	if err := r.handleUdfArtifactFinalizers(sp); err != nil {
-		return r.handleOutOfSyncError(sp, err)
-	}
 	// if the UdfArtifact needs to be deleted
 	if !sp.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleUdfArtifactDeletion(sp); err != nil {
@@ -95,6 +92,10 @@ func (r *UdfArtifactReconciler) handleUdfArtifactCreationIfNeeded(sp *platformvv
 	err, UdfArtifactExists := r.vvpClient.UdfArtifacts().ResourceExistsInVVP(sp, requireFunctionNames)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp UdfArtifact exists")
+		return err
+	}
+	if err := r.handleUdfArtifactFinalizers(*sp); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !UdfArtifactExists {

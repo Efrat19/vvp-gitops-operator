@@ -66,9 +66,6 @@ func (r *SavepointReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
-	if err := r.handleSavepointFinalizers(sp); err != nil {
-		return r.handleOutOfSyncError(sp, err)
-	}
 	// if the Savepoint needs to be deleted
 	if !sp.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleSavepointDeletion(sp); err != nil {
@@ -95,6 +92,10 @@ func (r *SavepointReconciler) handleSavepointCreationIfNeeded(sp *appmanagervvpv
 	err, SavepointExists := r.vvpClient.SavePoints().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp Savepoint exists")
+		return err
+	}
+	if err := r.handleSavepointFinalizers(*sp); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !SavepointExists {

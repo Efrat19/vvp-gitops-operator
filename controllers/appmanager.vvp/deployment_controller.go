@@ -70,9 +70,6 @@ func (r *DeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(dep, err)
 	}
-	if err := r.handleDeploymentFinalizers(dep); err != nil {
-		return r.handleOutOfSyncError(dep, err)
-	}
 	// if the deployment needs to be deleted
 	if !dep.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleDeploymentDeletion(dep); err != nil {
@@ -99,6 +96,10 @@ func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(dep *appmanagerv
 	err, deploymentExists := r.vvpClient.Deployments().ResourceExistsInVVP(dep)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp deployment exists")
+		return err
+	}
+	if err := r.handleDeploymentFinalizers(*dep); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !deploymentExists {

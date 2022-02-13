@@ -69,9 +69,6 @@ func (r *SqlScriptReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	if err := r.vvpClient.ProbeServer(); err != nil {
 		return r.handleOutOfSyncError(sp, err)
 	}
-	if err := r.handleSqlScriptFinalizers(sp); err != nil {
-		return r.handleOutOfSyncError(sp, err)
-	}
 	// if the SqlScript needs to be deleted
 	if !sp.ObjectMeta.DeletionTimestamp.IsZero() {
 		if err := r.handleSqlScriptDeletion(sp); err != nil {
@@ -98,6 +95,10 @@ func (r *SqlScriptReconciler) handleSqlScriptCreationIfNeeded(sp *platformvvpv1a
 	err, SqlScriptExists := r.vvpClient.SqlScripts().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp SqlScript exists")
+		return err
+	}
+	if err := r.handleSqlScriptFinalizers(*sp); err != nil {
+		log.Error(err, "failed to attach finalizers")
 		return err
 	}
 	if !SqlScriptExists {
