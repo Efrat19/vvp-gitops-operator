@@ -32,6 +32,8 @@ import (
 
 	"golang.org/x/oauth2"
 	"moul.io/http2curl"
+
+	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
 var (
@@ -485,7 +487,7 @@ type GenericSwaggerError struct {
 
 // Error returns non-empty string if there was an error.
 func (e GenericSwaggerError) Error() string {
-	return e.error
+	return e.getApiError()
 }
 
 // Body returns the raw bytes of the response
@@ -496,4 +498,25 @@ func (e GenericSwaggerError) Body() []byte {
 // Model returns the unpacked model of the error
 func (e GenericSwaggerError) Model() interface{} {
 	return e.model
+}
+
+type ApiException struct {
+	Kind       string      `json:"kind,omitempty"`
+	ApiVersion string      `json:"apiVersion,omitempty"`
+	Message    string      `json:"message,omitempty"`
+	Reason     string      `json:"reason,omitempty"`
+	Context    interface{} `json:"context,omitempty"`
+	StatusCode int         `json:"statusCode,omitempty"`
+}
+
+func (e GenericSwaggerError) getApiError() string {
+	var ae ApiException
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	if marshalErr := json.Unmarshal(e.body, &ae); marshalErr != nil {
+		msg := "Failed to unmarshal error response body"
+		log.Error(marshalErr, msg)
+		return e.error
+	}
+	return fmt.Sprintf("ApiException: %d %s: %s", ae.StatusCode, ae.Reason, ae.Message)
 }
