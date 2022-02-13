@@ -129,7 +129,15 @@ func (r *CatalogConnectorReconciler) handleCatalogConnectorDeletion(sp platformv
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-
+	err, catalogConnectorExists := r.vvpClient.CatalogConnectors().ResourceExistsInVVP(&sp)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp catalogConnector exists")
+		return err
+	}
+	if !catalogConnectorExists {
+		log.Info(fmt.Sprintf("catalogConnector %s doesnt exist in vvp, skipping deletion\n", sp.Spec.Name))
+		return nil
+	}
 	// The object is being deleted
 	log.Info(fmt.Sprintf("Deleting CatalogConnector %s\n", sp.Spec.Name))
 	if controllerutil.ContainsFinalizer(&sp, platformFinalizer) {

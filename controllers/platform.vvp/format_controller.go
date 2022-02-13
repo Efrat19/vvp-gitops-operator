@@ -129,7 +129,15 @@ func (r *FormatReconciler) handleFormatDeletion(sp platformvvpv1alpha1.Format) e
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-
+	err, formatExists := r.vvpClient.Formats().ResourceExistsInVVP(&sp)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp format exists")
+		return err
+	}
+	if !formatExists {
+		log.Info(fmt.Sprintf("format %s doesnt exist in vvp, skipping deletion\n", sp.Spec.Name))
+		return nil
+	}
 	// The object is being deleted
 	log.Info(fmt.Sprintf("Deleting Format %s\n", sp.Spec.Name))
 	if controllerutil.ContainsFinalizer(&sp, platformFinalizer) {

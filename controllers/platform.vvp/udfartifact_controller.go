@@ -18,10 +18,11 @@ package platformvvp
 
 import (
 	"context"
-	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
 	"errors"
 	"fmt"
 	"time"
+
+	"efrat19.io/vvp-gitops-operator/pkg/vvp_client"
 
 	// "github.com/fintechstudios/ververica-platform-k8s-operator/pkg/polling"
 	// "github.com/davecgh/go-spew/spew"
@@ -130,7 +131,16 @@ func (r *UdfArtifactReconciler) handleUdfArtifactDeletion(sp platformvvpv1alpha1
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-
+	requireFunctionNames := false
+	err, udfArtifactExists := r.vvpClient.UdfArtifacts().ResourceExistsInVVP(&sp, requireFunctionNames)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp udfArtifact exists")
+		return err
+	}
+	if !udfArtifactExists {
+		log.Info(fmt.Sprintf("udfArtifact %s doesnt exist in vvp, skipping deletion\n", sp.Spec.Name))
+		return nil
+	}
 	// The object is being deleted
 	log.Info(fmt.Sprintf("Deleting UdfArtifact %s\n", sp.Spec.Name))
 	if controllerutil.ContainsFinalizer(&sp, platformFinalizer) {

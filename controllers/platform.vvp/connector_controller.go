@@ -129,7 +129,15 @@ func (r *ConnectorReconciler) handleConnectorDeletion(sp platformvvpv1alpha1.Con
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-
+	err, connectorExists := r.vvpClient.Connectors().ResourceExistsInVVP(&sp)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp connector exists")
+		return err
+	}
+	if !connectorExists {
+		log.Info(fmt.Sprintf("connector %s doesnt exist in vvp, skipping deletion\n", sp.Spec.Name))
+		return nil
+	}
 	// The object is being deleted
 	log.Info(fmt.Sprintf("Deleting Connector %s\n", sp.Spec.Name))
 	if controllerutil.ContainsFinalizer(&sp, platformFinalizer) {

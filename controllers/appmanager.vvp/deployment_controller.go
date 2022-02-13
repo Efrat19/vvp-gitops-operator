@@ -135,7 +135,15 @@ func (r *DeploymentReconciler) handleDeploymentDeletion(dep appmanagervvpv1alpha
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-
+	err, deploymentExists := r.vvpClient.Deployments().ResourceExistsInVVP(&dep)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp deployment exists")
+		return err
+	}
+	if !deploymentExists {
+		log.Info(fmt.Sprintf("deployment %s doesnt exist in vvp, skipping deletion\n", dep.Spec.Metadata.Name))
+		return nil
+	}
 	// The object is being deleted
 	log.Info(fmt.Sprintf("Deleting deployment %s\n", dep.Spec.Metadata.Name))
 	if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {

@@ -131,7 +131,15 @@ func (r *SessionClusterReconciler) handleSessionClusterDeletion(sp appmanagervvp
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-
+	err, sessionClusterExists := r.vvpClient.SessionClusters().ResourceExistsInVVP(&sp)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp sessionCluster exists")
+		return err
+	}
+	if !sessionClusterExists {
+		log.Info(fmt.Sprintf("sessionCluster %s doesnt exist in vvp, skipping deletion\n", sp.Spec.Metadata.Id))
+		return nil
+	}
 	// The object is being deleted
 	log.Info(fmt.Sprintf("Deleting SessionCluster %s\n", sp.Spec.Metadata.Id))
 	if controllerutil.ContainsFinalizer(&sp, appmanagerFinalizer) {

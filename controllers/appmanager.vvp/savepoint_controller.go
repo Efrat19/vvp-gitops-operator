@@ -131,7 +131,15 @@ func (r *SavepointReconciler) handleSavepointDeletion(sp appmanagervvpv1alpha1.S
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-
+	err, SavepointExists := r.vvpClient.SavePoints().ResourceExistsInVVP(&sp)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp Savepoint exists")
+		return err
+	}
+	if !SavepointExists {
+		log.Info(fmt.Sprintf("Savepoint %s doesnt exist in vvp, skipping deletion\n", sp.Spec.Metadata.Id))
+		return nil
+	}
 	// The object is being deleted
 	log.Info(fmt.Sprintf("Deleting Savepoint %s\n", sp.Spec.Metadata.Id))
 	if controllerutil.ContainsFinalizer(&sp, appmanagerFinalizer) {

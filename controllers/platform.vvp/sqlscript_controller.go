@@ -133,7 +133,15 @@ func (r *SqlScriptReconciler) handleSqlScriptDeletion(sp platformvvpv1alpha1.Sql
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
-
+	err, sqlScriptExists := r.vvpClient.SqlScripts().ResourceExistsInVVP(&sp)
+	if err != nil {
+		log.Error(err, "unable to check whether vvp sqlScript exists")
+		return err
+	}
+	if !sqlScriptExists {
+		log.Info(fmt.Sprintf("sqlScript %s doesnt exist in vvp, skipping deletion\n", sp.Spec.Name))
+		return nil
+	}
 	// The object is being deleted
 	log.Info(fmt.Sprintf("Deleting SqlScript %s\n", sp.Spec.Name))
 	if controllerutil.ContainsFinalizer(&sp, platformFinalizer) {
