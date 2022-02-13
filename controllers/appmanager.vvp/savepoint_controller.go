@@ -95,7 +95,7 @@ func (r *SavepointReconciler) handleSavepointCreationIfNeeded(sp *appmanagervvpv
 	err, SavepointExists := r.vvpClient.SavePoints().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp Savepoint exists")
-		return nil
+		return err
 	}
 	if !SavepointExists {
 		log.Info(fmt.Sprintf("Savepoint %s doesnt exist in vvp, attempting to create\n", sp.Spec.Metadata.Id))
@@ -156,6 +156,7 @@ func (r *SavepointReconciler) handleSavepointDeletion(sp appmanagervvpv1alpha1.S
 }
 
 func (r *SavepointReconciler) handleOutOfSyncError(sp appmanagervvpv1alpha1.Savepoint, err error) (ctrl.Result, error) {
+
 	if updateErr := r.setStatus(sp, vvp_client.FormatOutOfSync(err)); updateErr != nil {
 		return ctrl.Result{}, updateErr
 	}

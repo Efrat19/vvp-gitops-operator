@@ -99,7 +99,7 @@ func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(dep *appmanagerv
 	err, deploymentExists := r.vvpClient.Deployments().ResourceExistsInVVP(dep)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp deployment exists")
-		return nil
+		return err
 	}
 	if !deploymentExists {
 		log.Info(fmt.Sprintf("Deployment %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))

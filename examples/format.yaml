@@ -1,0 +1,13 @@
+apiVersion: platform.vvp.efrat19.io/v1alpha1
+kind: Format
+metadata:
+  name: vvp-gitops-operator-example
+  namespace: vvp
+spec:
+  dependencies: {}
+  name: vvp-gitops-operator-example
+  packaged: {}
+  properties: {}
+  sink: {}
+  source: {}
+  type: vvp-gitops-operator-example

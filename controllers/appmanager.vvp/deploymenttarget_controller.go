@@ -95,7 +95,7 @@ func (r *DeploymentTargetReconciler) handleDeploymentTargetCreationIfNeeded(dep 
 	err, deploymentTargetExists := r.vvpClient.DeploymentTargets().ResourceExistsInVVP(dep)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp deploymentTarget exists")
-		return nil
+		return err
 	}
 	if !deploymentTargetExists {
 		log.Info(fmt.Sprintf("DeploymentTarget %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))

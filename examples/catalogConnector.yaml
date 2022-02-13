@@ -1,0 +1,21 @@
+
+
+---
+apiVersion: platform.vvp.efrat19.io/v1alpha1
+kind: CatalogConnector
+metadata:
+  name: vvp-gitops-operator-example
+  namespace: vvp
+spec:
+  dependencies: 
+  - vvp-gitops-operator-example
+  name: vvp-gitops-operator-example
+  packaged: true
+  properties: 
+  - defaultValue: test
+    definesFormat: true    
+    description: test  
+    key: "test" 
+    required: true     
+  readOnly: true
+  type: vvp-gitops-operator-example

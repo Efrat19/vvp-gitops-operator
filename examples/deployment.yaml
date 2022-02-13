@@ -1,0 +1,40 @@
+apiVersion: appmanager.vvp.efrat19.io/v1alpha1
+kind: Deployment
+metadata:
+  name: vvp-gitops-operator-example
+  namespace: vvp
+spec:
+  metadata:
+    name: vvp-gitops-operator-example
+    namespace: default
+    labels:
+      env: testing
+  spec:
+    maxJobCreationAttempts: 4
+    maxSavepointCreationAttempts: 4
+    restoreStrategy:
+      kind: LATEST_STATE
+    sessionClusterName: sql-editor-previews
+    state: RUNNING
+    template:
+      metadata:
+        annotations:
+          flink.queryable-state.enabled: 'false'
+          flink.security.ssl.enabled: 'false'
+      spec:
+        artifact:
+          flinkVersion: '1.14'
+          kind: SQLSCRIPT
+          sqlScript: |-
+            SELECT
+              kafka_key,
+              UserID
+            FROM USERS;
+        flinkConfiguration:
+          execution.checkpointing.externalized-checkpoint-retention: RETAIN_ON_CANCELLATION
+          execution.checkpointing.interval: 10s
+          execution.checkpointing.min-pause: 10s
+        parallelism: 1
+        resources: {}
+    upgradeStrategy:
+      kind: STATEFUL

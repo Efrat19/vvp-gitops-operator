@@ -93,7 +93,7 @@ func (r *CatalogConnectorReconciler) handleCatalogConnectorCreationIfNeeded(sp *
 	err, CatalogConnectorExists := r.vvpClient.CatalogConnectors().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp CatalogConnector exists")
-		return nil
+		return err
 	}
 	if !CatalogConnectorExists {
 		log.Info(fmt.Sprintf("CatalogConnector %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))

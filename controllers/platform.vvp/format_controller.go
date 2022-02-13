@@ -93,7 +93,7 @@ func (r *FormatReconciler) handleFormatCreationIfNeeded(sp *platformvvpv1alpha1.
 	err, FormatExists := r.vvpClient.Formats().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp Format exists")
-		return nil
+		return err
 	}
 	if !FormatExists {
 		log.Info(fmt.Sprintf("Format %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))

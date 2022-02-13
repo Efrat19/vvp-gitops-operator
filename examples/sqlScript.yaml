@@ -1,0 +1,15 @@
+apiVersion: platform.vvp.efrat19.io/v1alpha1
+kind: SqlScript
+metadata:
+  name: vvp-gitops-operator-example
+  namespace: vvp
+spec:
+  description: "vvp-gitops-operator-example"
+  name: vvp-gitops-operator-example
+  displayName: vvp-gitops-operator-example
+  script: |-
+    SELECT
+      kafka_key,
+      UserID
+    FROM USERS;
+    

@@ -1,0 +1,117 @@
+apiVersion: appmanager.vvp.efrat19.io/v1alpha1
+kind: SessionCluster
+metadata:
+  name: vvp-gitops-operator-example
+  namespace: vvp
+spec:
+  metadata:
+    name: vvp-gitops-operator-example
+    namespace: vvp
+  spec:
+    deploymentTargetName: vvp-gitops-operator-example
+    flinkConfiguration: {}
+    flinkImageRegistry: vvp-gitops-operator-example
+    flinkImageRepository: vvp-gitops-operator-example
+    flinkImageTag: vvp-gitops-operator-example
+    flinkVersion: vvp-gitops-operator-example
+    kubernetes:
+      jobManagerPodTemplate:
+        metadata:
+          annotations: {}
+          clusterName: vvp-gitops-operator-example
+          generateName: vvp-gitops-operator-example
+          labels: {}
+          name: vvp-gitops-operator-example
+          namespace: vvp
+          resourceVersion: vvp-gitops-operator-example
+          selfLink: vvp-gitops-operator-example
+          uid: vvp-gitops-operator-example
+        spec:
+          dnsPolicy: vvp-gitops-operator-example
+          hostname: vvp-gitops-operator-example
+          nodeName: vvp-gitops-operator-example
+          nodeSelector: {}
+          overhead: {}
+          preemptionPolicy: vvp-gitops-operator-example
+          priorityClassName: vvp-gitops-operator-example
+          restartPolicy: vvp-gitops-operator-example
+          runtimeClassName: vvp-gitops-operator-example
+          schedulerName: vvp-gitops-operator-example
+          securityContext:
+
+            fsGroupChangePolicy: vvp-gitops-operator-example
+
+
+
+            seLinuxOptions:
+              level: vvp-gitops-operator-example
+              role: vvp-gitops-operator-example
+              type: vvp-gitops-operator-example
+              user: vvp-gitops-operator-example
+            seccompProfile:
+              localhostProfile: vvp-gitops-operator-example
+              type: vvp-gitops-operator-example
+
+
+            windowsOptions:
+              gmsaCredentialSpec: vvp-gitops-operator-example
+              gmsaCredentialSpecName: vvp-gitops-operator-example
+              runAsUserName: vvp-gitops-operator-example
+          serviceAccount: vvp-gitops-operator-example
+          serviceAccountName: vvp-gitops-operator-example
+          subdomain: vvp-gitops-operator-example
+      labels: {}
+      taskManagerPodTemplate:
+        metadata:
+          annotations: {}
+          clusterName: vvp-gitops-operator-example
+    
+    
+          generateName: vvp-gitops-operator-example
+          labels: {}
+          name: vvp-gitops-operator-example
+          namespace: vvp
+          resourceVersion: vvp-gitops-operator-example
+          selfLink: vvp-gitops-operator-example
+          uid: vvp-gitops-operator-example
+        spec:
+
+          dnsPolicy: vvp-gitops-operator-example
+          hostname: vvp-gitops-operator-example
+          nodeName: vvp-gitops-operator-example
+          nodeSelector: {}
+          overhead: {}
+          preemptionPolicy: vvp-gitops-operator-example
+          priorityClassName: vvp-gitops-operator-example
+          restartPolicy: vvp-gitops-operator-example
+          runtimeClassName: vvp-gitops-operator-example
+          schedulerName: vvp-gitops-operator-example
+          securityContext:
+
+            fsGroupChangePolicy: vvp-gitops-operator-example
+
+
+
+            seLinuxOptions:
+              level: vvp-gitops-operator-example
+              role: vvp-gitops-operator-example
+              type: vvp-gitops-operator-example
+              user: vvp-gitops-operator-example
+            seccompProfile:
+              localhostProfile: vvp-gitops-operator-example
+              type: vvp-gitops-operator-example
+
+
+            windowsOptions:
+              gmsaCredentialSpec: vvp-gitops-operator-example
+              gmsaCredentialSpecName: vvp-gitops-operator-example
+              runAsUserName: vvp-gitops-operator-example
+          serviceAccount: vvp-gitops-operator-example
+          serviceAccountName: vvp-gitops-operator-example
+          subdomain: vvp-gitops-operator-example
+    logging:
+      log4j2ConfigurationTemplate: vvp-gitops-operator-example
+      log4jLoggers: {}
+      loggingProfile: vvp-gitops-operator-exam
+    resources: {}
+    state: vvp-gitops-operator-example

@@ -1,0 +1,13 @@
+apiVersion: appmanager.vvp.efrat19.io/v1alpha1
+kind: Savepoint
+metadata:
+  name: vvp-gitops-operator-example
+  namespace: vvp
+spec:
+  metadata:
+    deploymentId: vvp-gitops-operator-example
+    id: vvp-gitops-operator-example
+    jobId: vvp-gitops-operator-example
+    namespace: vvp
+  spec:
+    savepointLocation: location

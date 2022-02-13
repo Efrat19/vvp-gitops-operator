@@ -1,0 +1,13 @@
+---
+apiVersion: appmanager.vvp.efrat19.io/v1alpha1
+kind: DeploymentTarget
+metadata:
+  name: vvp-gitops-operator-example
+  namespace: vvp
+spec:
+  metadata:
+    name: vvp-gitops-operator-example
+    namespace: vvp
+  spec:
+    kubernetes:
+      namespace: vvp

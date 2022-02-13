@@ -97,7 +97,7 @@ func (r *SqlScriptReconciler) handleSqlScriptCreationIfNeeded(sp *platformvvpv1a
 	err, SqlScriptExists := r.vvpClient.SqlScripts().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp SqlScript exists")
-		return nil
+		return err
 	}
 	if !SqlScriptExists {
 		log.Info(fmt.Sprintf("SqlScript %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))

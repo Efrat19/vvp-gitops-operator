@@ -95,7 +95,7 @@ func (r *SessionClusterReconciler) handleSessionClusterCreationIfNeeded(sp *appm
 	err, SessionClusterExists := r.vvpClient.SessionClusters().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp SessionCluster exists")
-		return nil
+		return err
 	}
 	if !SessionClusterExists {
 		log.Info(fmt.Sprintf("SessionCluster %s doesnt exist in vvp, attempting to create\n", sp.Spec.Metadata.Id))

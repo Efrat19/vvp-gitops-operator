@@ -1,0 +1,9 @@
+apiVersion: platform.vvp.efrat19.io/v1alpha1
+kind: UdfArtifact
+metadata:
+  name: vvp-gitops-operator-example
+  namespace: vvp
+spec:
+  jarUrl: vvp-gitops-operator-example
+  name: vvp-gitops-operator-example
+  udfClasses: {}

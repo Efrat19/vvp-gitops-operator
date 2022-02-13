@@ -95,7 +95,7 @@ func (r *SecretValueReconciler) handleSecretValueCreationIfNeeded(sp *appmanager
 	err, SecretValueExists := r.vvpClient.SecretValues().ResourceExistsInVVP(sp)
 	if err != nil {
 		log.Error(err, "unable to check whether vvp SecretValue exists")
-		return nil
+		return err
 	}
 	if !SecretValueExists {
 		log.Info(fmt.Sprintf("SecretValue %s doesnt exist in vvp, attempting to create\n", sp.Spec.Metadata.Id))
