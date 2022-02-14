@@ -13,7 +13,7 @@ controllerManager:
         memory: 64Mi
   manager:
     image:
-      repository: controller
+      repository: efrat19/vvp-gitops-operator
       tag: latest
     resources:
       limits:
