@@ -130,7 +130,6 @@ func (r *SecretValueReconciler) attachFinalizers(sp appmanagervvpv1alpha1.Secret
 	return nil
 }
 
-
 func (r *SecretValueReconciler) detachFinalizers(sp appmanagervvpv1alpha1.SecretValue) error {
 	ctx := context.Background()
 	log := log.FromContext(ctx)
@@ -144,7 +143,6 @@ func (r *SecretValueReconciler) detachFinalizers(sp appmanagervvpv1alpha1.Secret
 	}
 	return nil
 }
-
 
 func (r *SecretValueReconciler) handleSecretValueDeletion(sp appmanagervvpv1alpha1.SecretValue) error {
 	ctx := context.Background()
