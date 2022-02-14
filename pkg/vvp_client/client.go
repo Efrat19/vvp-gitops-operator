@@ -121,7 +121,7 @@ func (v *vvpClient) UdfArtifacts() UdfArtifactsService {
 }
 
 func NewAppManagerClient() *appmanager_apis.APIClient {
-	basePath := getEnv("VVP_URL", "http://vvp.data.yad2.io")
+	basePath := getEnv("VVP_URL", "http://localhost:8080")
 	cfg := &appmanager_apis.Configuration{
 		BasePath:      basePath,
 		DefaultHeader: make(map[string]string),
@@ -131,7 +131,7 @@ func NewAppManagerClient() *appmanager_apis.APIClient {
 }
 
 func NewPlatformClient() *platform_apis.APIClient {
-	basePath := getEnv("VVP_URL", "http://vvp.data.yad2.io")
+	basePath := getEnv("VVP_URL", "http://localhost:8080")
 	cfg := &platform_apis.Configuration{
 		BasePath:      basePath,
 		DefaultHeader: make(map[string]string),
