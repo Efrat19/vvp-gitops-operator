@@ -27,8 +27,6 @@ docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate  -i htt
 # Gen k9s files
 python3 pre-gen.py
 make install 
-kustomize build config/crd > k.yaml
-k create k.yaml
 make build
 make run ENABLE_WEBHOOKS=false
 

@@ -1,0 +1,282 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "vvp-gitops-operator.fullname" . }}-manager-role
+  labels:
+  {{- include "vvp-gitops-operator.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymentTargets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymentTargets/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deploymentTargets/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deployments/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - deployments/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - savepoints
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - savepoints/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - savepoints/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - secretValues
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - secretValues/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - secretValues/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - sessionclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - sessionclusters/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - appmanager.vvp.efrat19.io
+  resources:
+  - sessionclusters/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - catalogconnectors
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - catalogconnectors/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - catalogconnectors/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - connectors
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - connectors/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - connectors/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - formats
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - formats/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - formats/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - sqlscripts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - sqlscripts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - sqlscripts/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - udfartifacts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - udfartifacts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - platform.vvp.efrat19.io
+  resources:
+  - udfartifacts/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "vvp-gitops-operator.fullname" . }}-manager-rolebinding
+  labels:
+  {{- include "vvp-gitops-operator.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: '{{ include "vvp-gitops-operator.fullname" . }}-manager-role'
+subjects:
+- kind: ServiceAccount
+  name: '{{ include "vvp-gitops-operator.fullname" . }}-controller-manager'
+  namespace: '{{ .Release.Namespace }}'

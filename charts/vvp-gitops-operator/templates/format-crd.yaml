@@ -1,0 +1,92 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: formats.platform.vvp.efrat19.io
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.4.1
+  labels:
+  {{- include "vvp-gitops-operator.labels" . | nindent 4 }}
+spec:
+  group: platform.vvp.efrat19.io
+  names:
+    kind: Format
+    listKind: FormatList
+    plural: formats
+    singular: format
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    - jsonPath: .status.lastSync
+      name: LAST SYNC
+      type: date
+    - jsonPath: .status.state
+      name: STATUS
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Format is the Schema for the formats API
+        properties:
+          apiVersion:
+            description: APIVersion defines the versioned schema of this re
+            type: string
+          kind:
+            description: Kind is a string value representing the REST resou
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              dependencies:
+                items:
+                  type: string
+                type: array
+              name:
+                type: string
+              packaged:
+                type: boolean
+              properties:
+                items:
+                  properties:
+                    defaultValue:
+                      type: string
+                    definesFormat:
+                      type: boolean
+                    description:
+                      type: string
+                    key:
+                      type: string
+                    required:
+                      type: boolean
+                  type: object
+                type: array
+              sink:
+                type: boolean
+              source:
+                type: boolean
+              type:
+                type: string
+            type: object
+          status:
+            description: FormatsStatus defines the observed state of Format
+            properties:
+              lastSync:
+                format: date-time
+                type: string
+              state:
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

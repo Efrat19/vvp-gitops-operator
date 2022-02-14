@@ -1,3 +1,6 @@
 - add polling to watch for events for deployments and session clusters
-- fix resources types https://github.com/Efrat19/vvp-gitops-operator/pull/2/commits/7a14ad02ef2cb656d7df08bd7af7dbac14d113d8
-- Add Validation
+- Add extend https://www.geeksforgeeks.org/inheritance-in-golang/#:~:text=Since%20Golang%20does%20not%20support,No%20Inheritance%20Concept%20in%20Golang.
+- add metrics
+- add helm chart
+- add tests
+- automate CI
