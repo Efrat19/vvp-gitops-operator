@@ -94,7 +94,7 @@ func (r *DeploymentTargetReconciler) handleDeploymentTargetCreationIfNeeded(dep 
 		log.Error(err, "unable to check whether vvp deploymentTarget exists")
 		return err
 	}
-	if err := r.handleDeploymentTargetFinalizers(*dep); err != nil {
+	if err := r.attachFinalizers(*dep); err != nil {
 		log.Error(err, "failed to attach finalizers")
 		return err
 	}
@@ -102,13 +102,14 @@ func (r *DeploymentTargetReconciler) handleDeploymentTargetCreationIfNeeded(dep 
 		log.Info(fmt.Sprintf("DeploymentTarget %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))
 		if err := r.vvpClient.DeploymentTargets().CreateExternalResources(dep); err != nil {
 			log.Error(err, "unable to create vvp deploymentTarget")
+			r.detachFinalizers(*dep)
 			return err
 		}
 	}
 	return nil
 }
 
-func (r *DeploymentTargetReconciler) handleDeploymentTargetFinalizers(dep appmanagervvpv1alpha1.DeploymentTarget) error {
+func (r *DeploymentTargetReconciler) attachFinalizers(dep appmanagervvpv1alpha1.DeploymentTarget) error {
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
@@ -125,6 +126,20 @@ func (r *DeploymentTargetReconciler) handleDeploymentTargetFinalizers(dep appman
 				return err
 			}
 		}
+	}
+	return nil
+}
+
+func (r *DeploymentTargetReconciler) detachFinalizers(dep appmanagervvpv1alpha1.DeploymentTarget) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
+		controllerutil.RemoveFinalizer(&dep, appmanagerFinalizer)
+		if err := r.Update(ctx, &dep); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to remove deploymentTarget %s finalizers\n", dep.Spec.Metadata.Name))
+			return err
+		}
+		return nil
 	}
 	return nil
 }
@@ -155,11 +170,7 @@ func (r *DeploymentTargetReconciler) handleDeploymentTargetDeletion(dep appmanag
 		}
 
 		// remove our finalizer from the list and update it.
-		controllerutil.RemoveFinalizer(&dep, appmanagerFinalizer)
-		if err := r.Update(ctx, &dep); err != nil {
-			log.Error(err, fmt.Sprintf("Failed to remove deploymentTarget %s finalizers\n", dep.Spec.Metadata.Name))
-			return err
-		}
+		return r.detachFinalizers(dep)
 	}
 	// Stop reconciliation as the item is being deleted
 	return nil

@@ -97,7 +97,7 @@ func (r *SqlScriptReconciler) handleSqlScriptCreationIfNeeded(sp *platformvvpv1a
 		log.Error(err, "unable to check whether vvp SqlScript exists")
 		return err
 	}
-	if err := r.handleSqlScriptFinalizers(*sp); err != nil {
+	if err := r.attachFinalizers(*sp); err != nil {
 		log.Error(err, "failed to attach finalizers")
 		return err
 	}
@@ -105,13 +105,14 @@ func (r *SqlScriptReconciler) handleSqlScriptCreationIfNeeded(sp *platformvvpv1a
 		log.Info(fmt.Sprintf("SqlScript %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))
 		if err := r.vvpClient.SqlScripts().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp SqlScript")
+			r.detachFinalizers(*sp)
 			return err
 		}
 	}
 	return nil
 }
 
-func (r *SqlScriptReconciler) handleSqlScriptFinalizers(sp platformvvpv1alpha1.SqlScript) error {
+func (r *SqlScriptReconciler) attachFinalizers(sp platformvvpv1alpha1.SqlScript) error {
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
@@ -128,6 +129,20 @@ func (r *SqlScriptReconciler) handleSqlScriptFinalizers(sp platformvvpv1alpha1.S
 				return err
 			}
 		}
+	}
+	return nil
+}
+
+func (r *SqlScriptReconciler) detachFinalizers(sp platformvvpv1alpha1.SqlScript) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	if controllerutil.ContainsFinalizer(&sp, platformFinalizer) {
+		controllerutil.RemoveFinalizer(&sp, platformFinalizer)
+		if err := r.Update(ctx, &sp); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to remove SqlScript %s finalizers\n", sp.Spec.Name))
+			return err
+		}
+		return nil
 	}
 	return nil
 }
@@ -158,11 +173,7 @@ func (r *SqlScriptReconciler) handleSqlScriptDeletion(sp platformvvpv1alpha1.Sql
 		}
 
 		// remove our finalizer from the list and update it.
-		controllerutil.RemoveFinalizer(&sp, platformFinalizer)
-		if err := r.Update(ctx, &sp); err != nil {
-			log.Error(err, fmt.Sprintf("Failed to remove SqlScript %s finalizers\n", sp.Spec.Name))
-			return err
-		}
+		r.detachFinalizers(sp)
 	}
 	// Stop reconciliation as the item is being deleted
 	return nil

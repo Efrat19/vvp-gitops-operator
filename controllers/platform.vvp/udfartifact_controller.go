@@ -94,7 +94,7 @@ func (r *UdfArtifactReconciler) handleUdfArtifactCreationIfNeeded(sp *platformvv
 		log.Error(err, "unable to check whether vvp UdfArtifact exists")
 		return err
 	}
-	if err := r.handleUdfArtifactFinalizers(*sp); err != nil {
+	if err := r.attachFinalizers(*sp); err != nil {
 		log.Error(err, "failed to attach finalizers")
 		return err
 	}
@@ -102,13 +102,14 @@ func (r *UdfArtifactReconciler) handleUdfArtifactCreationIfNeeded(sp *platformvv
 		log.Info(fmt.Sprintf("UdfArtifact %s doesnt exist in vvp, attempting to create\n", sp.Spec.Name))
 		if err := r.vvpClient.UdfArtifacts().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp UdfArtifact")
+			r.detachFinalizers(*sp)
 			return err
 		}
 	}
 	return nil
 }
 
-func (r *UdfArtifactReconciler) handleUdfArtifactFinalizers(sp platformvvpv1alpha1.UdfArtifact) error {
+func (r *UdfArtifactReconciler) attachFinalizers(sp platformvvpv1alpha1.UdfArtifact) error {
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
@@ -125,6 +126,20 @@ func (r *UdfArtifactReconciler) handleUdfArtifactFinalizers(sp platformvvpv1alph
 				return err
 			}
 		}
+	}
+	return nil
+}
+
+func (r *UdfArtifactReconciler) detachFinalizers(sp platformvvpv1alpha1.UdfArtifact) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	if controllerutil.ContainsFinalizer(&sp, platformFinalizer) {
+		controllerutil.RemoveFinalizer(&sp, platformFinalizer)
+		if err := r.Update(ctx, &sp); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to remove udfArtifact %s finalizers\n", sp.Spec.Name))
+			return err
+		}
+		return nil
 	}
 	return nil
 }
@@ -156,11 +171,7 @@ func (r *UdfArtifactReconciler) handleUdfArtifactDeletion(sp platformvvpv1alpha1
 		}
 
 		// remove our finalizer from the list and update it.
-		controllerutil.RemoveFinalizer(&sp, platformFinalizer)
-		if err := r.Update(ctx, &sp); err != nil {
-			log.Error(err, fmt.Sprintf("Failed to remove UdfArtifact %s finalizers\n", sp.Spec.Name))
-			return err
-		}
+		r.detachFinalizers(sp)
 	}
 	// Stop reconciliation as the item is being deleted
 	return nil

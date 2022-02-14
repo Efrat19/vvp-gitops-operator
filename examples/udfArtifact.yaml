@@ -6,4 +6,9 @@ metadata:
 spec:
   jarUrl: vvp-gitops-operator-example
   name: vvp-gitops-operator-example
-  udfClasses: {}
+  udfClasses: 
+  - className: vvp-gitops-operator-example    
+    classType: vvp-gitops-operator-example    
+    functionNames:
+    - vvp-gitops-operator-example
+    udfArtifactName: vvp-gitops-operator-example

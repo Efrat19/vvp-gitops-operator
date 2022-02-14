@@ -98,7 +98,7 @@ func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(dep *appmanagerv
 		log.Error(err, "unable to check whether vvp deployment exists")
 		return err
 	}
-	if err := r.handleDeploymentFinalizers(*dep); err != nil {
+	if err := r.attachFinalizers(*dep); err != nil {
 		log.Error(err, "failed to attach finalizers")
 		return err
 	}
@@ -106,13 +106,14 @@ func (r *DeploymentReconciler) handleDeploymentCreationIfNeeded(dep *appmanagerv
 		log.Info(fmt.Sprintf("Deployment %s doesnt exist in vvp, attempting to create\n", dep.Spec.Metadata.Name))
 		if err := r.vvpClient.Deployments().CreateExternalResources(dep); err != nil {
 			log.Error(err, "unable to create vvp deployment")
+			r.detachFinalizers(*dep)
 			return err
 		}
 	}
 	return nil
 }
 
-func (r *DeploymentReconciler) handleDeploymentFinalizers(dep appmanagervvpv1alpha1.Deployment) error {
+func (r *DeploymentReconciler) attachFinalizers(dep appmanagervvpv1alpha1.Deployment) error {
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
@@ -129,6 +130,20 @@ func (r *DeploymentReconciler) handleDeploymentFinalizers(dep appmanagervvpv1alp
 				return err
 			}
 		}
+	}
+	return nil
+}
+
+func (r *DeploymentReconciler) detachFinalizers(dep appmanagervvpv1alpha1.Deployment) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	if controllerutil.ContainsFinalizer(&dep, appmanagerFinalizer) {
+		controllerutil.RemoveFinalizer(&dep, appmanagerFinalizer)
+		if err := r.Update(ctx, &dep); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to remove deployment %s finalizers\n", dep.Spec.Metadata.Name))
+			return err
+		}
+		return nil
 	}
 	return nil
 }
@@ -158,11 +173,7 @@ func (r *DeploymentReconciler) handleDeploymentDeletion(dep appmanagervvpv1alpha
 		}
 
 		// remove our finalizer from the list and update it.
-		controllerutil.RemoveFinalizer(&dep, appmanagerFinalizer)
-		if err := r.Update(ctx, &dep); err != nil {
-			log.Error(err, fmt.Sprintf("Failed to remove deployment %s finalizers\n", dep.Spec.Metadata.Name))
-			return err
-		}
+		return r.detachFinalizers(dep)
 	}
 	// Stop reconciliation as the item is being deleted
 	return nil

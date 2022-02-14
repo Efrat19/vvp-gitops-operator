@@ -10,6 +10,6 @@ spec:
   script: |-
     SELECT
       kafka_key,
-      UserID
+      UserID,
     FROM USERS;
     

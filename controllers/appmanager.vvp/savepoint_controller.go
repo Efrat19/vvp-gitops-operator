@@ -94,7 +94,7 @@ func (r *SavepointReconciler) handleSavepointCreationIfNeeded(sp *appmanagervvpv
 		log.Error(err, "unable to check whether vvp Savepoint exists")
 		return err
 	}
-	if err := r.handleSavepointFinalizers(*sp); err != nil {
+	if err := r.attachFinalizers(*sp); err != nil {
 		log.Error(err, "failed to attach finalizers")
 		return err
 	}
@@ -102,13 +102,14 @@ func (r *SavepointReconciler) handleSavepointCreationIfNeeded(sp *appmanagervvpv
 		log.Info(fmt.Sprintf("Savepoint %s doesnt exist in vvp, attempting to create\n", sp.Spec.Metadata.Id))
 		if err := r.vvpClient.SavePoints().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp Savepoint")
+			r.detachFinalizers(*sp)
 			return err
 		}
 	}
 	return nil
 }
 
-func (r *SavepointReconciler) handleSavepointFinalizers(sp appmanagervvpv1alpha1.Savepoint) error {
+func (r *SavepointReconciler) attachFinalizers(sp appmanagervvpv1alpha1.Savepoint) error {
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
@@ -125,6 +126,20 @@ func (r *SavepointReconciler) handleSavepointFinalizers(sp appmanagervvpv1alpha1
 				return err
 			}
 		}
+	}
+	return nil
+}
+
+func (r *SavepointReconciler) detachFinalizers(sp appmanagervvpv1alpha1.Savepoint) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	if controllerutil.ContainsFinalizer(&sp, appmanagerFinalizer) {
+		controllerutil.RemoveFinalizer(&sp, appmanagerFinalizer)
+		if err := r.Update(ctx, &sp); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to remove Savepoint %s finalizers\n", sp.Spec.Metadata.Id))
+			return err
+		}
+		return nil
 	}
 	return nil
 }
@@ -155,11 +170,7 @@ func (r *SavepointReconciler) handleSavepointDeletion(sp appmanagervvpv1alpha1.S
 		}
 
 		// remove our finalizer from the list and update it.
-		controllerutil.RemoveFinalizer(&sp, appmanagerFinalizer)
-		if err := r.Update(ctx, &sp); err != nil {
-			log.Error(err, fmt.Sprintf("Failed to remove Savepoint %s finalizers\n", sp.Spec.Metadata.Id))
-			return err
-		}
+		r.detachFinalizers(sp)
 	}
 	// Stop reconciliation as the item is being deleted
 	return nil

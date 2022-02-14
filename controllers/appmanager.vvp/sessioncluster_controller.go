@@ -94,7 +94,7 @@ func (r *SessionClusterReconciler) handleSessionClusterCreationIfNeeded(sp *appm
 		log.Error(err, "unable to check whether vvp SessionCluster exists")
 		return err
 	}
-	if err := r.handleSessionClusterFinalizers(*sp); err != nil {
+	if err := r.attachFinalizers(*sp); err != nil {
 		log.Error(err, "failed to attach finalizers")
 		return err
 	}
@@ -102,13 +102,14 @@ func (r *SessionClusterReconciler) handleSessionClusterCreationIfNeeded(sp *appm
 		log.Info(fmt.Sprintf("SessionCluster %s doesnt exist in vvp, attempting to create\n", sp.Spec.Metadata.Id))
 		if err := r.vvpClient.SessionClusters().CreateExternalResources(sp); err != nil {
 			log.Error(err, "unable to create vvp SessionCluster")
+			r.detachFinalizers(*sp)
 			return err
 		}
 	}
 	return nil
 }
 
-func (r *SessionClusterReconciler) handleSessionClusterFinalizers(sp appmanagervvpv1alpha1.SessionCluster) error {
+func (r *SessionClusterReconciler) attachFinalizers(sp appmanagervvpv1alpha1.SessionCluster) error {
 	ctx := context.Background()
 	// name of our custom finalizer
 	log := log.FromContext(ctx)
@@ -125,6 +126,20 @@ func (r *SessionClusterReconciler) handleSessionClusterFinalizers(sp appmanagerv
 				return err
 			}
 		}
+	}
+	return nil
+}
+
+func (r *SessionClusterReconciler) detachFinalizers(sp appmanagervvpv1alpha1.SessionCluster) error {
+	ctx := context.Background()
+	log := log.FromContext(ctx)
+	if controllerutil.ContainsFinalizer(&sp, appmanagerFinalizer) {
+		controllerutil.RemoveFinalizer(&sp, appmanagerFinalizer)
+		if err := r.Update(ctx, &sp); err != nil {
+			log.Error(err, fmt.Sprintf("Failed to remove SessionCluster %s finalizers\n", sp.Spec.Metadata.Id))
+			return err
+		}
+		return nil
 	}
 	return nil
 }
@@ -155,11 +170,7 @@ func (r *SessionClusterReconciler) handleSessionClusterDeletion(sp appmanagervvp
 		}
 
 		// remove our finalizer from the list and update it.
-		controllerutil.RemoveFinalizer(&sp, appmanagerFinalizer)
-		if err := r.Update(ctx, &sp); err != nil {
-			log.Error(err, fmt.Sprintf("Failed to remove SessionCluster %s finalizers\n", sp.Spec.Metadata.Id))
-			return err
-		}
+		r.detachFinalizers(sp)
 	}
 	// Stop reconciliation as the item is being deleted
 	return nil
