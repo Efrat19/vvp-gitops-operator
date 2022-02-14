@@ -1,3 +1,4 @@
+ververicaPlatformURL: ververica.your-domain.com
 controllerManager:
   kubeRbacProxy:
     image:
@@ -12,7 +13,7 @@ controllerManager:
         memory: 64Mi
   manager:
     image:
-      repository: efrat19/vvp-gitops-operator
+      repository: controller
       tag: latest
     resources:
       limits:

@@ -25,4 +25,6 @@ WORKDIR /
 COPY --from=builder /workspace/manager .
 USER 65532:65532
 
+ENV VVP_URL http://localhost:8080
+
 ENTRYPOINT ["/manager"]

@@ -46,6 +46,9 @@ spec:
         command:
         - /manager
         image: {{ .Values.controllerManager.manager.image.repository }}:{{ .Values.controllerManager.manager.image.tag| default .Chart.AppVersion }}
+        env:
+        - name: VVP_URL
+          value: {{ .Values.ververicaPlatformURL }}
         livenessProbe:
           httpGet:
             path: /healthz
