@@ -22,7 +22,8 @@ spec:
     metadata:
       labels:
         control-plane: controller-manager
-      {{- include "vvp-gitops-operator.selectorLabels" . | nindent 8 }}      annotations:
+      {{- include "vvp-gitops-operator.selectorLabels" . | nindent 8 }}      
+      annotations:
         kubectl.kubernetes.io/default-container: manager
     spec:
       containers:
