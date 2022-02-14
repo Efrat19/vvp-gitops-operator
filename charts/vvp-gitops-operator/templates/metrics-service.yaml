@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "vvp-gitops-operator.fullname" . }}-controller-manager-metrics-service
+  name: {{ include "vvp-gitops-operator.fullname" . }}-metrics-service
   labels:
     control-plane: controller-manager
   {{- include "vvp-gitops-operator.labels" . | nindent 4 }}
