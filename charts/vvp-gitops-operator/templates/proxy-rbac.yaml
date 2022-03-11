@@ -36,6 +36,7 @@ rules:
   - deploymentTargets/finalizers
   verbs:
   - update
+  
 - apiGroups:
   - appmanager.vvp.efrat19.io
   resources:
